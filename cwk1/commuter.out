@@ -1,0 +1,289 @@
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 58929 was started by markmuinde on MacBook-Pro-2.local,
+Wed Nov  2 10:59:51 2022
+The command was "prover9 -f commuter.in".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file commuter.in
+
+set(ignore_option_dependencies).
+if(Prover9).
+% Conditional input included.
+clear(auto).
+clear(auto_setup).
+clear(auto_limits).
+clear(auto_denials).
+clear(auto_inference).
+clear(auto_process).
+assign(eq_defs,pass).
+assign(max_seconds,10).
+assign(max_weight,2147483647).
+assign(sos_limit,-1).
+clear(predicate_elim).
+set(binary_resolution).
+set(paramodulation).
+set(factor).
+end_if.
+if(Mace4).
+% Conditional input omitted.
+end_if.
+
+formulas(assumptions).
+GoToWork & (GoOnFoot | GoByCycle) -> -Inside.
+GoByCycle <-> Helmet.
+(Raining & -Inside -> SplashedByCars & -HearWell) | (Raining & -Inside -> -SplashedByCars & HearWell).
+(Raining -> -GoByCycle) & (Raining <-> Windy).
+Helmet | HairWet -> -HearWell.
+GoToWork -> GoOnFoot | GoByBus | GoByCycle.
+Raining & -Inside & -Helmet -> HairWet.
+GoToWork -> -SplashedByCars.
+end_of_list.
+
+formulas(goals).
+Windy & GoToWork -> GoByBus.
+end_of_list.
+
+============================== end of input ==========================
+
+% Enabling option dependencies (ignore applies only on input).
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 GoToWork & (GoOnFoot | GoByCycle) -> -Inside # label(non_clause).  [assumption].
+2 GoByCycle <-> Helmet # label(non_clause).  [assumption].
+3 (Raining & -Inside -> SplashedByCars & -HearWell) | (Raining & -Inside -> -SplashedByCars & HearWell) # label(non_clause).  [assumption].
+4 (Raining -> -GoByCycle) & (Raining <-> Windy) # label(non_clause).  [assumption].
+5 Helmet | HairWet -> -HearWell # label(non_clause).  [assumption].
+6 GoToWork -> GoOnFoot | GoByBus | GoByCycle # label(non_clause).  [assumption].
+7 Raining & -Inside & -Helmet -> HairWet # label(non_clause).  [assumption].
+8 GoToWork -> -SplashedByCars # label(non_clause).  [assumption].
+9 Windy & GoToWork -> GoByBus # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+-GoToWork | -GoOnFoot | -Inside.  [clausify(1)].
+-GoToWork | -GoByCycle | -Inside.  [clausify(1)].
+-GoByCycle | Helmet.  [clausify(2)].
+GoByCycle | -Helmet.  [clausify(2)].
+-Raining | Inside | SplashedByCars | HearWell.  [clausify(3)].
+-Raining | Inside | -HearWell | -SplashedByCars.  [clausify(3)].
+-Raining | -GoByCycle.  [clausify(4)].
+-Raining | Windy.  [clausify(4)].
+Raining | -Windy.  [clausify(4)].
+-Helmet | -HearWell.  [clausify(5)].
+-HairWet | -HearWell.  [clausify(5)].
+-GoToWork | GoOnFoot | GoByBus | GoByCycle.  [clausify(6)].
+-Raining | Inside | Helmet | HairWet.  [clausify(7)].
+-GoToWork | -SplashedByCars.  [clausify(8)].
+Windy.  [deny(9)].
+GoToWork.  [deny(9)].
+-GoByBus.  [deny(9)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ Raining, GoByCycle, Helmet, Inside, Windy, GoToWork, HearWell, SplashedByCars, GoByBus, GoOnFoot, HairWet ]).
+Function symbol precedence:  function_order([ ]).
+After inverse_order:  (no changes).
+
+kept:      10 -GoToWork | -GoOnFoot | -Inside.  [clausify(1)].
+kept:      11 -GoToWork | -GoByCycle | -Inside.  [clausify(1)].
+kept:      12 -GoByCycle | Helmet.  [clausify(2)].
+kept:      13 GoByCycle | -Helmet.  [clausify(2)].
+kept:      14 -Raining | Inside | SplashedByCars | HearWell.  [clausify(3)].
+kept:      15 -Raining | Inside | -HearWell | -SplashedByCars.  [clausify(3)].
+kept:      16 -Raining | -GoByCycle.  [clausify(4)].
+kept:      17 -Raining | Windy.  [clausify(4)].
+kept:      18 Raining | -Windy.  [clausify(4)].
+kept:      19 -Helmet | -HearWell.  [clausify(5)].
+kept:      20 -HairWet | -HearWell.  [clausify(5)].
+kept:      21 -GoToWork | GoOnFoot | GoByBus | GoByCycle.  [clausify(6)].
+kept:      22 -Raining | Inside | Helmet | HairWet.  [clausify(7)].
+kept:      23 -GoToWork | -SplashedByCars.  [clausify(8)].
+kept:      24 Windy.  [deny(9)].
+kept:      25 GoToWork.  [deny(9)].
+kept:      26 -GoByBus.  [deny(9)].
+
+============================== end of process initial clauses ========
+
+============================== CLAUSES FOR SEARCH ====================
+
+% Clauses after input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+10 -GoToWork | -GoOnFoot | -Inside.  [clausify(1)].
+11 -GoToWork | -GoByCycle | -Inside.  [clausify(1)].
+12 -GoByCycle | Helmet.  [clausify(2)].
+13 GoByCycle | -Helmet.  [clausify(2)].
+14 -Raining | Inside | SplashedByCars | HearWell.  [clausify(3)].
+15 -Raining | Inside | -HearWell | -SplashedByCars.  [clausify(3)].
+16 -Raining | -GoByCycle.  [clausify(4)].
+18 Raining | -Windy.  [clausify(4)].
+19 -Helmet | -HearWell.  [clausify(5)].
+20 -HairWet | -HearWell.  [clausify(5)].
+21 -GoToWork | GoOnFoot | GoByBus | GoByCycle.  [clausify(6)].
+22 -Raining | Inside | Helmet | HairWet.  [clausify(7)].
+23 -GoToWork | -SplashedByCars.  [clausify(8)].
+24 Windy.  [deny(9)].
+25 GoToWork.  [deny(9)].
+26 -GoByBus.  [deny(9)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== end of clauses for search =============
+
+============================== SEARCH ================================
+
+% Starting search at 0.00 seconds.
+
+given #1 (I,wt=3): 10 -GoToWork | -GoOnFoot | -Inside.  [clausify(1)].
+
+given #2 (I,wt=3): 11 -GoToWork | -GoByCycle | -Inside.  [clausify(1)].
+
+given #3 (I,wt=2): 12 -GoByCycle | Helmet.  [clausify(2)].
+
+given #4 (I,wt=2): 13 GoByCycle | -Helmet.  [clausify(2)].
+
+given #5 (I,wt=4): 14 -Raining | Inside | SplashedByCars | HearWell.  [clausify(3)].
+
+given #6 (I,wt=4): 15 -Raining | Inside | -HearWell | -SplashedByCars.  [clausify(3)].
+
+given #7 (I,wt=2): 16 -Raining | -GoByCycle.  [clausify(4)].
+
+given #8 (I,wt=2): 18 Raining | -Windy.  [clausify(4)].
+
+given #9 (I,wt=2): 19 -Helmet | -HearWell.  [clausify(5)].
+
+given #10 (I,wt=2): 20 -HairWet | -HearWell.  [clausify(5)].
+
+given #11 (I,wt=4): 21 -GoToWork | GoOnFoot | GoByBus | GoByCycle.  [clausify(6)].
+
+given #12 (I,wt=4): 22 -Raining | Inside | Helmet | HairWet.  [clausify(7)].
+
+given #13 (I,wt=2): 23 -GoToWork | -SplashedByCars.  [clausify(8)].
+
+given #14 (I,wt=1): 24 Windy.  [deny(9)].
+
+given #15 (I,wt=1): 25 GoToWork.  [deny(9)].
+
+given #16 (I,wt=1): 26 -GoByBus.  [deny(9)].
+
+given #17 (A,wt=1): 27 Raining.  [resolve(24,a,18,b)].
+
+given #18 (F,wt=2): 29 -GoByCycle | -Inside.  [resolve(25,a,11,a)].
+
+given #19 (T,wt=3): 28 GoOnFoot | GoByBus | GoByCycle.  [resolve(25,a,21,a)].
+
+given #20 (T,wt=3): 30 Inside | Helmet | HairWet.  [resolve(27,a,22,a)].
+
+given #21 (T,wt=3): 31 Inside | SplashedByCars | HearWell.  [resolve(27,a,14,a)].
+
+given #22 (T,wt=3): 33 Inside | Helmet | -HearWell.  [resolve(30,c,20,a)].
+
+given #23 (A,wt=4): 32 GoByBus | GoByCycle | -GoToWork | -Inside.  [resolve(28,a,10,b)].
+
+given #24 (T,wt=3): 34 Inside | HearWell | -GoToWork.  [resolve(31,b,23,b)].
+
+given #25 (T,wt=2): 36 Inside | HearWell.  [resolve(34,c,25,a)].
+
+given #26 (T,wt=2): 37 Inside | Helmet.  [resolve(36,b,33,c),merge(b)].
+
+given #27 (T,wt=2): 38 Inside | -Helmet.  [resolve(36,b,19,b)].
+
+given #28 (A,wt=3): 35 GoByBus | GoByCycle | -Inside.  [resolve(32,c,25,a)].
+
+given #29 (T,wt=3): 39 GoByBus | GoByCycle | Helmet.  [resolve(35,c,37,a)].
+
+given #30 (T,wt=2): 40 GoByCycle | Helmet.  [resolve(39,a,26,a)].
+
+given #31 (T,wt=1): 42 GoByCycle.  [resolve(40,b,13,b),merge(b)].
+
+============================== PROOF =================================
+
+% Proof 1 at 0.01 (+ 0.00) seconds.
+% Length of proof is 36.
+% Level of proof is 11.
+% Maximum clause weight is 4.000.
+% Given clauses 31.
+
+1 GoToWork & (GoOnFoot | GoByCycle) -> -Inside # label(non_clause).  [assumption].
+2 GoByCycle <-> Helmet # label(non_clause).  [assumption].
+3 (Raining & -Inside -> SplashedByCars & -HearWell) | (Raining & -Inside -> -SplashedByCars & HearWell) # label(non_clause).  [assumption].
+4 (Raining -> -GoByCycle) & (Raining <-> Windy) # label(non_clause).  [assumption].
+5 Helmet | HairWet -> -HearWell # label(non_clause).  [assumption].
+6 GoToWork -> GoOnFoot | GoByBus | GoByCycle # label(non_clause).  [assumption].
+7 Raining & -Inside & -Helmet -> HairWet # label(non_clause).  [assumption].
+8 GoToWork -> -SplashedByCars # label(non_clause).  [assumption].
+9 Windy & GoToWork -> GoByBus # label(non_clause) # label(goal).  [goal].
+10 -GoToWork | -GoOnFoot | -Inside.  [clausify(1)].
+13 GoByCycle | -Helmet.  [clausify(2)].
+14 -Raining | Inside | SplashedByCars | HearWell.  [clausify(3)].
+16 -Raining | -GoByCycle.  [clausify(4)].
+18 Raining | -Windy.  [clausify(4)].
+20 -HairWet | -HearWell.  [clausify(5)].
+21 -GoToWork | GoOnFoot | GoByBus | GoByCycle.  [clausify(6)].
+22 -Raining | Inside | Helmet | HairWet.  [clausify(7)].
+23 -GoToWork | -SplashedByCars.  [clausify(8)].
+24 Windy.  [deny(9)].
+25 GoToWork.  [deny(9)].
+26 -GoByBus.  [deny(9)].
+27 Raining.  [resolve(24,a,18,b)].
+28 GoOnFoot | GoByBus | GoByCycle.  [resolve(25,a,21,a)].
+30 Inside | Helmet | HairWet.  [resolve(27,a,22,a)].
+31 Inside | SplashedByCars | HearWell.  [resolve(27,a,14,a)].
+32 GoByBus | GoByCycle | -GoToWork | -Inside.  [resolve(28,a,10,b)].
+33 Inside | Helmet | -HearWell.  [resolve(30,c,20,a)].
+34 Inside | HearWell | -GoToWork.  [resolve(31,b,23,b)].
+35 GoByBus | GoByCycle | -Inside.  [resolve(32,c,25,a)].
+36 Inside | HearWell.  [resolve(34,c,25,a)].
+37 Inside | Helmet.  [resolve(36,b,33,c),merge(b)].
+39 GoByBus | GoByCycle | Helmet.  [resolve(35,c,37,a)].
+40 GoByCycle | Helmet.  [resolve(39,a,26,a)].
+42 GoByCycle.  [resolve(40,b,13,b),merge(b)].
+43 -Raining.  [resolve(42,a,16,b)].
+44 $F.  [resolve(43,a,27,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=31. Generated=36. Kept=34. proofs=1.
+Usable=16. Sos=0. Demods=0. Limbo=0, Disabled=34. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=2. Back_subsumed=17.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=0 (0 lex), Back_demodulated=0. Back_unit_deleted=0.
+Demod_attempts=0. Demod_rewrites=0.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=1. Nonunit_bsub_feature_tests=45.
+Megabytes=0.07.
+User_CPU=0.01, System_CPU=0.01, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+Process 58929 exit (max_proofs) Wed Nov  2 10:59:51 2022

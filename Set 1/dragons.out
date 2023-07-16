@@ -1,0 +1,179 @@
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 42721 was started by markmuinde on MacBook-Pro.local,
+Fri Oct 28 19:29:04 2022
+The command was "prover9 -f dragons.in".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file dragons.in
+
+set(ignore_option_dependencies).
+if(Prover9).
+% Conditional input included.
+clear(auto).
+clear(auto_setup).
+clear(auto_limits).
+clear(auto_denials).
+clear(auto_inference).
+clear(auto_process).
+assign(eq_defs,pass).
+assign(max_seconds,10).
+assign(max_weight,2147483647).
+assign(sos_limit,-1).
+clear(predicate_elim).
+set(binary_resolution).
+set(paramodulation).
+set(factor).
+end_if.
+if(Mace4).
+% Conditional input omitted.
+end_if.
+
+formulas(assumptions).
+(DragonDestroysVillage -> VillagersHomeless & -VillagersTakeCastle) | (DragonDestroysVillage -> VillagersTakeCastle & -VillagersHomeless).
+KingMean -> VillagersTakeCastle.
+-KingMean -> -DragonDestroysVillage.
+DragonDestroysVillage.
+end_of_list.
+
+formulas(goals).
+-VillagersHomeless.
+end_of_list.
+
+============================== end of input ==========================
+
+% Enabling option dependencies (ignore applies only on input).
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 (DragonDestroysVillage -> VillagersHomeless & -VillagersTakeCastle) | (DragonDestroysVillage -> VillagersTakeCastle & -VillagersHomeless) # label(non_clause).  [assumption].
+2 KingMean -> VillagersTakeCastle # label(non_clause).  [assumption].
+3 -KingMean -> -DragonDestroysVillage # label(non_clause).  [assumption].
+4 -VillagersHomeless # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+-DragonDestroysVillage | VillagersHomeless | VillagersTakeCastle.  [clausify(1)].
+-DragonDestroysVillage | -VillagersTakeCastle | -VillagersHomeless.  [clausify(1)].
+-KingMean | VillagersTakeCastle.  [clausify(2)].
+KingMean | -DragonDestroysVillage.  [clausify(3)].
+DragonDestroysVillage.  [assumption].
+VillagersHomeless.  [deny(4)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ DragonDestroysVillage, KingMean, VillagersHomeless, VillagersTakeCastle ]).
+Function symbol precedence:  function_order([ ]).
+After inverse_order:  (no changes).
+
+kept:      5 -DragonDestroysVillage | VillagersHomeless | VillagersTakeCastle.  [clausify(1)].
+kept:      6 -DragonDestroysVillage | -VillagersTakeCastle | -VillagersHomeless.  [clausify(1)].
+kept:      7 -KingMean | VillagersTakeCastle.  [clausify(2)].
+kept:      8 KingMean | -DragonDestroysVillage.  [clausify(3)].
+kept:      9 DragonDestroysVillage.  [assumption].
+kept:      10 VillagersHomeless.  [deny(4)].
+
+============================== end of process initial clauses ========
+
+============================== CLAUSES FOR SEARCH ====================
+
+% Clauses after input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+6 -DragonDestroysVillage | -VillagersTakeCastle | -VillagersHomeless.  [clausify(1)].
+7 -KingMean | VillagersTakeCastle.  [clausify(2)].
+8 KingMean | -DragonDestroysVillage.  [clausify(3)].
+9 DragonDestroysVillage.  [assumption].
+10 VillagersHomeless.  [deny(4)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== end of clauses for search =============
+
+============================== SEARCH ================================
+
+% Starting search at 0.01 seconds.
+
+given #1 (I,wt=3): 6 -DragonDestroysVillage | -VillagersTakeCastle | -VillagersHomeless.  [clausify(1)].
+
+given #2 (I,wt=2): 7 -KingMean | VillagersTakeCastle.  [clausify(2)].
+
+given #3 (I,wt=2): 8 KingMean | -DragonDestroysVillage.  [clausify(3)].
+
+given #4 (I,wt=1): 9 DragonDestroysVillage.  [assumption].
+
+given #5 (I,wt=1): 10 VillagersHomeless.  [deny(4)].
+
+given #6 (A,wt=1): 11 KingMean.  [resolve(9,a,8,b)].
+
+given #7 (T,wt=1): 12 VillagersTakeCastle.  [resolve(11,a,7,a)].
+
+given #8 (A,wt=2): 13 -DragonDestroysVillage | -VillagersHomeless.  [resolve(12,a,6,b)].
+
+============================== PROOF =================================
+
+% Proof 1 at 0.01 (+ 0.00) seconds.
+% Length of proof is 14.
+% Level of proof is 6.
+% Maximum clause weight is 3.000.
+% Given clauses 8.
+
+1 (DragonDestroysVillage -> VillagersHomeless & -VillagersTakeCastle) | (DragonDestroysVillage -> VillagersTakeCastle & -VillagersHomeless) # label(non_clause).  [assumption].
+2 KingMean -> VillagersTakeCastle # label(non_clause).  [assumption].
+3 -KingMean -> -DragonDestroysVillage # label(non_clause).  [assumption].
+4 -VillagersHomeless # label(non_clause) # label(goal).  [goal].
+6 -DragonDestroysVillage | -VillagersTakeCastle | -VillagersHomeless.  [clausify(1)].
+7 -KingMean | VillagersTakeCastle.  [clausify(2)].
+8 KingMean | -DragonDestroysVillage.  [clausify(3)].
+9 DragonDestroysVillage.  [assumption].
+10 VillagersHomeless.  [deny(4)].
+11 KingMean.  [resolve(9,a,8,b)].
+12 VillagersTakeCastle.  [resolve(11,a,7,a)].
+13 -DragonDestroysVillage | -VillagersHomeless.  [resolve(12,a,6,b)].
+14 -DragonDestroysVillage.  [resolve(13,b,10,a)].
+15 $F.  [resolve(14,a,9,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=8. Generated=10. Kept=10. proofs=1.
+Usable=5. Sos=0. Demods=0. Limbo=0, Disabled=10. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=0. Back_subsumed=4.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=0 (0 lex), Back_demodulated=0. Back_unit_deleted=0.
+Demod_attempts=0. Demod_rewrites=0.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=0. Nonunit_bsub_feature_tests=9.
+Megabytes=0.04.
+User_CPU=0.01, System_CPU=0.00, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+Process 42721 exit (max_proofs) Fri Oct 28 19:29:04 2022

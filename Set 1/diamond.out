@@ -1,0 +1,172 @@
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 3073 was started by markmuinde on MacBook-Pro.local,
+Thu Oct 13 16:01:08 2022
+The command was "prover9 -f diamond.in".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file diamond.in
+
+set(ignore_option_dependencies).
+if(Prover9).
+% Conditional input included.
+clear(auto).
+clear(auto_setup).
+clear(auto_limits).
+clear(auto_denials).
+clear(auto_inference).
+clear(auto_process).
+assign(eq_defs,pass).
+assign(max_seconds,10).
+assign(max_weight,2147483647).
+assign(sos_limit,-1).
+clear(predicate_elim).
+set(binary_resolution).
+set(paramodulation).
+set(factor).
+end_if.
+if(Mace4).
+% Conditional input omitted.
+end_if.
+
+formulas(assumptions).
+DiamondStolen.
+DiamondStolen -> ThiefInHouse.
+ThiefInHouse -> DoorOpen | WindowSmashed.
+-WindowSmashed.
+end_of_list.
+
+formulas(goals).
+DoorOpen.
+end_of_list.
+
+============================== end of input ==========================
+
+% Enabling option dependencies (ignore applies only on input).
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 DiamondStolen -> ThiefInHouse # label(non_clause).  [assumption].
+2 ThiefInHouse -> DoorOpen | WindowSmashed # label(non_clause).  [assumption].
+3 DoorOpen # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+DiamondStolen.  [assumption].
+-DiamondStolen | ThiefInHouse.  [clausify(1)].
+-ThiefInHouse | DoorOpen | WindowSmashed.  [clausify(2)].
+-WindowSmashed.  [assumption].
+-DoorOpen.  [deny(3)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ DiamondStolen, ThiefInHouse, DoorOpen, WindowSmashed ]).
+Function symbol precedence:  function_order([ ]).
+After inverse_order:  (no changes).
+
+kept:      4 DiamondStolen.  [assumption].
+kept:      5 -DiamondStolen | ThiefInHouse.  [clausify(1)].
+kept:      6 -ThiefInHouse | DoorOpen | WindowSmashed.  [clausify(2)].
+kept:      7 -WindowSmashed.  [assumption].
+kept:      8 -DoorOpen.  [deny(3)].
+
+============================== end of process initial clauses ========
+
+============================== CLAUSES FOR SEARCH ====================
+
+% Clauses after input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+4 DiamondStolen.  [assumption].
+5 -DiamondStolen | ThiefInHouse.  [clausify(1)].
+6 -ThiefInHouse | DoorOpen | WindowSmashed.  [clausify(2)].
+7 -WindowSmashed.  [assumption].
+8 -DoorOpen.  [deny(3)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== end of clauses for search =============
+
+============================== SEARCH ================================
+
+% Starting search at 0.01 seconds.
+
+given #1 (I,wt=1): 4 DiamondStolen.  [assumption].
+
+given #2 (I,wt=2): 5 -DiamondStolen | ThiefInHouse.  [clausify(1)].
+
+given #3 (I,wt=3): 6 -ThiefInHouse | DoorOpen | WindowSmashed.  [clausify(2)].
+
+given #4 (I,wt=1): 7 -WindowSmashed.  [assumption].
+
+given #5 (I,wt=1): 8 -DoorOpen.  [deny(3)].
+
+given #6 (A,wt=1): 9 ThiefInHouse.  [resolve(5,a,4,a)].
+
+given #7 (T,wt=2): 10 DoorOpen | WindowSmashed.  [resolve(9,a,6,a)].
+
+============================== PROOF =================================
+
+% Proof 1 at 0.01 (+ 0.01) seconds.
+% Length of proof is 12.
+% Level of proof is 5.
+% Maximum clause weight is 3.000.
+% Given clauses 7.
+
+1 DiamondStolen -> ThiefInHouse # label(non_clause).  [assumption].
+2 ThiefInHouse -> DoorOpen | WindowSmashed # label(non_clause).  [assumption].
+3 DoorOpen # label(non_clause) # label(goal).  [goal].
+4 DiamondStolen.  [assumption].
+5 -DiamondStolen | ThiefInHouse.  [clausify(1)].
+6 -ThiefInHouse | DoorOpen | WindowSmashed.  [clausify(2)].
+7 -WindowSmashed.  [assumption].
+8 -DoorOpen.  [deny(3)].
+9 ThiefInHouse.  [resolve(5,a,4,a)].
+10 DoorOpen | WindowSmashed.  [resolve(9,a,6,a)].
+11 DoorOpen.  [resolve(10,b,7,a)].
+12 $F.  [resolve(11,a,8,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=7. Generated=8. Kept=8. proofs=1.
+Usable=5. Sos=0. Demods=0. Limbo=0, Disabled=7. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=0. Back_subsumed=2.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=0 (0 lex), Back_demodulated=0. Back_unit_deleted=0.
+Demod_attempts=0. Demod_rewrites=0.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=0. Nonunit_bsub_feature_tests=5.
+Megabytes=0.03.
+User_CPU=0.01, System_CPU=0.01, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+Process 3073 exit (max_proofs) Thu Oct 13 16:01:08 2022

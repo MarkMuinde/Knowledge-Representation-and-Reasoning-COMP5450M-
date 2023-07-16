@@ -1,0 +1,299 @@
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 42430 was started by markmuinde on MacBook-Pro.local,
+Fri Oct 28 19:25:06 2022
+The command was "prover9 -f impostor.in".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file impostor.in
+
+set(ignore_option_dependencies).
+if(Prover9).
+% Conditional input included.
+clear(auto).
+clear(auto_setup).
+clear(auto_limits).
+clear(auto_denials).
+clear(auto_inference).
+clear(auto_process).
+assign(eq_defs,pass).
+assign(max_seconds,10).
+assign(max_weight,2147483647).
+assign(sos_limit,-1).
+clear(predicate_elim).
+set(binary_resolution).
+set(paramodulation).
+set(factor).
+end_if.
+if(Mace4).
+% Conditional input omitted.
+end_if.
+
+formulas(assumptions).
+Crewmember(Blue) & Crewmember(Yellow) & Crewmember(Red) & Crewmember(Purple) & Crewmember(Janitor) & (all x (Crewmember(x) -> x = Blue | x = Yellow | x = Red | x = Purple | x = Janitor)).
+(exists x exists y (Crewmember(x) & Crewmember(y) & Impostor(x) & Impostor(y) & x != y)).
+(all x all y all z (Impostor(x) & Impostor(y) -> (Impostor(z) -> x = z | y = z))).
+(all x all y (Accused(x,y) -> Impostor(x) | Impostor(y))).
+(all x all y (Accused(x,y) & -Impostor(x) & KnowsImpostor(x,y) & KnowsImpostor(y,y) -> Impostor(y))).
+(all x (Impostor(x) -> KnowsImpostor(x,x))).
+(all x (Murdered(x) -> -Impostor(x))).
+(exists x KnowsImpostor(Purple,x)).
+-KnowsImpostor(Purple,Janitor) & -KnowsImpostor(Purple,Blue).
+Murdered(Purple).
+-Janitor = Red & -Janitor = Blue.
+Accused(Blue,Yellow).
+(all x -KnowsImpostor(x,Yellow)).
+end_of_list.
+
+formulas(goals).
+-Impostor(Yellow) & -Impostor(Purple) & -Impostor(Janitor) & Impostor(Blue) & Impostor(Red).
+end_of_list.
+
+============================== end of input ==========================
+
+% Enabling option dependencies (ignore applies only on input).
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 Crewmember(Blue) & Crewmember(Yellow) & Crewmember(Red) & Crewmember(Purple) & Crewmember(Janitor) & (all x (Crewmember(x) -> x = Blue | x = Yellow | x = Red | x = Purple | x = Janitor)) # label(non_clause).  [assumption].
+2 (exists x exists y (Crewmember(x) & Crewmember(y) & Impostor(x) & Impostor(y) & x != y)) # label(non_clause).  [assumption].
+3 (all x all y all z (Impostor(x) & Impostor(y) -> (Impostor(z) -> x = z | y = z))) # label(non_clause).  [assumption].
+4 (all x all y (Accused(x,y) -> Impostor(x) | Impostor(y))) # label(non_clause).  [assumption].
+5 (all x all y (Accused(x,y) & -Impostor(x) & KnowsImpostor(x,y) & KnowsImpostor(y,y) -> Impostor(y))) # label(non_clause).  [assumption].
+6 (all x (Impostor(x) -> KnowsImpostor(x,x))) # label(non_clause).  [assumption].
+7 (all x (Murdered(x) -> -Impostor(x))) # label(non_clause).  [assumption].
+8 (exists x KnowsImpostor(Purple,x)) # label(non_clause).  [assumption].
+9 -KnowsImpostor(Purple,Janitor) & -KnowsImpostor(Purple,Blue) # label(non_clause).  [assumption].
+10 -Janitor = Red & -Janitor = Blue # label(non_clause).  [assumption].
+11 (all x -KnowsImpostor(x,Yellow)) # label(non_clause).  [assumption].
+12 -Impostor(Yellow) & -Impostor(Purple) & -Impostor(Janitor) & Impostor(Blue) & Impostor(Red) # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+Crewmember(Blue).  [clausify(1)].
+Crewmember(Yellow).  [clausify(1)].
+Crewmember(Red).  [clausify(1)].
+Crewmember(Purple).  [clausify(1)].
+Crewmember(Janitor).  [clausify(1)].
+-Crewmember(x) | x = Blue | x = Yellow | x = Red | x = Purple | x = Janitor.  [clausify(1)].
+Crewmember(c1).  [clausify(2)].
+Crewmember(c2).  [clausify(2)].
+Impostor(c1).  [clausify(2)].
+Impostor(c2).  [clausify(2)].
+c2 != c1.  [clausify(2)].
+-Impostor(x) | -Impostor(y) | -Impostor(z) | z = x | z = y.  [clausify(3)].
+-Accused(x,y) | Impostor(x) | Impostor(y).  [clausify(4)].
+-Accused(x,y) | Impostor(x) | -KnowsImpostor(x,y) | -KnowsImpostor(y,y) | Impostor(y).  [clausify(5)].
+-Impostor(x) | KnowsImpostor(x,x).  [clausify(6)].
+-Murdered(x) | -Impostor(x).  [clausify(7)].
+KnowsImpostor(Purple,c3).  [clausify(8)].
+-KnowsImpostor(Purple,Janitor).  [clausify(9)].
+-KnowsImpostor(Purple,Blue).  [clausify(9)].
+Murdered(Purple).  [assumption].
+-Janitor = Red.  [clausify(10)].
+-Janitor = Blue.  [clausify(10)].
+Accused(Blue,Yellow).  [assumption].
+-KnowsImpostor(x,Yellow).  [clausify(11)].
+Impostor(Yellow) | Impostor(Purple) | Impostor(Janitor) | -Impostor(Blue) | -Impostor(Red).  [deny(12)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ =, Impostor, Crewmember, Murdered, KnowsImpostor, Accused ]).
+Function symbol precedence:  function_order([ Blue, Janitor, Purple, Red, Yellow, c1, c2, c3, - ]).
+After inverse_order:  (no changes).
+
+kept:      13 Crewmember(Blue).  [clausify(1)].
+kept:      14 Crewmember(Yellow).  [clausify(1)].
+kept:      15 Crewmember(Red).  [clausify(1)].
+kept:      16 Crewmember(Purple).  [clausify(1)].
+kept:      17 Crewmember(Janitor).  [clausify(1)].
+           18 -Crewmember(x) | x = Blue | x = Yellow | x = Red | x = Purple | x = Janitor.  [clausify(1)].
+kept:      19 -Crewmember(x) | Blue = x | Yellow = x | Red = x | Purple = x | Janitor = x.  [copy(18),flip(b),flip(c),flip(d),flip(e),flip(f)].
+kept:      20 Crewmember(c1).  [clausify(2)].
+kept:      21 Crewmember(c2).  [clausify(2)].
+kept:      22 Impostor(c1).  [clausify(2)].
+kept:      23 Impostor(c2).  [clausify(2)].
+kept:      24 c2 != c1.  [clausify(2)].
+kept:      25 -Impostor(x) | -Impostor(y) | -Impostor(z) | z = x | z = y.  [clausify(3)].
+kept:      26 -Accused(x,y) | Impostor(x) | Impostor(y).  [clausify(4)].
+kept:      27 -Impostor(x) | KnowsImpostor(x,x).  [clausify(6)].
+kept:      28 -Murdered(x) | -Impostor(x).  [clausify(7)].
+kept:      29 KnowsImpostor(Purple,c3).  [clausify(8)].
+kept:      30 -KnowsImpostor(Purple,Janitor).  [clausify(9)].
+kept:      31 -KnowsImpostor(Purple,Blue).  [clausify(9)].
+kept:      32 Murdered(Purple).  [assumption].
+kept:      33 -Janitor = Red.  [clausify(10)].
+           34 -Janitor = Blue.  [clausify(10)].
+kept:      35 Red = Blue.  [copy(34),rewrite([33(2)])].
+kept:      36 Accused(Blue,Yellow).  [assumption].
+kept:      37 -KnowsImpostor(x,Yellow).  [clausify(11)].
+           38 Impostor(Yellow) | Impostor(Purple) | Impostor(Janitor) | -Impostor(Blue) | -Impostor(Red).  [deny(12)].
+kept:      39 Impostor(Yellow) | Impostor(Purple) | Impostor(Janitor) | -Impostor(Blue).  [copy(38),rewrite([35(9)]),merge(e)].
+kept:      40 -Impostor(x) | -Impostor(y) | y = x.  [factor(25,a,b),merge(d)].
+kept:      41 -Accused(x,x) | Impostor(x).  [factor(26,b,c)].
+kept:      42 -Janitor = Blue.  [back_rewrite(33),rewrite([35(3)])].
+kept:      43 -Crewmember(x) | Blue = x | Yellow = x | Purple = x | Janitor = x.  [back_rewrite(19),rewrite([35(6)]),merge(d)].
+
+============================== end of process initial clauses ========
+
+============================== CLAUSES FOR SEARCH ====================
+
+% Clauses after input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+13 Crewmember(Blue).  [clausify(1)].
+14 Crewmember(Yellow).  [clausify(1)].
+16 Crewmember(Purple).  [clausify(1)].
+17 Crewmember(Janitor).  [clausify(1)].
+20 Crewmember(c1).  [clausify(2)].
+21 Crewmember(c2).  [clausify(2)].
+22 Impostor(c1).  [clausify(2)].
+23 Impostor(c2).  [clausify(2)].
+24 c2 != c1.  [clausify(2)].
+26 -Accused(x,y) | Impostor(x) | Impostor(y).  [clausify(4)].
+27 -Impostor(x) | KnowsImpostor(x,x).  [clausify(6)].
+28 -Murdered(x) | -Impostor(x).  [clausify(7)].
+29 KnowsImpostor(Purple,c3).  [clausify(8)].
+30 -KnowsImpostor(Purple,Janitor).  [clausify(9)].
+31 -KnowsImpostor(Purple,Blue).  [clausify(9)].
+32 Murdered(Purple).  [assumption].
+35 Red = Blue.  [copy(34),rewrite([33(2)])].
+36 Accused(Blue,Yellow).  [assumption].
+37 -KnowsImpostor(x,Yellow).  [clausify(11)].
+39 Impostor(Yellow) | Impostor(Purple) | Impostor(Janitor) | -Impostor(Blue).  [copy(38),rewrite([35(9)]),merge(e)].
+40 -Impostor(x) | -Impostor(y) | y = x.  [factor(25,a,b),merge(d)].
+41 -Accused(x,x) | Impostor(x).  [factor(26,b,c)].
+42 -Janitor = Blue.  [back_rewrite(33),rewrite([35(3)])].
+43 -Crewmember(x) | Blue = x | Yellow = x | Purple = x | Janitor = x.  [back_rewrite(19),rewrite([35(6)]),merge(d)].
+end_of_list.
+
+formulas(demodulators).
+35 Red = Blue.  [copy(34),rewrite([33(2)])].
+42 -Janitor = Blue.  [back_rewrite(33),rewrite([35(3)])].
+end_of_list.
+
+============================== end of clauses for search =============
+
+============================== SEARCH ================================
+
+% Starting search at 0.01 seconds.
+
+given #1 (I,wt=2): 13 Crewmember(Blue).  [clausify(1)].
+
+given #2 (I,wt=2): 14 Crewmember(Yellow).  [clausify(1)].
+
+given #3 (I,wt=2): 16 Crewmember(Purple).  [clausify(1)].
+
+given #4 (I,wt=2): 17 Crewmember(Janitor).  [clausify(1)].
+
+given #5 (I,wt=2): 20 Crewmember(c1).  [clausify(2)].
+
+given #6 (I,wt=2): 21 Crewmember(c2).  [clausify(2)].
+
+given #7 (I,wt=2): 22 Impostor(c1).  [clausify(2)].
+
+given #8 (I,wt=2): 23 Impostor(c2).  [clausify(2)].
+
+given #9 (I,wt=3): 24 c2 != c1.  [clausify(2)].
+
+given #10 (I,wt=7): 26 -Accused(x,y) | Impostor(x) | Impostor(y).  [clausify(4)].
+
+given #11 (I,wt=5): 27 -Impostor(x) | KnowsImpostor(x,x).  [clausify(6)].
+
+given #12 (I,wt=4): 28 -Murdered(x) | -Impostor(x).  [clausify(7)].
+
+given #13 (I,wt=3): 29 KnowsImpostor(Purple,c3).  [clausify(8)].
+
+given #14 (I,wt=3): 30 -KnowsImpostor(Purple,Janitor).  [clausify(9)].
+
+given #15 (I,wt=3): 31 -KnowsImpostor(Purple,Blue).  [clausify(9)].
+
+given #16 (I,wt=2): 32 Murdered(Purple).  [assumption].
+
+given #17 (I,wt=3): 35 Red = Blue.  [copy(34),rewrite([33(2)])].
+
+given #18 (I,wt=3): 36 Accused(Blue,Yellow).  [assumption].
+
+given #19 (I,wt=3): 37 -KnowsImpostor(x,Yellow).  [clausify(11)].
+
+given #20 (I,wt=8): 39 Impostor(Yellow) | Impostor(Purple) | Impostor(Janitor) | -Impostor(Blue).  [copy(38),rewrite([35(9)]),merge(e)].
+
+given #21 (I,wt=7): 40 -Impostor(x) | -Impostor(y) | y = x.  [factor(25,a,b),merge(d)].
+
+given #22 (I,wt=5): 41 -Accused(x,x) | Impostor(x).  [factor(26,b,c)].
+
+given #23 (I,wt=4): 42 -Janitor = Blue.  [back_rewrite(33),rewrite([35(3)])].
+
+given #24 (I,wt=14): 43 -Crewmember(x) | Blue = x | Yellow = x | Purple = x | Janitor = x.  [back_rewrite(19),rewrite([35(6)]),merge(d)].
+
+given #25 (A,wt=3): 44 KnowsImpostor(c2,c2).  [resolve(27,a,23,a)].
+
+given #26 (F,wt=2): 46 -Impostor(Purple).  [resolve(32,a,28,a)].
+
+given #27 (T,wt=3): 45 KnowsImpostor(c1,c1).  [resolve(27,a,22,a)].
+
+given #28 (T,wt=4): 47 Impostor(Blue) | Impostor(Yellow).  [resolve(36,a,26,a)].
+
+given #29 (T,wt=5): 48 -Impostor(x) | c2 = x.  [resolve(40,a,23,a),flip(b)].
+
+============================== PROOF =================================
+
+% Proof 1 at 0.01 (+ 0.01) seconds.
+% Length of proof is 10.
+% Level of proof is 5.
+% Maximum clause weight is 12.000.
+% Given clauses 29.
+
+2 (exists x exists y (Crewmember(x) & Crewmember(y) & Impostor(x) & Impostor(y) & x != y)) # label(non_clause).  [assumption].
+3 (all x all y all z (Impostor(x) & Impostor(y) -> (Impostor(z) -> x = z | y = z))) # label(non_clause).  [assumption].
+22 Impostor(c1).  [clausify(2)].
+23 Impostor(c2).  [clausify(2)].
+24 c2 != c1.  [clausify(2)].
+25 -Impostor(x) | -Impostor(y) | -Impostor(z) | z = x | z = y.  [clausify(3)].
+40 -Impostor(x) | -Impostor(y) | y = x.  [factor(25,a,b),merge(d)].
+48 -Impostor(x) | c2 = x.  [resolve(40,a,23,a),flip(b)].
+55 c2 = c1.  [resolve(48,a,22,a)].
+56 $F.  [resolve(55,a,24,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=29. Generated=56. Kept=40. proofs=1.
+Usable=29. Sos=5. Demods=2. Limbo=1, Disabled=29. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=16. Back_subsumed=1.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=3 (0 lex), Back_demodulated=3. Back_unit_deleted=0.
+Demod_attempts=205. Demod_rewrites=5.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=5. Nonunit_bsub_feature_tests=19.
+Megabytes=0.11.
+User_CPU=0.01, System_CPU=0.01, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+Process 42430 exit (max_proofs) Fri Oct 28 19:25:06 2022

@@ -1,0 +1,244 @@
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 42379 was started by markmuinde on MacBook-Pro.local,
+Fri Oct 28 19:22:46 2022
+The command was "prover9 -f parts_and_overlaps.in".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file parts_and_overlaps.in
+
+set(ignore_option_dependencies).
+if(Prover9).
+% Conditional input included.
+clear(auto).
+clear(auto_setup).
+clear(auto_limits).
+clear(auto_denials).
+clear(auto_inference).
+clear(auto_process).
+assign(eq_defs,pass).
+assign(max_seconds,10).
+assign(max_weight,2147483647).
+assign(sos_limit,-1).
+clear(predicate_elim).
+set(binary_resolution).
+set(paramodulation).
+set(factor).
+end_if.
+if(Mace4).
+% Conditional input omitted.
+end_if.
+
+formulas(assumptions).
+(all x Contact(x,x)).
+(all A all B (PartOf(A,B) <-> (all C (Contact(C,A) -> Contact(C,B))))).
+(all A all B (ProperPartOf(A,B) <-> PartOf(A,B) & -PartOf(B,A))).
+(all A all B (Overlaps(A,B) <-> (exists C (PartOf(C,A) & PartOf(C,B))))).
+end_of_list.
+
+formulas(goals).
+(all A all B (ProperPartOf(A,B) -> Overlaps(A,B) & Contact(A,B))).
+end_of_list.
+
+============================== end of input ==========================
+
+% Enabling option dependencies (ignore applies only on input).
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 (all x Contact(x,x)) # label(non_clause).  [assumption].
+2 (all A all B (PartOf(A,B) <-> (all C (Contact(C,A) -> Contact(C,B))))) # label(non_clause).  [assumption].
+3 (all A all B (ProperPartOf(A,B) <-> PartOf(A,B) & -PartOf(B,A))) # label(non_clause).  [assumption].
+4 (all A all B (Overlaps(A,B) <-> (exists C (PartOf(C,A) & PartOf(C,B))))) # label(non_clause).  [assumption].
+5 (all A all B (ProperPartOf(A,B) -> Overlaps(A,B) & Contact(A,B))) # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+Contact(x,x).  [clausify(1)].
+-PartOf(x,y) | -Contact(z,x) | Contact(z,y).  [clausify(2)].
+PartOf(x,y) | Contact(f1(x,y),x).  [clausify(2)].
+PartOf(x,y) | -Contact(f1(x,y),y).  [clausify(2)].
+-ProperPartOf(x,y) | PartOf(x,y).  [clausify(3)].
+-ProperPartOf(x,y) | -PartOf(y,x).  [clausify(3)].
+ProperPartOf(x,y) | -PartOf(x,y) | PartOf(y,x).  [clausify(3)].
+-Overlaps(x,y) | PartOf(f2(x,y),x).  [clausify(4)].
+-Overlaps(x,y) | PartOf(f2(x,y),y).  [clausify(4)].
+Overlaps(x,y) | -PartOf(z,x) | -PartOf(z,y).  [clausify(4)].
+ProperPartOf(c1,c2).  [deny(5)].
+-Overlaps(c1,c2) | -Contact(c1,c2).  [deny(5)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ PartOf, Contact, Overlaps, ProperPartOf ]).
+Function symbol precedence:  function_order([ c1, c2, f1, f2 ]).
+After inverse_order:  (no changes).
+
+kept:      6 Contact(x,x).  [clausify(1)].
+kept:      7 -PartOf(x,y) | -Contact(z,x) | Contact(z,y).  [clausify(2)].
+kept:      8 PartOf(x,y) | Contact(f1(x,y),x).  [clausify(2)].
+kept:      9 PartOf(x,y) | -Contact(f1(x,y),y).  [clausify(2)].
+kept:      10 -ProperPartOf(x,y) | PartOf(x,y).  [clausify(3)].
+kept:      11 -ProperPartOf(x,y) | -PartOf(y,x).  [clausify(3)].
+kept:      12 ProperPartOf(x,y) | -PartOf(x,y) | PartOf(y,x).  [clausify(3)].
+kept:      13 -Overlaps(x,y) | PartOf(f2(x,y),x).  [clausify(4)].
+kept:      14 -Overlaps(x,y) | PartOf(f2(x,y),y).  [clausify(4)].
+kept:      15 Overlaps(x,y) | -PartOf(z,x) | -PartOf(z,y).  [clausify(4)].
+kept:      16 ProperPartOf(c1,c2).  [deny(5)].
+kept:      17 -Overlaps(c1,c2) | -Contact(c1,c2).  [deny(5)].
+kept:      18 Overlaps(x,x) | -PartOf(y,x).  [factor(15,b,c)].
+
+============================== end of process initial clauses ========
+
+============================== CLAUSES FOR SEARCH ====================
+
+% Clauses after input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+6 Contact(x,x).  [clausify(1)].
+7 -PartOf(x,y) | -Contact(z,x) | Contact(z,y).  [clausify(2)].
+8 PartOf(x,y) | Contact(f1(x,y),x).  [clausify(2)].
+9 PartOf(x,y) | -Contact(f1(x,y),y).  [clausify(2)].
+10 -ProperPartOf(x,y) | PartOf(x,y).  [clausify(3)].
+11 -ProperPartOf(x,y) | -PartOf(y,x).  [clausify(3)].
+12 ProperPartOf(x,y) | -PartOf(x,y) | PartOf(y,x).  [clausify(3)].
+13 -Overlaps(x,y) | PartOf(f2(x,y),x).  [clausify(4)].
+14 -Overlaps(x,y) | PartOf(f2(x,y),y).  [clausify(4)].
+15 Overlaps(x,y) | -PartOf(z,x) | -PartOf(z,y).  [clausify(4)].
+16 ProperPartOf(c1,c2).  [deny(5)].
+17 -Overlaps(c1,c2) | -Contact(c1,c2).  [deny(5)].
+18 Overlaps(x,x) | -PartOf(y,x).  [factor(15,b,c)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== end of clauses for search =============
+
+============================== SEARCH ================================
+
+% Starting search at 0.01 seconds.
+
+given #1 (I,wt=3): 6 Contact(x,x).  [clausify(1)].
+
+given #2 (I,wt=9): 7 -PartOf(x,y) | -Contact(z,x) | Contact(z,y).  [clausify(2)].
+
+given #3 (I,wt=8): 8 PartOf(x,y) | Contact(f1(x,y),x).  [clausify(2)].
+
+given #4 (I,wt=8): 9 PartOf(x,y) | -Contact(f1(x,y),y).  [clausify(2)].
+
+given #5 (I,wt=6): 10 -ProperPartOf(x,y) | PartOf(x,y).  [clausify(3)].
+
+given #6 (I,wt=6): 11 -ProperPartOf(x,y) | -PartOf(y,x).  [clausify(3)].
+
+given #7 (I,wt=9): 12 ProperPartOf(x,y) | -PartOf(x,y) | PartOf(y,x).  [clausify(3)].
+
+given #8 (I,wt=8): 13 -Overlaps(x,y) | PartOf(f2(x,y),x).  [clausify(4)].
+
+given #9 (I,wt=8): 14 -Overlaps(x,y) | PartOf(f2(x,y),y).  [clausify(4)].
+
+given #10 (I,wt=9): 15 Overlaps(x,y) | -PartOf(z,x) | -PartOf(z,y).  [clausify(4)].
+
+given #11 (I,wt=3): 16 ProperPartOf(c1,c2).  [deny(5)].
+
+given #12 (I,wt=6): 17 -Overlaps(c1,c2) | -Contact(c1,c2).  [deny(5)].
+
+given #13 (I,wt=6): 18 Overlaps(x,x) | -PartOf(y,x).  [factor(15,b,c)].
+
+given #14 (A,wt=6): 19 -PartOf(x,y) | Contact(x,y).  [resolve(7,b,6,a)].
+
+given #15 (F,wt=3): 22 -PartOf(c2,c1).  [resolve(16,a,11,a)].
+
+given #16 (T,wt=3): 21 PartOf(x,x).  [resolve(9,b,8,b),merge(b)].
+
+given #17 (T,wt=3): 23 PartOf(c1,c2).  [resolve(16,a,10,a)].
+
+given #18 (T,wt=3): 24 Overlaps(x,x).  [resolve(21,a,18,b)].
+
+given #19 (T,wt=3): 27 Contact(c1,c2).  [resolve(23,a,19,a)].
+
+given #20 (A,wt=11): 20 PartOf(x,y) | -PartOf(x,z) | Contact(f1(x,y),z).  [resolve(8,b,7,b)].
+
+given #21 (T,wt=5): 30 PartOf(f2(x,x),x).  [resolve(24,a,14,a)].
+
+given #22 (T,wt=5): 34 Contact(f2(x,x),x).  [resolve(30,a,19,a)].
+
+given #23 (T,wt=6): 25 Overlaps(x,y) | -PartOf(y,x).  [resolve(21,a,15,c)].
+
+given #24 (T,wt=3): 40 Overlaps(c2,c1).  [resolve(25,b,23,a)].
+
+given #25 (A,wt=6): 26 Overlaps(x,y) | -PartOf(x,y).  [resolve(21,a,15,b)].
+
+given #26 (T,wt=3): 44 Overlaps(c1,c2).  [resolve(26,b,23,a)].
+
+============================== PROOF =================================
+
+% Proof 1 at 0.01 (+ 0.01) seconds.
+% Length of proof is 21.
+% Level of proof is 6.
+% Maximum clause weight is 9.000.
+% Given clauses 26.
+
+1 (all x Contact(x,x)) # label(non_clause).  [assumption].
+2 (all A all B (PartOf(A,B) <-> (all C (Contact(C,A) -> Contact(C,B))))) # label(non_clause).  [assumption].
+3 (all A all B (ProperPartOf(A,B) <-> PartOf(A,B) & -PartOf(B,A))) # label(non_clause).  [assumption].
+4 (all A all B (Overlaps(A,B) <-> (exists C (PartOf(C,A) & PartOf(C,B))))) # label(non_clause).  [assumption].
+5 (all A all B (ProperPartOf(A,B) -> Overlaps(A,B) & Contact(A,B))) # label(non_clause) # label(goal).  [goal].
+6 Contact(x,x).  [clausify(1)].
+7 -PartOf(x,y) | -Contact(z,x) | Contact(z,y).  [clausify(2)].
+8 PartOf(x,y) | Contact(f1(x,y),x).  [clausify(2)].
+9 PartOf(x,y) | -Contact(f1(x,y),y).  [clausify(2)].
+10 -ProperPartOf(x,y) | PartOf(x,y).  [clausify(3)].
+15 Overlaps(x,y) | -PartOf(z,x) | -PartOf(z,y).  [clausify(4)].
+16 ProperPartOf(c1,c2).  [deny(5)].
+17 -Overlaps(c1,c2) | -Contact(c1,c2).  [deny(5)].
+19 -PartOf(x,y) | Contact(x,y).  [resolve(7,b,6,a)].
+21 PartOf(x,x).  [resolve(9,b,8,b),merge(b)].
+23 PartOf(c1,c2).  [resolve(16,a,10,a)].
+26 Overlaps(x,y) | -PartOf(x,y).  [resolve(21,a,15,b)].
+27 Contact(c1,c2).  [resolve(23,a,19,a)].
+44 Overlaps(c1,c2).  [resolve(26,b,23,a)].
+45 -Contact(c1,c2).  [resolve(44,a,17,a)].
+46 $F.  [resolve(45,a,27,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=26. Generated=47. Kept=40. proofs=1.
+Usable=25. Sos=13. Demods=0. Limbo=0, Disabled=13. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=7. Back_subsumed=1.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=0 (0 lex), Back_demodulated=0. Back_unit_deleted=0.
+Demod_attempts=0. Demod_rewrites=0.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=21. Nonunit_bsub_feature_tests=52.
+Megabytes=0.09.
+User_CPU=0.01, System_CPU=0.01, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+Process 42379 exit (max_proofs) Fri Oct 28 19:22:46 2022

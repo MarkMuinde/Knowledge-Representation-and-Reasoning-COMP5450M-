@@ -1,0 +1,128 @@
+
+% Saved by Prover9-Mace4 Version 0.5, December 2007.
+% Last line is a lie. It is there to stop the Prover9-Mace4
+% GUI giving a warning when the file is loaded.
+% This file was actually reated by BB Prover9 Autograder
+
+set(ignore_option_dependencies). % GUI handles dependencies
+
+if(Prover9). % Options for Prover9
+  clear(auto).
+  clear(auto_setup).
+  clear(auto_limits).
+  clear(auto_denials).
+  clear(auto_inference).
+  clear(auto_process).
+  assign(eq_defs, pass).
+  assign(max_seconds, 10).
+  assign(max_weight, 2147483647).
+  assign(sos_limit, -1).
+  clear(predicate_elim).
+  set(binary_resolution).
+  set(paramodulation).
+  set(factor).
+end_if.
+
+if(Mace4).   % Options for Mace4
+  assign(max_seconds, 60).
+end_if.
+
+formulas(assumptions).
+
+%% Honey Crumpets
+%% A logic problem by Brandon Bennett
+%%
+%% Prover9 file: honey_crumpets.p9
+
+%% To solve this first-order logic proof problem, you must replace
+%% each of the assumption place-holders __An__ and the goal place-holder
+%% __G__, with an approapriate first-order formula that captures the
+%% meaning of the given English sentence.
+%%
+%% Then run Prover9.
+%% If your representations are correct, it should find a Proof.
+%% You can also check your representations using the Gradescope Autograder.
+
+%% In writing the formulae, you should only use the following vocabulary:
+%%
+%% Logical symbols:           &  |  -  ->   <->  =  all  exists
+%% Brackets and separators:   ( )  [  ]  ,  .
+%% Variables:                 Whatever you like, but must be quantified.
+%%
+%% Predicates: Honey, Butter, NextTo, Diagonal, Ate
+
+%%
+%% Use only the specified vocabulary, otherwise the autograder will not work.
+
+
+
+%% A1: "All crumpets have butter or honey on them."
+
+        all x (Honey(x) | Butter(x)).
+
+%% A2: "No crumpet has both honey and butter."
+
+        all x (-(Honey(x) & Butter (x))).
+
+%% A3: "There are exactly two honey crumpets."
+
+        exists x exists y all z (Honey(x) & Honey(y) & -(x=y) & (Honey(z) -> (x=z | y=z))).
+
+%% A4: "There are exactly two buttered crumpets."
+
+        exists x exists y all z (Butter(x) & Butter(y) & -(x=y) & (Butter(z) -> (x=z | y=z))).
+
+%% A5: "Any two different crumpets are either next to each other or diagonally opposite."
+
+        all x all y (-(x=y) -> (NextTo(x,y) | Diagonal (x,y))).
+
+%% A6: "No two crumpets are next to each other and diagonally opposite."
+
+        all x all y (-(NextTo(x,y) & Diagonal (x,y))).
+
+%% A7: "No crumpet is next to itself."
+
+        all x (-(NextTo(x,x))).
+
+%% A8: "No crumpet is diagonally opposite itself"
+
+        all x (-(Diagonal(x,x))).
+
+%% A9: "If any crumpet A is next to any crumpet B then B is also next to A."
+
+        all x all y (NextTo(x,y) <-> NextTo (y,x)).
+
+%% A10: "If any crumpet A is diagonally opposite any crumpet B then B is also diagonally opposite A."
+
+        all x all y (Diagonal(x,y) <-> Diagonal(y,x)).
+
+%% A11: "Every crumpet is diagonally opposite another crumpet."
+
+        all x exists y (Diagonal(x,y)).
+
+%% A12: "Every crumpet is next to two different crumpets."
+
+        all x exists y exists z (-(y=z) & NextTo(x,y) & NextTo(x,z)).
+
+%% A13: "There are two honey crumpets which are next to each other."
+
+        exists x exists y (NextTo(x,y) & Honey(x) & Honey(y)).
+
+%% A14: "If a crumpet A is diagonally opposite another crumpet B, and B is diagonally opposite another crumpet C, then A is C."
+
+        all x all y all z ((Diagonal(x,y) & Diagonal(y,z)) -> x=z).
+
+%% A15: "I ate two diagonally opposite crumpets."
+
+        exists x exists y (Ate(x) & Ate (y) & Diagonal (x,y)).
+
+
+end_of_list.
+
+formulas(goals).
+
+%% GOAL: "I ate a honey crumpet."
+
+          exists x (Ate(x) & Honey (x)).
+
+end_of_list.

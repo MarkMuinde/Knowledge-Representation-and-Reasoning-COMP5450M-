@@ -1,0 +1,110 @@
+
+% Saved by Prover9-Mace4 Version 0.5, December 2007.
+% Last line is a lie. It is there to stop the Prover9-Mace4
+% GUI giving a warning when the file is loaded.
+% This file was actually reated by BB Prover9 Autograder
+
+set(ignore_option_dependencies). % GUI handles dependencies
+
+if(Prover9). % Options for Prover9
+  clear(auto).
+  clear(auto_setup).
+  clear(auto_limits).
+  clear(auto_denials).
+  clear(auto_inference).
+  clear(auto_process).
+  assign(eq_defs, pass).
+  assign(max_seconds, 10).
+  assign(max_weight, 2147483647).
+  assign(sos_limit, -1).
+  clear(predicate_elim).
+  set(binary_resolution).
+  set(paramodulation).
+  set(factor).
+end_if.
+
+if(Mace4).   % Options for Mace4
+  assign(max_seconds, 60).
+end_if.
+
+formulas(assumptions).
+
+%% Sunny Farm
+%% A logic problem by Brandon Bennett (September 2022)
+%%
+%% Prover9 file: sunny_farm.p9
+
+%% To solve this first-order logic proof problem, you must replace
+%% each of the assumption place-holders __An__ and the goal place-holder
+%% __G__, with an approapriate first-order formula that captures the
+%% meaning of the given English sentence.
+%%
+%% Then run Prover9.
+%% If your representations are correct, it should find a Proof.
+%% You can also check your representations using the Gradescope Autograder.
+
+%% In writing the formulae, you should only use the following vocabulary:
+%%
+%% Logical symbols:           &  |  -  ->   <->  =  all  exists
+%% Brackets and separators:   ( )  [  ]  ,  .
+%% Variables:                 Whatever you like, but must be quantified.
+%%
+%% Names: cheeky, sweety, sunny_farm
+%% Properties: Animal, Carnivore, Lamb, Weasel, Lucky, Grumpy, Friendly
+%% Relations: LivesAt, Helps, LikesToEat, =
+
+%%
+%% Use only the specified vocabulary, otherwise the autograder will not work.
+
+
+
+%% A1: "Every friendly animal helps every other friendly animal."
+
+        all x all y (Friendly(x) & Animal(x) & Friendly(y) & Animal(y) & -(x=y) <-> Helps(x,y)).
+
+%% A2: "All weasels like to eat any lamb."
+
+        all x all y (Weasel(x) & Lamb(y) -> LikesToEat (x,y)).
+
+%% A3: "No carnivores live at Sunny Farm."
+
+        all x (Carnivore(x) <-> -LivesAt(x, sunny_farm)).
+
+%% A4: "Cheeky and Sweety are two lambs who live at Sunny Farm."
+
+        Lamb(cheeky) & Lamb (sweety) & LivesAt(cheeky, sunny_farm) & LivesAt(sweety, sunny_farm) & -(cheeky=sweety).
+
+%% A5: "All animals that are helped by another animal are lucky."
+
+        all x all y ((Animal(x) & Animal(y) & Helps (y,x) & -(x=y)) -> Lucky (x)).
+
+%% A6: "There are at least three animals living at Sunny Farm."
+
+        exists x exists y exists z (Animal(x) & Animal(y) & Animal(z) & -(x=y) & -(y=z) & -(x=z) & LivesAt(x,sunny_farm) & LivesAt (y, sunny_farm) & LivesAt (z, sunny_farm)).
+
+%% A7: "The only animals living at Sunny Farm who are neither friendly nor grumpy are weasels."
+
+        all x (( Animal(x) & LivesAt (x, sunny_farm) & -Friendly(x) & -Grumpy(x)) <-> Weasel(x)).
+
+%% A8: "Not more than one grumpy animal lives at Sunny Farm."
+
+        all x all y ((Grumpy(x) & Animal(x) & LivesAt (x, sunny_farm) & Grumpy(y) & Animal(y) & LivesAt (y, sunny_farm)) -> (x=y)).
+
+%% A9: "Lambs are non-carnivorous animals."
+
+        all x (Lamb(x) <-> Animal(x) & -Carnivore(x)).
+
+%% A10: "The definition of 'carnivore' is an animal that likes to eat some other animal."
+
+        all x all y (Animal(x) & Animal(y) & -(x=y) & LikesToEat(x,y) <-> Carnivore(x)).
+
+
+end_of_list.
+
+formulas(goals).
+
+%% GOAL: "A lucky lamb lives at Sunny Farm."
+
+          exists x (Lamb(x) & Lucky(x) & LivesAt (x, sunny_farm)).
+
+end_of_list.

@@ -1,0 +1,2640 @@
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 42382 was started by markmuinde on MacBook-Pro.local,
+Fri Oct 28 19:23:27 2022
+The command was "prover9 -f honey_crumpets.in".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file honey_crumpets.in
+
+set(ignore_option_dependencies).
+if(Prover9).
+% Conditional input included.
+clear(auto).
+clear(auto_setup).
+clear(auto_limits).
+clear(auto_denials).
+clear(auto_inference).
+clear(auto_process).
+assign(eq_defs,pass).
+assign(max_seconds,10).
+assign(max_weight,2147483647).
+assign(sos_limit,-1).
+clear(predicate_elim).
+set(binary_resolution).
+set(paramodulation).
+set(factor).
+end_if.
+if(Mace4).
+% Conditional input omitted.
+end_if.
+
+formulas(assumptions).
+(all x (Honey(x) | Butter(x))).
+(all x -(Honey(x) & Butter(x))).
+(exists x exists y all z (Honey(x) & Honey(y) & x != y & (Honey(z) -> x = z | y = z))).
+(exists x exists y all z (Butter(x) & Butter(y) & x != y & (Butter(z) -> x = z | y = z))).
+(all x all y (x != y -> NextTo(x,y) | Diagonal(x,y))).
+(all x all y -(NextTo(x,y) & Diagonal(x,y))).
+(all x -NextTo(x,x)).
+(all x -Diagonal(x,x)).
+(all x all y (NextTo(x,y) <-> NextTo(y,x))).
+(all x all y (Diagonal(x,y) <-> Diagonal(y,x))).
+(all x exists y Diagonal(x,y)).
+(all x exists y exists z (y != z & NextTo(x,y) & NextTo(x,z))).
+(exists x exists y (NextTo(x,y) & Honey(x) & Honey(y))).
+(all x all y all z (Diagonal(x,y) & Diagonal(y,z) -> x = z)).
+(exists x exists y (Ate(x) & Ate(y) & Diagonal(x,y))).
+end_of_list.
+
+formulas(goals).
+(exists x (Ate(x) & Honey(x))).
+end_of_list.
+
+============================== end of input ==========================
+
+% Enabling option dependencies (ignore applies only on input).
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 (all x (Honey(x) | Butter(x))) # label(non_clause).  [assumption].
+2 (all x -(Honey(x) & Butter(x))) # label(non_clause).  [assumption].
+3 (exists x exists y all z (Honey(x) & Honey(y) & x != y & (Honey(z) -> x = z | y = z))) # label(non_clause).  [assumption].
+4 (exists x exists y all z (Butter(x) & Butter(y) & x != y & (Butter(z) -> x = z | y = z))) # label(non_clause).  [assumption].
+5 (all x all y (x != y -> NextTo(x,y) | Diagonal(x,y))) # label(non_clause).  [assumption].
+6 (all x all y -(NextTo(x,y) & Diagonal(x,y))) # label(non_clause).  [assumption].
+7 (all x -NextTo(x,x)) # label(non_clause).  [assumption].
+8 (all x -Diagonal(x,x)) # label(non_clause).  [assumption].
+9 (all x all y (NextTo(x,y) <-> NextTo(y,x))) # label(non_clause).  [assumption].
+10 (all x all y (Diagonal(x,y) <-> Diagonal(y,x))) # label(non_clause).  [assumption].
+11 (all x exists y Diagonal(x,y)) # label(non_clause).  [assumption].
+12 (all x exists y exists z (y != z & NextTo(x,y) & NextTo(x,z))) # label(non_clause).  [assumption].
+13 (exists x exists y (NextTo(x,y) & Honey(x) & Honey(y))) # label(non_clause).  [assumption].
+14 (all x all y all z (Diagonal(x,y) & Diagonal(y,z) -> x = z)) # label(non_clause).  [assumption].
+15 (exists x exists y (Ate(x) & Ate(y) & Diagonal(x,y))) # label(non_clause).  [assumption].
+16 (exists x (Ate(x) & Honey(x))) # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+Honey(x) | Butter(x).  [clausify(1)].
+-Honey(x) | -Butter(x).  [clausify(2)].
+Honey(c1).  [clausify(3)].
+Honey(c2).  [clausify(3)].
+c2 != c1.  [clausify(3)].
+-Honey(x) | x = c1 | x = c2.  [clausify(3)].
+Butter(c3).  [clausify(4)].
+Butter(c4).  [clausify(4)].
+c4 != c3.  [clausify(4)].
+-Butter(x) | x = c3 | x = c4.  [clausify(4)].
+x = y | NextTo(y,x) | Diagonal(y,x).  [clausify(5)].
+-NextTo(x,y) | -Diagonal(x,y).  [clausify(6)].
+-NextTo(x,x).  [clausify(7)].
+-Diagonal(x,x).  [clausify(8)].
+-NextTo(x,y) | NextTo(y,x).  [clausify(9)].
+NextTo(x,y) | -NextTo(y,x).  [clausify(9)].
+-Diagonal(x,y) | Diagonal(y,x).  [clausify(10)].
+Diagonal(x,y) | -Diagonal(y,x).  [clausify(10)].
+Diagonal(x,f1(x)).  [clausify(11)].
+f3(x) != f2(x).  [clausify(12)].
+NextTo(x,f2(x)).  [clausify(12)].
+NextTo(x,f3(x)).  [clausify(12)].
+NextTo(c5,c6).  [clausify(13)].
+Honey(c5).  [clausify(13)].
+Honey(c6).  [clausify(13)].
+-Diagonal(x,y) | -Diagonal(y,z) | z = x.  [clausify(14)].
+Ate(c7).  [clausify(15)].
+Ate(c8).  [clausify(15)].
+Diagonal(c7,c8).  [clausify(15)].
+-Ate(x) | -Honey(x).  [deny(16)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ =, Honey, Butter, Ate, Diagonal, NextTo ]).
+Function symbol precedence:  function_order([ c1, c2, c3, c4, c5, c6, c7, c8, f1, f2, f3 ]).
+After inverse_order:  (no changes).
+
+kept:      17 Honey(x) | Butter(x).  [clausify(1)].
+kept:      18 -Honey(x) | -Butter(x).  [clausify(2)].
+kept:      19 Honey(c1).  [clausify(3)].
+kept:      20 Honey(c2).  [clausify(3)].
+kept:      21 c2 != c1.  [clausify(3)].
+           22 -Honey(x) | x = c1 | x = c2.  [clausify(3)].
+kept:      23 -Honey(x) | c1 = x | c2 = x.  [copy(22),flip(b),flip(c)].
+kept:      24 Butter(c3).  [clausify(4)].
+kept:      25 Butter(c4).  [clausify(4)].
+kept:      26 c4 != c3.  [clausify(4)].
+           27 -Butter(x) | x = c3 | x = c4.  [clausify(4)].
+kept:      28 -Butter(x) | c3 = x | c4 = x.  [copy(27),flip(b),flip(c)].
+kept:      29 x = y | NextTo(y,x) | Diagonal(y,x).  [clausify(5)].
+kept:      30 -NextTo(x,y) | -Diagonal(x,y).  [clausify(6)].
+kept:      31 -NextTo(x,x).  [clausify(7)].
+kept:      32 -Diagonal(x,x).  [clausify(8)].
+kept:      33 -NextTo(x,y) | NextTo(y,x).  [clausify(9)].
+kept:      34 -Diagonal(x,y) | Diagonal(y,x).  [clausify(10)].
+kept:      35 Diagonal(x,f1(x)).  [clausify(11)].
+kept:      36 f3(x) != f2(x).  [clausify(12)].
+kept:      37 NextTo(x,f2(x)).  [clausify(12)].
+kept:      38 NextTo(x,f3(x)).  [clausify(12)].
+kept:      39 NextTo(c5,c6).  [clausify(13)].
+kept:      40 Honey(c5).  [clausify(13)].
+kept:      41 Honey(c6).  [clausify(13)].
+kept:      42 -Diagonal(x,y) | -Diagonal(y,z) | z = x.  [clausify(14)].
+kept:      43 Ate(c7).  [clausify(15)].
+kept:      44 Ate(c8).  [clausify(15)].
+kept:      45 Diagonal(c7,c8).  [clausify(15)].
+kept:      46 -Ate(x) | -Honey(x).  [deny(16)].
+
+============================== end of process initial clauses ========
+
+============================== CLAUSES FOR SEARCH ====================
+
+% Clauses after input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+17 Honey(x) | Butter(x).  [clausify(1)].
+18 -Honey(x) | -Butter(x).  [clausify(2)].
+19 Honey(c1).  [clausify(3)].
+20 Honey(c2).  [clausify(3)].
+21 c2 != c1.  [clausify(3)].
+23 -Honey(x) | c1 = x | c2 = x.  [copy(22),flip(b),flip(c)].
+24 Butter(c3).  [clausify(4)].
+25 Butter(c4).  [clausify(4)].
+26 c4 != c3.  [clausify(4)].
+28 -Butter(x) | c3 = x | c4 = x.  [copy(27),flip(b),flip(c)].
+29 x = y | NextTo(y,x) | Diagonal(y,x).  [clausify(5)].
+30 -NextTo(x,y) | -Diagonal(x,y).  [clausify(6)].
+31 -NextTo(x,x).  [clausify(7)].
+32 -Diagonal(x,x).  [clausify(8)].
+33 -NextTo(x,y) | NextTo(y,x).  [clausify(9)].
+34 -Diagonal(x,y) | Diagonal(y,x).  [clausify(10)].
+35 Diagonal(x,f1(x)).  [clausify(11)].
+36 f3(x) != f2(x).  [clausify(12)].
+37 NextTo(x,f2(x)).  [clausify(12)].
+38 NextTo(x,f3(x)).  [clausify(12)].
+39 NextTo(c5,c6).  [clausify(13)].
+40 Honey(c5).  [clausify(13)].
+41 Honey(c6).  [clausify(13)].
+42 -Diagonal(x,y) | -Diagonal(y,z) | z = x.  [clausify(14)].
+43 Ate(c7).  [clausify(15)].
+44 Ate(c8).  [clausify(15)].
+45 Diagonal(c7,c8).  [clausify(15)].
+46 -Ate(x) | -Honey(x).  [deny(16)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== end of clauses for search =============
+
+============================== SEARCH ================================
+
+% Starting search at 0.01 seconds.
+
+given #1 (I,wt=4): 17 Honey(x) | Butter(x).  [clausify(1)].
+
+given #2 (I,wt=4): 18 -Honey(x) | -Butter(x).  [clausify(2)].
+
+given #3 (I,wt=2): 19 Honey(c1).  [clausify(3)].
+
+given #4 (I,wt=2): 20 Honey(c2).  [clausify(3)].
+
+given #5 (I,wt=3): 21 c2 != c1.  [clausify(3)].
+
+given #6 (I,wt=8): 23 -Honey(x) | c1 = x | c2 = x.  [copy(22),flip(b),flip(c)].
+
+given #7 (I,wt=2): 24 Butter(c3).  [clausify(4)].
+
+given #8 (I,wt=2): 25 Butter(c4).  [clausify(4)].
+
+given #9 (I,wt=3): 26 c4 != c3.  [clausify(4)].
+
+given #10 (I,wt=8): 28 -Butter(x) | c3 = x | c4 = x.  [copy(27),flip(b),flip(c)].
+
+given #11 (I,wt=9): 29 x = y | NextTo(y,x) | Diagonal(y,x).  [clausify(5)].
+
+given #12 (I,wt=6): 30 -NextTo(x,y) | -Diagonal(x,y).  [clausify(6)].
+
+given #13 (I,wt=3): 31 -NextTo(x,x).  [clausify(7)].
+
+given #14 (I,wt=3): 32 -Diagonal(x,x).  [clausify(8)].
+
+given #15 (I,wt=6): 33 -NextTo(x,y) | NextTo(y,x).  [clausify(9)].
+
+given #16 (I,wt=6): 34 -Diagonal(x,y) | Diagonal(y,x).  [clausify(10)].
+
+given #17 (I,wt=4): 35 Diagonal(x,f1(x)).  [clausify(11)].
+
+given #18 (I,wt=5): 36 f3(x) != f2(x).  [clausify(12)].
+
+given #19 (I,wt=4): 37 NextTo(x,f2(x)).  [clausify(12)].
+
+given #20 (I,wt=4): 38 NextTo(x,f3(x)).  [clausify(12)].
+
+given #21 (I,wt=3): 39 NextTo(c5,c6).  [clausify(13)].
+
+given #22 (I,wt=2): 40 Honey(c5).  [clausify(13)].
+
+given #23 (I,wt=2): 41 Honey(c6).  [clausify(13)].
+
+given #24 (I,wt=9): 42 -Diagonal(x,y) | -Diagonal(y,z) | z = x.  [clausify(14)].
+
+given #25 (I,wt=2): 43 Ate(c7).  [clausify(15)].
+
+given #26 (I,wt=2): 44 Ate(c8).  [clausify(15)].
+
+given #27 (I,wt=3): 45 Diagonal(c7,c8).  [clausify(15)].
+
+given #28 (I,wt=4): 46 -Ate(x) | -Honey(x).  [deny(16)].
+
+given #29 (A,wt=2): 47 -Honey(c3).  [resolve(24,a,18,b)].
+
+given #30 (F,wt=2): 48 -Honey(c4).  [resolve(25,a,18,b)].
+
+given #31 (F,wt=2): 65 -Honey(c8).  [resolve(46,a,44,a)].
+
+given #32 (F,wt=2): 66 -Honey(c7).  [resolve(46,a,43,a)].
+
+given #33 (F,wt=3): 57 -Diagonal(c5,c6).  [resolve(39,a,30,a)].
+
+given #34 (T,wt=3): 56 NextTo(c6,c5).  [resolve(39,a,33,a)].
+
+given #35 (T,wt=3): 64 Diagonal(c8,c7).  [resolve(45,a,34,a)].
+
+given #36 (T,wt=4): 51 Diagonal(f1(x),x).  [resolve(35,a,34,a)].
+
+given #37 (T,wt=4): 52 NextTo(f2(x),x).  [resolve(37,a,33,a)].
+
+given #38 (A,wt=8): 49 c3 = x | c4 = x | Honey(x).  [resolve(28,a,17,b)].
+
+given #39 (F,wt=3): 67 -Diagonal(c6,c5).  [resolve(56,a,30,a)].
+
+given #40 (F,wt=4): 53 -Diagonal(x,f2(x)).  [resolve(37,a,30,a)].
+
+given #41 (F,wt=4): 55 -Diagonal(x,f3(x)).  [resolve(38,a,30,a)].
+
+given #42 (F,wt=4): 72 -Diagonal(f2(x),x).  [resolve(52,a,30,a)].
+
+given #43 (T,wt=4): 54 NextTo(f3(x),x).  [resolve(38,a,33,a)].
+
+given #44 (T,wt=6): 58 c5 = c1 | c5 = c2.  [resolve(40,a,23,a),flip(a),flip(b)].
+
+given #45 (T,wt=6): 59 c6 = c1 | c6 = c2.  [resolve(41,a,23,a),flip(a),flip(b)].
+
+given #46 (T,wt=6): 62 -Diagonal(x,c7) | c8 = x.  [resolve(45,a,42,b)].
+
+given #47 (A,wt=9): 50 NextTo(x,y) | x = y | Diagonal(y,x).  [resolve(33,a,29,b)].
+
+given #48 (F,wt=4): 76 -Diagonal(f3(x),x).  [resolve(54,a,30,a)].
+
+given #49 (T,wt=4): 85 f1(c7) = c8.  [resolve(62,a,51,a),flip(a)].
+
+given #50 (T,wt=6): 63 -Diagonal(c8,x) | c7 = x.  [resolve(45,a,42,a),flip(b)].
+
+given #51 (T,wt=4): 86 f1(c8) = c7.  [resolve(63,a,35,a),flip(a)].
+
+given #52 (T,wt=6): 68 -Diagonal(x,c8) | c7 = x.  [resolve(64,a,42,b)].
+
+given #53 (A,wt=7): 60 -Diagonal(f1(x),y) | y = x.  [resolve(42,a,35,a)].
+
+given #54 (T,wt=5): 87 f1(f1(x)) = x.  [resolve(60,a,35,a)].
+
+given #55 (T,wt=6): 69 -Diagonal(c7,x) | c8 = x.  [resolve(64,a,42,a),flip(b)].
+
+given #56 (T,wt=6): 73 c7 = c3 | c7 = c4.  [resolve(49,c,66,a),flip(a),flip(b)].
+
+given #57 (T,wt=5): 88 c7 = c3 | Ate(c4).  [para(73(b,1),43(a,1))].
+
+given #58 (A,wt=7): 61 -Diagonal(x,y) | f1(y) = x.  [resolve(42,b,35,a)].
+
+given #59 (T,wt=6): 74 c8 = c3 | c8 = c4.  [resolve(49,c,65,a),flip(a),flip(b)].
+
+given #60 (T,wt=5): 94 c8 = c3 | Ate(c4).  [para(74(b,1),44(a,1))].
+
+given #61 (T,wt=6): 77 c5 = c1 | NextTo(c2,c6).  [para(58(b,1),39(a,1))].
+
+given #62 (T,wt=6): 78 c5 = c1 | -Diagonal(c2,c6).  [para(58(b,1),57(a,1))].
+
+given #63 (A,wt=7): 70 -Diagonal(x,f1(y)) | y = x.  [resolve(51,a,42,b)].
+
+given #64 (T,wt=6): 79 c5 = c1 | NextTo(c6,c2).  [para(58(b,1),56(a,2))].
+
+given #65 (T,wt=6): 80 c5 = c1 | -Diagonal(c6,c2).  [para(58(b,1),67(a,2))].
+
+given #66 (T,wt=6): 81 c6 = c1 | NextTo(c5,c2).  [para(59(b,1),39(a,2))].
+
+given #67 (T,wt=6): 82 c6 = c1 | -Diagonal(c5,c2).  [para(59(b,1),57(a,2))].
+
+given #68 (A,wt=7): 71 -Diagonal(x,y) | f1(x) = y.  [resolve(51,a,42,a),flip(b)].
+
+given #69 (T,wt=6): 83 c6 = c1 | NextTo(c2,c5).  [para(59(b,1),56(a,1))].
+
+given #70 (T,wt=6): 84 c6 = c1 | -Diagonal(c2,c5).  [para(59(b,1),67(a,1))].
+
+given #71 (T,wt=6): 89 c7 = c3 | Diagonal(c4,c8).  [para(73(b,1),45(a,1))].
+
+given #72 (T,wt=6): 90 c7 = c3 | Diagonal(c8,c4).  [para(73(b,1),64(a,2))].
+
+given #73 (A,wt=12): 75 c3 = x | c4 = x | c1 = x | c2 = x.  [resolve(49,c,23,a)].
+
+given #74 (T,wt=6): 95 c8 = c3 | Diagonal(c7,c4).  [para(74(b,1),45(a,2))].
+
+given #75 (T,wt=6): 96 c8 = c3 | Diagonal(c4,c7).  [para(74(b,1),64(a,1))].
+
+given #76 (T,wt=7): 92 c7 = c3 | f1(c4) = c8.  [para(73(b,1),85(a,1,1))].
+
+given #77 (T,wt=7): 98 c8 = c3 | f1(c4) = c7.  [para(74(b,1),86(a,1,1))].
+
+given #78 (A,wt=9): 91 c7 = c3 | -Diagonal(x,c4) | c8 = x.  [para(73(b,1),62(a,2))].
+
+given #79 (T,wt=9): 93 c7 = c3 | -Diagonal(c4,x) | c8 = x.  [para(73(b,1),69(a,1))].
+
+given #80 (T,wt=9): 97 c8 = c3 | -Diagonal(c4,x) | c7 = x.  [para(74(b,1),63(a,1))].
+
+given #81 (T,wt=9): 99 c8 = c3 | -Diagonal(x,c4) | c7 = x.  [para(74(b,1),68(a,2))].
+
+given #82 (T,wt=9): 100 c6 = c1 | c5 = c1 | NextTo(c2,c2).  [para(59(b,1),77(b,2))].
+
+given #83 (A,wt=9): 101 c7 = c3 | -Diagonal(c8,x) | c4 = x.  [resolve(89,b,42,a),flip(c)].
+
+given #84 (T,wt=6): 142 c6 = c1 | c5 = c1.  [resolve(100,c,31,a)].
+
+given #85 (T,wt=6): 144 c5 = c1 | NextTo(c5,c1).  [para(142(a,1),39(a,2))].
+
+given #86 (T,wt=6): 145 c5 = c1 | -Diagonal(c5,c1).  [para(142(a,1),57(a,2))].
+
+given #87 (T,wt=6): 146 c5 = c1 | NextTo(c1,c5).  [para(142(a,1),56(a,1))].
+
+given #88 (A,wt=9): 102 c8 = c3 | c7 = c3 | Diagonal(c4,c4).  [para(74(b,1),89(b,2))].
+
+given #89 (T,wt=6): 147 c5 = c1 | -Diagonal(c1,c5).  [para(142(a,1),67(a,1))].
+
+given #90 (T,wt=6): 148 c5 = c1 | NextTo(c2,c1).  [para(142(a,1),77(b,2)),merge(b)].
+
+given #91 (T,wt=6): 149 c5 = c1 | -Diagonal(c2,c1).  [para(142(a,1),78(b,2)),merge(b)].
+
+given #92 (T,wt=6): 150 c5 = c1 | NextTo(c1,c2).  [para(142(a,1),79(b,1)),merge(b)].
+
+given #93 (A,wt=9): 103 c7 = c3 | -Diagonal(x,c8) | c4 = x.  [resolve(90,b,42,b)].
+
+given #94 (T,wt=6): 151 c5 = c1 | -Diagonal(c1,c2).  [para(142(a,1),80(b,1)),merge(b)].
+
+given #95 (T,wt=6): 153 c8 = c3 | c7 = c3.  [resolve(102,c,32,a)].
+
+given #96 (T,wt=5): 154 c7 = c3 | Ate(c3).  [para(153(a,1),44(a,1))].
+
+given #97 (T,wt=6): 155 c7 = c3 | Diagonal(c7,c3).  [para(153(a,1),45(a,2))].
+
+given #98 (A,wt=11): 104 c3 = x | c1 = x | c2 = x | Butter(x).  [para(75(b,1),25(a,1))].
+
+given #99 (T,wt=6): 156 c7 = c3 | Diagonal(c3,c7).  [para(153(a,1),64(a,1))].
+
+given #100 (T,wt=6): 160 c7 = c3 | Diagonal(c4,c3).  [para(153(a,1),89(b,2)),merge(b)].
+
+given #101 (T,wt=6): 161 c7 = c3 | Diagonal(c3,c4).  [para(153(a,1),90(b,1)),merge(b)].
+
+given #102 (T,wt=7): 158 c7 = c3 | f1(c3) = c7.  [para(153(a,1),86(a,1,1))].
+
+given #103 (A,wt=15): 105 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | Diagonal(x,c4).  [para(75(b,2),35(a,2)),flip(a),flip(b),flip(c)].
+
+given #104 (T,wt=7): 162 c7 = c3 | f1(c4) = c3.  [para(153(a,1),92(b,2)),merge(b)].
+
+given #105 (T,wt=7): 167 c7 = c3 | f1(c3) = c4.  [resolve(160,b,61,a)].
+
+given #106 (T,wt=9): 130 c8 = c3 | -Diagonal(x,c7) | c4 = x.  [resolve(95,b,42,b)].
+
+given #107 (T,wt=9): 132 c8 = c3 | -Diagonal(c7,x) | c4 = x.  [resolve(96,b,42,a),flip(c)].
+
+given #108 (A,wt=16): 106 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | f2(x) != c4.  [para(75(b,2),36(a,1)),flip(a),flip(b),flip(c),flip(d)].
+
+given #109 (T,wt=9): 157 c7 = c3 | -Diagonal(c3,x) | c7 = x.  [para(153(a,1),63(a,1))].
+
+given #110 (T,wt=9): 159 c7 = c3 | -Diagonal(x,c3) | c7 = x.  [para(153(a,1),68(a,2))].
+
+given #111 (T,wt=9): 163 c7 = c3 | -Diagonal(c3,x) | c4 = x.  [para(153(a,1),101(b,1)),merge(b)].
+
+given #112 (T,wt=9): 164 c7 = c3 | -Diagonal(x,c3) | c4 = x.  [para(153(a,1),103(b,2)),merge(b)].
+
+given #113 (A,wt=16): 107 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | f3(x) != c4.  [para(75(b,2),36(a,2)),flip(a),flip(b),flip(c)].
+
+given #114 (T,wt=9): 165 c7 = c3 | -Diagonal(x,c7) | c3 = x.  [resolve(155,b,42,b)].
+
+given #115 (T,wt=9): 166 c7 = c3 | -Diagonal(c7,x) | c3 = x.  [resolve(156,b,42,a),flip(c)].
+
+given #116 (T,wt=9): 168 c7 = c3 | -Diagonal(x,c4) | c3 = x.  [resolve(160,b,42,b)].
+
+given #117 (T,wt=9): 170 c7 = c3 | -Diagonal(c4,x) | c3 = x.  [resolve(161,b,42,a),flip(c)].
+
+given #118 (A,wt=15): 108 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | NextTo(x,c4).  [para(75(b,2),37(a,2)),flip(a),flip(b),flip(c)].
+
+given #119 (T,wt=12): 178 f1(c4) = c3 | f1(c4) = c1 | f1(c4) = c2.  [resolve(105,d,32,a)].
+
+given #120 (T,wt=11): 190 f1(c4) = c1 | f1(c4) = c2 | Diagonal(c4,c3).  [para(178(a,1),35(a,2))].
+
+given #121 (T,wt=11): 191 f1(c4) = c1 | f1(c4) = c2 | Diagonal(c3,c4).  [para(178(a,1),51(a,1))].
+
+given #122 (T,wt=12): 188 f2(c4) = c3 | f2(c4) = c1 | f2(c4) = c2.  [resolve(108,d,31,a)].
+
+given #123 (A,wt=15): 109 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | NextTo(x,c4).  [para(75(b,2),38(a,2)),flip(a),flip(b),flip(c)].
+
+given #124 (T,wt=11): 201 f2(c4) = c1 | f2(c4) = c2 | NextTo(c4,c3).  [para(188(a,1),37(a,2))].
+
+given #125 (T,wt=11): 202 f2(c4) = c1 | f2(c4) = c2 | NextTo(c3,c4).  [para(188(a,1),52(a,1))].
+
+given #126 (T,wt=11): 203 f2(c4) = c1 | f2(c4) = c2 | -Diagonal(c4,c3).  [para(188(a,1),53(a,2))].
+
+given #127 (T,wt=11): 204 f2(c4) = c1 | f2(c4) = c2 | -Diagonal(c3,c4).  [para(188(a,1),72(a,1))].
+
+given #128 (A,wt=15): 110 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | Diagonal(c4,x).  [para(75(b,2),51(a,1)),flip(a),flip(b),flip(c)].
+
+given #129 (T,wt=11): 211 f2(c4) = c1 | f2(c4) = c2 | c7 = c3.  [resolve(203,c,160,b)].
+
+given #130 (T,wt=10): 218 f2(c4) = c1 | c7 = c3 | NextTo(c4,c2).  [para(211(b,1),37(a,2))].
+
+given #131 (T,wt=10): 219 f2(c4) = c1 | c7 = c3 | NextTo(c2,c4).  [para(211(b,1),52(a,1))].
+
+given #132 (T,wt=10): 220 f2(c4) = c1 | c7 = c3 | -Diagonal(c4,c2).  [para(211(b,1),53(a,2))].
+
+given #133 (A,wt=15): 111 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | NextTo(c4,x).  [para(75(b,2),52(a,1)),flip(a),flip(b),flip(c)].
+
+given #134 (T,wt=10): 221 f2(c4) = c1 | c7 = c3 | -Diagonal(c2,c4).  [para(211(b,1),72(a,1))].
+
+given #135 (T,wt=11): 217 f2(c4) = c1 | c7 = c3 | f3(c4) != c2.  [para(211(b,1),36(a,2))].
+
+given #136 (T,wt=12): 193 f1(c4) = c1 | f1(c4) = c2 | f1(c3) = c4.  [para(178(a,1),87(a,1,1))].
+
+given #137 (T,wt=11): 230 f1(c4) = c1 | f1(c3) = c4 | Diagonal(c4,c2).  [para(193(b,1),35(a,2))].
+
+given #138 (A,wt=15): 112 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | -Diagonal(x,c4).  [para(75(b,2),53(a,2)),flip(a),flip(b),flip(c)].
+
+given #139 (T,wt=11): 231 f1(c4) = c1 | f1(c3) = c4 | Diagonal(c2,c4).  [para(193(b,1),51(a,1))].
+
+given #140 (T,wt=12): 200 f2(c4) = c1 | f2(c4) = c2 | f3(c4) != c3.  [para(188(a,1),36(a,2))].
+
+given #141 (T,wt=12): 206 f3(c4) = c3 | f3(c4) = c1 | f3(c4) = c2.  [resolve(109,d,31,a)].
+
+given #142 (T,wt=11): 252 f3(c4) = c1 | f3(c4) = c2 | NextTo(c4,c3).  [para(206(a,1),38(a,2))].
+
+given #143 (A,wt=15): 113 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | -Diagonal(x,c4).  [para(75(b,2),55(a,2)),flip(a),flip(b),flip(c)].
+
+given #144 (T,wt=11): 253 f3(c4) = c1 | f3(c4) = c2 | -Diagonal(c4,c3).  [para(206(a,1),55(a,2))].
+
+given #145 (T,wt=11): 254 f3(c4) = c1 | f3(c4) = c2 | NextTo(c3,c4).  [para(206(a,1),54(a,1))].
+
+given #146 (T,wt=11): 255 f3(c4) = c1 | f3(c4) = c2 | -Diagonal(c3,c4).  [para(206(a,1),76(a,1))].
+
+given #147 (T,wt=11): 268 f3(c4) = c1 | f3(c4) = c2 | c7 = c3.  [resolve(253,c,160,b)].
+
+given #148 (A,wt=15): 114 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | -Diagonal(c4,x).  [para(75(b,2),72(a,1)),flip(a),flip(b),flip(c)].
+
+given #149 (T,wt=10): 275 f3(c4) = c1 | c7 = c3 | NextTo(c4,c2).  [para(268(b,1),38(a,2))].
+
+given #150 (T,wt=10): 276 f3(c4) = c1 | c7 = c3 | -Diagonal(c4,c2).  [para(268(b,1),55(a,2))].
+
+given #151 (T,wt=10): 277 f3(c4) = c1 | c7 = c3 | NextTo(c2,c4).  [para(268(b,1),54(a,1))].
+
+given #152 (T,wt=10): 278 f3(c4) = c1 | c7 = c3 | -Diagonal(c2,c4).  [para(268(b,1),76(a,1))].
+
+given #153 (A,wt=15): 115 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | NextTo(c4,x).  [para(75(b,2),54(a,1)),flip(a),flip(b),flip(c)].
+
+given #154 (T,wt=11): 273 f3(c4) = c1 | c7 = c3 | f2(c4) = c1.  [resolve(268,b,217,c),merge(d)].
+
+given #155 (T,wt=10): 287 c7 = c3 | f2(c4) = c1 | NextTo(c4,c1).  [para(273(a,1),38(a,2))].
+
+given #156 (T,wt=10): 288 c7 = c3 | f2(c4) = c1 | -Diagonal(c4,c1).  [para(273(a,1),55(a,2))].
+
+given #157 (T,wt=10): 289 c7 = c3 | f2(c4) = c1 | NextTo(c1,c4).  [para(273(a,1),54(a,1))].
+
+given #158 (A,wt=15): 116 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | -Diagonal(c4,x).  [para(75(b,2),76(a,1)),flip(a),flip(b),flip(c)].
+
+given #159 (T,wt=10): 290 c7 = c3 | f2(c4) = c1 | -Diagonal(c1,c4).  [para(273(a,1),76(a,1))].
+
+given #160 (T,wt=11): 274 f3(c4) = c1 | c7 = c3 | f2(c4) != c2.  [para(268(b,1),36(a,1)),flip(c)].
+
+given #161 (T,wt=12): 233 f1(c4) = c1 | f1(c3) = c4 | f1(c2) = c4.  [para(193(b,1),87(a,1,1))].
+
+given #162 (T,wt=11): 299 f1(c3) = c4 | f1(c2) = c4 | Diagonal(c4,c1).  [para(233(a,1),35(a,2))].
+
+given #163 (A,wt=18): 117 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | -Diagonal(c4,y) | y = x.  [para(75(b,2),60(a,1)),flip(a),flip(b),flip(c)].
+
+given #164 (T,wt=11): 300 f1(c3) = c4 | f1(c2) = c4 | Diagonal(c1,c4).  [para(233(a,1),51(a,1))].
+
+given #165 (T,wt=12): 251 f3(c4) = c1 | f3(c4) = c2 | f2(c4) != c3.  [para(206(a,1),36(a,1)),flip(c)].
+
+given #166 (T,wt=12): 302 f1(c3) = c4 | f1(c2) = c4 | f1(c1) = c4.  [para(233(a,1),87(a,1,1))].
+
+given #167 (T,wt=11): 318 f1(c2) = c4 | f1(c1) = c4 | Diagonal(c3,c4).  [para(302(a,1),35(a,2))].
+
+given #168 (A,wt=16): 118 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | f1(c4) = x.  [para(75(b,2),87(a,1,1)),flip(a),flip(b),flip(c)].
+
+given #169 (T,wt=11): 319 f1(c2) = c4 | f1(c1) = c4 | Diagonal(c4,c3).  [para(302(a,1),51(a,1))].
+
+given #170 (T,wt=12): 321 f1(c2) = c4 | f1(c1) = c4 | f1(c4) = c3.  [para(302(a,1),87(a,1,1))].
+
+given #171 (T,wt=12): 346 c8 = c3 | c8 = c1 | c8 = c2 | Ate(f1(c4)).  [para(118(d,2),43(a,1)),rewrite([85(2),85(5),85(8)])].
+
+given #172 (T,wt=12): 347 c7 = c3 | c7 = c1 | c7 = c2 | Ate(f1(c4)).  [para(118(d,2),44(a,1)),rewrite([86(2),86(5),86(8)])].
+
+given #173 (A,wt=15): 119 c3 = x | c1 = x | c2 = x | c7 = c3 | c7 = x.  [para(75(b,1),73(b,2))].
+
+given #174 (T,wt=12): 351 c7 = c3 | c7 = c1 | c7 = c2 | -Honey(f1(c4)).  [para(118(d,2),65(a,1)),rewrite([86(2),86(5),86(8)])].
+
+given #175 (T,wt=12): 352 c8 = c3 | c8 = c1 | c8 = c2 | -Honey(f1(c4)).  [para(118(d,2),66(a,1)),rewrite([85(2),85(5),85(8)])].
+
+given #176 (T,wt=13): 337 c3 = x | c1 = x | c2 = x | Diagonal(x,f1(c4)).  [para(118(d,2),35(a,2)),rewrite([87(2),87(4),87(6)]),flip(a),flip(b),flip(c)].
+
+given #177 (T,wt=13): 348 c8 = c3 | c8 = c1 | c8 = c2 | Diagonal(f1(c4),c8).  [para(118(d,2),45(a,1)),rewrite([85(2),85(5),85(8)])].
+
+given #178 (A,wt=14): 120 c3 = x | c1 = x | c2 = x | c7 = c3 | Ate(x).  [para(75(b,1),88(b,1))].
+
+given #179 (T,wt=13): 349 c7 = c3 | c7 = c1 | c7 = c2 | Diagonal(c7,f1(c4)).  [para(118(d,2),45(a,2)),rewrite([86(2),86(5),86(8)])].
+
+given #180 (T,wt=13): 357 c7 = c3 | c7 = c1 | c7 = c2 | Diagonal(f1(c4),c7).  [para(118(d,2),64(a,1)),rewrite([86(2),86(5),86(8)])].
+
+given #181 (T,wt=13): 358 c8 = c3 | c8 = c1 | c8 = c2 | Diagonal(c8,f1(c4)).  [para(118(d,2),64(a,2)),rewrite([85(2),85(5),85(8)])].
+
+given #182 (T,wt=13): 360 c3 = x | c1 = x | c2 = x | Diagonal(f1(c4),x).  [para(118(d,2),51(a,1)),rewrite([87(2),87(4),87(6)]),flip(a),flip(b),flip(c)].
+
+given #183 (A,wt=15): 121 c3 = x | c1 = x | c2 = x | c8 = c3 | c8 = x.  [para(75(b,1),74(b,2))].
+
+given #184 (T,wt=13): 430 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(c3,f1(c4)).  [factor(372,a,e)].
+
+given #185 (T,wt=13): 431 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(c1,f1(c4)).  [factor(372,b,e)].
+
+given #186 (T,wt=13): 432 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(c2,f1(c4)).  [factor(372,c,e)].
+
+given #187 (T,wt=13): 433 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(f1(c4),c3).  [factor(374,a,e)].
+
+given #188 (A,wt=14): 122 c3 = x | c1 = x | c2 = x | c8 = c3 | Ate(x).  [para(75(b,1),94(b,1))].
+
+given #189 (T,wt=13): 434 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(f1(c4),c1).  [factor(374,b,e)].
+
+given #190 (T,wt=13): 435 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(f1(c4),c2).  [factor(374,c,e)].
+
+given #191 (T,wt=13): 436 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(c3,f1(c4)).  [factor(375,a,e)].
+
+given #192 (T,wt=13): 437 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(c1,f1(c4)).  [factor(375,b,e)].
+
+given #193 (A,wt=18): 123 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | -Diagonal(y,c4) | x = y.  [para(75(b,2),70(a,2)),flip(a),flip(b),flip(c)].
+
+given #194 (T,wt=13): 438 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(c2,f1(c4)).  [factor(375,c,e)].
+
+given #195 (T,wt=13): 442 c3 = x | c1 = x | c2 = x | -Diagonal(f1(c4),c3).  [factor(377,a,e)].
+
+given #196 (T,wt=13): 443 c3 = x | c1 = x | c2 = x | -Diagonal(f1(c4),c1).  [factor(377,b,e)].
+
+given #197 (T,wt=13): 444 c3 = x | c1 = x | c2 = x | -Diagonal(f1(c4),c2).  [factor(377,c,e)].
+
+given #198 (A,wt=15): 124 c3 = x | c1 = x | c2 = x | c7 = c3 | Diagonal(x,c8).  [para(75(b,1),89(b,1))].
+
+given #199 (T,wt=13): 445 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(f1(c4),c3).  [factor(380,a,e)].
+
+given #200 (T,wt=13): 446 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(f1(c4),c1).  [factor(380,b,e)].
+
+given #201 (T,wt=13): 447 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(f1(c4),c2).  [factor(380,c,e)].
+
+given #202 (T,wt=14): 192 f1(c4) = c1 | f1(c4) = c2 | -Diagonal(c3,x) | c4 = x.  [para(178(a,1),60(a,1)),flip(d)].
+
+given #203 (A,wt=15): 125 c3 = x | c1 = x | c2 = x | c7 = c3 | Diagonal(c8,x).  [para(75(b,1),90(b,2))].
+
+given #204 (T,wt=14): 194 f1(c4) = c1 | f1(c4) = c2 | -Diagonal(x,c3) | c4 = x.  [para(178(a,1),70(a,2))].
+
+given #205 (T,wt=14): 196 f1(c4) = c1 | f1(c4) = c2 | -Diagonal(x,c4) | c3 = x.  [resolve(190,c,42,b)].
+
+given #206 (T,wt=14): 198 f1(c4) = c1 | f1(c4) = c2 | -Diagonal(c4,x) | c3 = x.  [resolve(191,c,42,a),flip(d)].
+
+given #207 (T,wt=14): 232 f1(c4) = c1 | f1(c3) = c4 | -Diagonal(c2,x) | c4 = x.  [para(193(b,1),60(a,1)),flip(d)].
+
+given #208 (A,wt=21): 126 c3 = x | c1 = x | c2 = x | c3 = y | x = y | c1 = y | c2 = y.  [para(75(b,1),75(b,1))].
+
+given #209 (T,wt=14): 234 f1(c4) = c1 | f1(c3) = c4 | -Diagonal(x,c2) | c4 = x.  [para(193(b,1),70(a,2))].
+
+given #210 (T,wt=14): 236 f1(c4) = c1 | f1(c3) = c4 | c8 = c3 | c7 = c2.  [para(193(b,1),98(b,1)),flip(d)].
+
+given #211 (T,wt=13): 752 f1(c3) = c4 | c8 = c3 | c7 = c2 | Diagonal(c4,c1).  [para(236(a,1),35(a,2))].
+
+given #212 (T,wt=13): 753 f1(c3) = c4 | c8 = c3 | c7 = c2 | Diagonal(c1,c4).  [para(236(a,1),51(a,1))].
+
+given #213 (A,wt=16): 127 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | -Diagonal(c4,f1(c3)).  [factor(117,a,e)].
+
+given #214 (T,wt=13): 758 f1(c3) = c4 | c8 = c3 | c7 = c2 | c7 = c1.  [para(236(a,1),98(b,1)),flip(e),merge(d)].
+
+given #215 (T,wt=12): 781 c8 = c3 | c7 = c2 | c7 = c1 | Diagonal(c3,c4).  [para(758(a,1),35(a,2))].
+
+given #216 (T,wt=12): 782 c8 = c3 | c7 = c2 | c7 = c1 | Diagonal(c4,c3).  [para(758(a,1),51(a,1))].
+
+given #217 (T,wt=13): 784 c8 = c3 | c7 = c2 | c7 = c1 | f1(c4) = c3.  [para(758(a,1),87(a,1,1))].
+
+given #218 (A,wt=16): 128 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | -Diagonal(c4,f1(c1)).  [factor(117,b,e)].
+
+given #219 (T,wt=14): 237 f1(c4) = c1 | f1(c3) = c4 | -Diagonal(x,c4) | c2 = x.  [resolve(230,c,42,b)].
+
+given #220 (T,wt=14): 247 f1(c4) = c1 | f1(c3) = c4 | -Diagonal(c4,x) | c2 = x.  [resolve(231,c,42,a),flip(d)].
+
+given #221 (T,wt=14): 301 f1(c3) = c4 | f1(c2) = c4 | -Diagonal(c1,x) | c4 = x.  [para(233(a,1),60(a,1)),flip(d)].
+
+given #222 (T,wt=14): 303 f1(c3) = c4 | f1(c2) = c4 | -Diagonal(x,c1) | c4 = x.  [para(233(a,1),70(a,2))].
+
+given #223 (A,wt=16): 129 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | -Diagonal(c4,f1(c2)).  [factor(117,c,e)].
+
+given #224 (T,wt=14): 305 f1(c3) = c4 | f1(c2) = c4 | c8 = c3 | c7 = c1.  [para(233(a,1),98(b,1)),flip(d)].
+
+given #225 (T,wt=13): 830 f1(c2) = c4 | c8 = c3 | c7 = c1 | Diagonal(c3,c4).  [para(305(a,1),35(a,2))].
+
+given #226 (T,wt=13): 831 f1(c2) = c4 | c8 = c3 | c7 = c1 | Diagonal(c4,c3).  [para(305(a,1),51(a,1))].
+
+given #227 (T,wt=14): 308 f1(c3) = c4 | f1(c2) = c4 | -Diagonal(x,c4) | c1 = x.  [resolve(299,c,42,b)].
+
+given #228 (A,wt=15): 131 c3 = x | c1 = x | c2 = x | c8 = c3 | Diagonal(c7,x).  [para(75(b,1),95(b,2))].
+
+given #229 (T,wt=14): 315 f1(c3) = c4 | f1(c2) = c4 | -Diagonal(c4,x) | c1 = x.  [resolve(300,c,42,a),flip(d)].
+
+given #230 (T,wt=14): 320 f1(c2) = c4 | f1(c1) = c4 | -Diagonal(c4,x) | c3 = x.  [para(302(a,1),60(a,1)),flip(d)].
+
+given #231 (T,wt=14): 322 f1(c2) = c4 | f1(c1) = c4 | -Diagonal(x,c4) | c3 = x.  [para(302(a,1),70(a,2))].
+
+given #232 (T,wt=14): 328 f1(c2) = c4 | f1(c1) = c4 | -Diagonal(x,c3) | c4 = x.  [resolve(318,c,42,b)].
+
+given #233 (A,wt=15): 133 c3 = x | c1 = x | c2 = x | c8 = c3 | Diagonal(x,c7).  [para(75(b,1),96(b,1))].
+
+given #234 (T,wt=14): 379 c1 = x | c2 = x | f1(c4) = f1(x) | c3 = x.  [para(118(a,1),87(a,1)),rewrite([87(2),87(4)]),flip(a),flip(b)].
+
+given #235 (T,wt=13): 871 c1 = x | c2 = x | c3 = x | Diagonal(c4,f1(x)).  [para(379(c,1),35(a,2))].
+
+given #236 (T,wt=13): 872 c1 = x | c2 = x | c3 = x | Diagonal(f1(x),c4).  [para(379(c,1),51(a,1))].
+
+given #237 (T,wt=14): 451 f1(c2) = c4 | f1(c1) = c4 | -Diagonal(c3,x) | c4 = x.  [resolve(319,c,42,a),flip(d)].
+
+given #238 (A,wt=16): 135 c3 = x | c1 = x | c2 = x | c7 = c3 | f1(x) = c8.  [para(75(b,1),92(b,1,1))].
+
+given #239 (T,wt=14): 462 c4 = c3 | c4 = c1 | c4 = c2 | c7 = c3 | Butter(c7).  [para(119(e,2),25(a,1)),flip(a),flip(b),flip(c)].
+
+given #240 (T,wt=14): 468 c3 = x | c1 = x | c2 = x | c7 = x | Ate(c3).  [para(119(d,1),43(a,1))].
+
+given #241 (T,wt=14): 538 c4 = c3 | c4 = c1 | c4 = c2 | c8 = c3 | Butter(c8).  [para(121(e,2),25(a,1)),flip(a),flip(b),flip(c)].
+
+given #242 (T,wt=14): 544 c3 = x | c1 = x | c2 = x | c8 = x | Ate(c3).  [para(121(d,1),44(a,1))].
+
+given #243 (A,wt=16): 136 c3 = x | c1 = x | c2 = x | c8 = c3 | f1(x) = c7.  [para(75(b,1),98(b,1,1))].
+
+given #244 (T,wt=14): 755 f1(c3) = c4 | c8 = c3 | c7 = c2 | f1(c1) = c4.  [para(236(a,1),87(a,1,1))].
+
+given #245 (T,wt=13): 910 c8 = c3 | c7 = c2 | f1(c1) = c4 | Diagonal(c3,c4).  [para(755(a,1),35(a,2))].
+
+given #246 (T,wt=13): 911 c8 = c3 | c7 = c2 | f1(c1) = c4 | Diagonal(c4,c3).  [para(755(a,1),51(a,1))].
+
+given #247 (T,wt=14): 833 f1(c2) = c4 | c8 = c3 | c7 = c1 | f1(c4) = c3.  [para(305(a,1),87(a,1,1))].
+
+given #248 (A,wt=18): 138 c3 = x | c1 = x | c2 = x | c7 = c3 | -Diagonal(y,x) | c8 = y.  [para(75(b,1),91(b,2))].
+
+given #249 (T,wt=14): 913 c8 = c3 | c7 = c2 | f1(c1) = c4 | f1(c4) = c3.  [para(755(a,1),87(a,1,1))].
+
+given #250 (T,wt=15): 169 c3 = x | c1 = x | c2 = x | c7 = c3 | Diagonal(x,c3).  [para(75(b,1),160(b,1))].
+
+given #251 (T,wt=15): 171 c3 = x | c1 = x | c2 = x | c7 = c3 | Diagonal(c3,x).  [para(75(b,1),161(b,2))].
+
+given #252 (T,wt=15): 174 f1(f3(c4)) = c3 | f1(f3(c4)) = c1 | f1(f3(c4)) = c2.  [resolve(105,d,76,a)].
+
+given #253 (A,wt=18): 139 c3 = x | c1 = x | c2 = x | c7 = c3 | -Diagonal(x,y) | c8 = y.  [para(75(b,1),93(b,1))].
+
+given #254 (T,wt=14): 969 f1(f3(c4)) = c1 | f1(f3(c4)) = c2 | Diagonal(f3(c4),c3).  [para(174(a,1),35(a,2))].
+
+given #255 (T,wt=14): 970 f1(f3(c4)) = c1 | f1(f3(c4)) = c2 | Diagonal(c3,f3(c4)).  [para(174(a,1),51(a,1))].
+
+given #256 (T,wt=15): 175 f1(f2(c4)) = c3 | f1(f2(c4)) = c1 | f1(f2(c4)) = c2.  [resolve(105,d,72,a)].
+
+given #257 (T,wt=14): 1006 f1(f2(c4)) = c1 | f1(f2(c4)) = c2 | Diagonal(f2(c4),c3).  [para(175(a,1),35(a,2))].
+
+given #258 (A,wt=18): 140 c3 = x | c1 = x | c2 = x | c8 = c3 | -Diagonal(x,y) | c7 = y.  [para(75(b,1),97(b,1))].
+
+given #259 (T,wt=14): 1007 f1(f2(c4)) = c1 | f1(f2(c4)) = c2 | Diagonal(c3,f2(c4)).  [para(175(a,1),51(a,1))].
+
+given #260 (T,wt=15): 240 f2(c3) = c3 | f2(c3) = c1 | f2(c3) = c2 | c7 = c3.  [resolve(112,d,161,b)].
+
+given #261 (T,wt=14): 1042 f2(c3) = c1 | f2(c3) = c2 | c7 = c3 | NextTo(c3,c3).  [para(240(a,1),37(a,2))].
+
+given #262 (T,wt=11): 1049 f2(c3) = c1 | f2(c3) = c2 | c7 = c3.  [resolve(1042,d,31,a)].
+
+given #263 (A,wt=18): 141 c3 = x | c1 = x | c2 = x | c8 = c3 | -Diagonal(y,x) | c7 = y.  [para(75(b,1),99(b,2))].
+
+given #264 (T,wt=10): 1051 f2(c3) = c1 | c7 = c3 | NextTo(c3,c2).  [para(1049(b,1),37(a,2))].
+
+given #265 (T,wt=10): 1052 f2(c3) = c1 | c7 = c3 | NextTo(c2,c3).  [para(1049(b,1),52(a,1))].
+
+given #266 (T,wt=10): 1053 f2(c3) = c1 | c7 = c3 | -Diagonal(c3,c2).  [para(1049(b,1),53(a,2))].
+
+given #267 (T,wt=10): 1054 f2(c3) = c1 | c7 = c3 | -Diagonal(c2,c3).  [para(1049(b,1),72(a,1))].
+
+given #268 (A,wt=18): 172 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c8 = c3 | c7 = x.  [resolve(105,d,99,b)].
+
+given #269 (T,wt=11): 1050 f2(c3) = c1 | c7 = c3 | f3(c3) != c2.  [para(1049(b,1),36(a,2))].
+
+given #270 (T,wt=15): 242 f2(c7) = c3 | f2(c7) = c1 | f2(c7) = c2 | c8 = c3.  [resolve(112,d,95,b)].
+
+given #271 (T,wt=14): 1092 f2(c7) = c1 | f2(c7) = c2 | c8 = c3 | NextTo(c7,c3).  [para(242(a,1),37(a,2))].
+
+given #272 (T,wt=14): 1093 f2(c7) = c1 | f2(c7) = c2 | c8 = c3 | NextTo(c3,c7).  [para(242(a,1),52(a,1))].
+
+given #273 (A,wt=18): 173 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c7 = c3 | c8 = x.  [resolve(105,d,91,b)].
+
+given #274 (T,wt=15): 243 f2(c8) = c3 | f2(c8) = c1 | f2(c8) = c2 | c7 = c3.  [resolve(112,d,90,b)].
+
+given #275 (T,wt=14): 1119 f2(c8) = c1 | f2(c8) = c2 | c7 = c3 | NextTo(c8,c3).  [para(243(a,1),37(a,2))].
+
+given #276 (T,wt=14): 1120 f2(c8) = c1 | f2(c8) = c2 | c7 = c3 | NextTo(c3,c8).  [para(243(a,1),52(a,1))].
+
+given #277 (T,wt=14): 1126 c7 = c3 | f2(c8) = c1 | f2(c8) = c2 | NextTo(c3,c3).  [para(153(a,1),1119(d,1)),merge(d)].
+
+given #278 (A,wt=16): 176 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | f1(x) = c4.  [resolve(105,d,71,a)].
+
+given #279 (T,wt=11): 1135 c7 = c3 | f2(c8) = c1 | f2(c8) = c2.  [resolve(1126,d,31,a)].
+
+given #280 (T,wt=10): 1141 c7 = c3 | f2(c8) = c1 | NextTo(c8,c2).  [para(1135(c,1),37(a,2))].
+
+given #281 (T,wt=10): 1142 c7 = c3 | f2(c8) = c1 | NextTo(c2,c8).  [para(1135(c,1),52(a,1))].
+
+given #282 (T,wt=10): 1143 c7 = c3 | f2(c8) = c1 | -Diagonal(c8,c2).  [para(1135(c,1),53(a,2))].
+
+given #283 (A,wt=18): 177 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | -Diagonal(y,x) | c4 = y.  [resolve(105,d,42,b)].
+
+given #284 (T,wt=10): 1144 c7 = c3 | f2(c8) = c1 | -Diagonal(c2,c8).  [para(1135(c,1),72(a,1))].
+
+given #285 (T,wt=10): 1148 c7 = c3 | f2(c8) = c1 | NextTo(c3,c2).  [para(153(a,1),1141(c,1)),merge(b)].
+
+given #286 (T,wt=10): 1151 c7 = c3 | f2(c8) = c1 | NextTo(c2,c3).  [para(153(a,1),1142(c,2)),merge(b)].
+
+given #287 (T,wt=10): 1154 c7 = c3 | f2(c8) = c1 | -Diagonal(c3,c2).  [para(153(a,1),1143(c,1)),merge(b)].
+
+given #288 (A,wt=24): 179 c3 = x | c1 = x | c2 = x | f1(y) = c3 | f1(y) = c1 | f1(y) = c2 | Diagonal(y,x).  [para(75(b,1),105(d,2))].
+
+given #289 (T,wt=10): 1158 c7 = c3 | f2(c8) = c1 | -Diagonal(c2,c3).  [para(153(a,1),1144(c,2)),merge(b)].
+
+given #290 (T,wt=11): 1140 c7 = c3 | f2(c8) = c1 | f3(c8) != c2.  [para(1135(c,1),36(a,2))].
+
+given #291 (T,wt=11): 1145 c7 = c3 | f2(c8) = c1 | f2(c3) = c2.  [para(153(a,1),1135(c,1,1)),merge(b)].
+
+given #292 (T,wt=10): 1187 c7 = c3 | f2(c3) = c2 | NextTo(c8,c1).  [para(1145(b,1),37(a,2))].
+
+given #293 (A,wt=16): 180 c3 = x | c1 = x | c2 = x | c7 = c3 | f1(x) = c3.  [para(75(b,1),162(b,1,1))].
+
+given #294 (T,wt=10): 1188 c7 = c3 | f2(c3) = c2 | NextTo(c1,c8).  [para(1145(b,1),52(a,1))].
+
+given #295 (T,wt=10): 1189 c7 = c3 | f2(c3) = c2 | -Diagonal(c8,c1).  [para(1145(b,1),53(a,2))].
+
+given #296 (T,wt=10): 1190 c7 = c3 | f2(c3) = c2 | -Diagonal(c1,c8).  [para(1145(b,1),72(a,1))].
+
+given #297 (T,wt=10): 1193 c7 = c3 | f2(c3) = c2 | NextTo(c3,c1).  [para(153(a,1),1187(c,1)),merge(b)].
+
+given #298 (A,wt=16): 181 c3 = x | c1 = x | c2 = x | c7 = c3 | f1(c3) = x.  [para(75(b,1),167(b,2))].
+
+given #299 (T,wt=10): 1200 c7 = c3 | f2(c3) = c2 | NextTo(c1,c3).  [para(153(a,1),1188(c,2)),merge(b)].
+
+given #300 (T,wt=10): 1203 c7 = c3 | f2(c3) = c2 | -Diagonal(c3,c1).  [para(153(a,1),1189(c,1)),merge(b)].
+
+given #301 (T,wt=10): 1205 c7 = c3 | f2(c3) = c2 | -Diagonal(c1,c3).  [para(153(a,1),1190(c,2)),merge(b)].
+
+given #302 (T,wt=11): 1181 c7 = c3 | f2(c8) = c1 | f3(c3) != c2.  [para(153(a,1),1140(c,1,1)),merge(b)].
+
+given #303 (A,wt=24): 182 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | f2(x) = c3 | f2(x) = c1 | f2(x) = c2.  [resolve(106,d,75,b(flip)),flip(d),flip(e),flip(f)].
+
+given #304 (T,wt=11): 1186 c7 = c3 | f2(c3) = c2 | f3(c8) != c1.  [para(1145(b,1),36(a,2))].
+
+given #305 (T,wt=11): 1300 c7 = c3 | f2(c3) = c2 | f3(c3) != c1.  [para(153(a,1),1186(c,1,1)),merge(b)].
+
+given #306 (T,wt=12): 1218 c7 = c3 | c7 = c1 | c7 = c2 | Ate(f1(c3)).  [para(181(e,2),43(a,1)),flip(a),flip(b),flip(c),merge(d)].
+
+given #307 (T,wt=12): 1221 c7 = c3 | c7 = c1 | c7 = c2 | -Honey(f1(c3)).  [para(181(e,2),66(a,1)),flip(a),flip(b),flip(c),merge(d)].
+
+given #308 (A,wt=25): 183 c3 = x | c1 = x | c2 = x | f3(y) = c3 | f3(y) = c1 | f3(y) = c2 | f2(y) != x.  [para(75(b,1),106(d,2))].
+
+given #309 (T,wt=13): 1219 c7 = c3 | c7 = c1 | c7 = c2 | Diagonal(f1(c3),c8).  [para(181(e,2),45(a,1)),flip(a),flip(b),flip(c),merge(d)].
+
+given #310 (T,wt=13): 1222 c7 = c3 | c7 = c1 | c7 = c2 | Diagonal(c8,f1(c3)).  [para(181(e,2),64(a,2)),flip(a),flip(b),flip(c),merge(d)].
+
+given #311 (T,wt=14): 1258 c7 = c3 | c7 = c1 | c7 = c2 | Diagonal(f1(c3),f1(c4)).  [para(181(e,2),349(d,1)),flip(a),flip(b),flip(c),merge(d),merge(e),merge(f),merge(g)].
+
+given #312 (T,wt=14): 1259 c7 = c3 | c7 = c1 | c7 = c2 | Diagonal(f1(c4),f1(c3)).  [para(181(e,2),357(d,2)),flip(a),flip(b),flip(c),merge(d),merge(e),merge(f),merge(g)].
+
+given #313 (A,wt=25): 184 c3 = x | c1 = x | c2 = x | f2(y) = c3 | f2(y) = c1 | f2(y) = c2 | f3(y) != x.  [para(75(b,1),107(d,2))].
+
+given #314 (T,wt=15): 244 f2(f1(c4)) = c3 | f2(f1(c4)) = c1 | f2(f1(c4)) = c2.  [resolve(112,d,51,a)].
+
+given #315 (T,wt=14): 1334 f2(f1(c4)) = c1 | f2(f1(c4)) = c2 | NextTo(f1(c4),c3).  [para(244(a,1),37(a,2))].
+
+given #316 (T,wt=14): 1335 f2(f1(c4)) = c1 | f2(f1(c4)) = c2 | NextTo(c3,f1(c4)).  [para(244(a,1),52(a,1))].
+
+given #317 (T,wt=14): 1336 f2(f1(c4)) = c1 | f2(f1(c4)) = c2 | -Diagonal(f1(c4),c3).  [para(244(a,1),53(a,2))].
+
+given #318 (A,wt=18): 185 c7 = c3 | c3 = x | f1(x) = c3 | f1(x) = c1 | f1(x) = c2.  [resolve(168,b,105,d)].
+
+given #319 (T,wt=14): 1337 f2(f1(c4)) = c1 | f2(f1(c4)) = c2 | -Diagonal(c3,f1(c4)).  [para(244(a,1),72(a,1))].
+
+given #320 (T,wt=15): 261 f3(c3) = c3 | f3(c3) = c1 | f3(c3) = c2 | c7 = c3.  [resolve(113,d,161,b)].
+
+given #321 (T,wt=14): 1398 f3(c3) = c1 | f3(c3) = c2 | c7 = c3 | NextTo(c3,c3).  [para(261(a,1),38(a,2))].
+
+given #322 (T,wt=11): 1408 f3(c3) = c1 | f3(c3) = c2 | c7 = c3.  [resolve(1398,d,31,a)].
+
+given #323 (A,wt=18): 186 c3 = x | c1 = x | c2 = x | c7 = c3 | -Diagonal(y,x) | c3 = y.  [para(75(b,1),168(b,2))].
+
+given #324 (T,wt=10): 1412 f3(c3) = c1 | c7 = c3 | NextTo(c3,c2).  [para(1408(b,1),38(a,2))].
+
+given #325 (T,wt=10): 1413 f3(c3) = c1 | c7 = c3 | -Diagonal(c3,c2).  [para(1408(b,1),55(a,2))].
+
+given #326 (T,wt=10): 1414 f3(c3) = c1 | c7 = c3 | NextTo(c2,c3).  [para(1408(b,1),54(a,1))].
+
+given #327 (T,wt=10): 1415 f3(c3) = c1 | c7 = c3 | -Diagonal(c2,c3).  [para(1408(b,1),76(a,1))].
+
+given #328 (A,wt=18): 187 c3 = x | c1 = x | c2 = x | c7 = c3 | -Diagonal(x,y) | c3 = y.  [para(75(b,1),170(b,1))].
+
+given #329 (T,wt=11): 1409 f3(c3) = c1 | c7 = c3 | f2(c8) = c1.  [resolve(1408,b,1181,c),merge(c)].
+
+given #330 (T,wt=10): 1437 c7 = c3 | f2(c8) = c1 | NextTo(c3,c1).  [para(1409(a,1),38(a,2))].
+
+given #331 (T,wt=10): 1438 c7 = c3 | f2(c8) = c1 | -Diagonal(c3,c1).  [para(1409(a,1),55(a,2))].
+
+given #332 (T,wt=10): 1439 c7 = c3 | f2(c8) = c1 | NextTo(c1,c3).  [para(1409(a,1),54(a,1))].
+
+given #333 (A,wt=24): 189 c3 = x | c1 = x | c2 = x | f2(y) = c3 | f2(y) = c1 | f2(y) = c2 | NextTo(y,x).  [para(75(b,1),108(d,2))].
+
+given #334 (T,wt=10): 1440 c7 = c3 | f2(c8) = c1 | -Diagonal(c1,c3).  [para(1409(a,1),76(a,1))].
+
+given #335 (T,wt=11): 1410 f3(c3) = c1 | c7 = c3 | f2(c3) = c1.  [resolve(1408,b,1050,c),merge(d)].
+
+given #336 (T,wt=10): 1462 c7 = c3 | f2(c3) = c1 | NextTo(c3,c1).  [para(1410(a,1),38(a,2))].
+
+given #337 (T,wt=10): 1463 c7 = c3 | f2(c3) = c1 | -Diagonal(c3,c1).  [para(1410(a,1),55(a,2))].
+
+given #338 (A,wt=21): 195 c3 = x | c1 = x | c2 = x | f1(x) = c3 | f1(c4) = c1 | f1(c4) = c2.  [para(75(b,1),178(a,1,1))].
+
+given #339 (T,wt=10): 1464 c7 = c3 | f2(c3) = c1 | NextTo(c1,c3).  [para(1410(a,1),54(a,1))].
+
+given #340 (T,wt=10): 1465 c7 = c3 | f2(c3) = c1 | -Diagonal(c1,c3).  [para(1410(a,1),76(a,1))].
+
+given #341 (T,wt=11): 1411 f3(c3) = c1 | c7 = c3 | f2(c3) != c2.  [para(1408(b,1),36(a,1)),flip(c)].
+
+given #342 (T,wt=11): 1436 c7 = c3 | f2(c8) = c1 | f2(c3) != c1.  [para(1409(a,1),36(a,1)),flip(c)].
+
+given #343 (A,wt=20): 197 c3 = x | c1 = x | c2 = x | f1(c4) = c1 | f1(c4) = c2 | Diagonal(x,c3).  [para(75(b,1),190(c,1))].
+
+given #344 (T,wt=15): 263 f3(c7) = c3 | f3(c7) = c1 | f3(c7) = c2 | c8 = c3.  [resolve(113,d,95,b)].
+
+given #345 (T,wt=14): 1536 f3(c7) = c1 | f3(c7) = c2 | c8 = c3 | NextTo(c7,c3).  [para(263(a,1),38(a,2))].
+
+given #346 (T,wt=14): 1537 f3(c7) = c1 | f3(c7) = c2 | c8 = c3 | NextTo(c3,c7).  [para(263(a,1),54(a,1))].
+
+given #347 (T,wt=15): 264 f3(c8) = c3 | f3(c8) = c1 | f3(c8) = c2 | c7 = c3.  [resolve(113,d,90,b)].
+
+given #348 (A,wt=20): 199 c3 = x | c1 = x | c2 = x | f1(c4) = c1 | f1(c4) = c2 | Diagonal(c3,x).  [para(75(b,1),191(c,2))].
+
+given #349 (T,wt=14): 1553 f3(c8) = c1 | f3(c8) = c2 | c7 = c3 | NextTo(c8,c3).  [para(264(a,1),38(a,2))].
+
+given #350 (T,wt=14): 1554 f3(c8) = c1 | f3(c8) = c2 | c7 = c3 | NextTo(c3,c8).  [para(264(a,1),54(a,1))].
+
+given #351 (T,wt=14): 1566 c7 = c3 | f3(c8) = c1 | f3(c8) = c2 | NextTo(c3,c3).  [para(153(a,1),1553(d,1)),merge(d)].
+
+given #352 (T,wt=11): 1575 c7 = c3 | f3(c8) = c1 | f3(c8) = c2.  [resolve(1566,d,31,a)].
+
+given #353 (A,wt=21): 205 c3 = x | c1 = x | c2 = x | f2(x) = c3 | f2(c4) = c1 | f2(c4) = c2.  [para(75(b,1),188(a,1,1))].
+
+given #354 (T,wt=10): 1578 c7 = c3 | f3(c8) = c1 | NextTo(c8,c2).  [para(1575(c,1),38(a,2))].
+
+given #355 (T,wt=10): 1579 c7 = c3 | f3(c8) = c1 | -Diagonal(c8,c2).  [para(1575(c,1),55(a,2))].
+
+given #356 (T,wt=10): 1580 c7 = c3 | f3(c8) = c1 | NextTo(c2,c8).  [para(1575(c,1),54(a,1))].
+
+given #357 (T,wt=10): 1581 c7 = c3 | f3(c8) = c1 | -Diagonal(c2,c8).  [para(1575(c,1),76(a,1))].
+
+given #358 (A,wt=24): 207 c3 = x | c1 = x | c2 = x | f3(y) = c3 | f3(y) = c1 | f3(y) = c2 | NextTo(y,x).  [para(75(b,1),109(d,2))].
+
+given #359 (T,wt=10): 1602 c7 = c3 | f3(c8) = c1 | NextTo(c3,c2).  [para(153(a,1),1578(c,1)),merge(b)].
+
+given #360 (T,wt=10): 1605 c7 = c3 | f3(c8) = c1 | -Diagonal(c3,c2).  [para(153(a,1),1579(c,1)),merge(b)].
+
+given #361 (T,wt=10): 1607 c7 = c3 | f3(c8) = c1 | NextTo(c2,c3).  [para(153(a,1),1580(c,2)),merge(b)].
+
+given #362 (T,wt=10): 1610 c7 = c3 | f3(c8) = c1 | -Diagonal(c2,c3).  [para(153(a,1),1581(c,2)),merge(b)].
+
+given #363 (A,wt=20): 208 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | f2(c4) = c2 | NextTo(x,c3).  [para(75(b,1),201(c,1))].
+
+given #364 (T,wt=11): 1576 c7 = c3 | f3(c8) = c1 | f2(c8) = c1.  [resolve(1575,c,1140,c),merge(c)].
+
+given #365 (T,wt=10): 1633 c7 = c3 | f2(c8) = c1 | NextTo(c8,c1).  [para(1576(b,1),38(a,2))].
+
+given #366 (T,wt=10): 1634 c7 = c3 | f2(c8) = c1 | -Diagonal(c8,c1).  [para(1576(b,1),55(a,2))].
+
+given #367 (T,wt=10): 1635 c7 = c3 | f2(c8) = c1 | NextTo(c1,c8).  [para(1576(b,1),54(a,1))].
+
+given #368 (A,wt=20): 209 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | f2(c4) = c2 | NextTo(c3,x).  [para(75(b,1),202(c,2))].
+
+given #369 (T,wt=10): 1636 c7 = c3 | f2(c8) = c1 | -Diagonal(c1,c8).  [para(1576(b,1),76(a,1))].
+
+given #370 (T,wt=11): 1577 c7 = c3 | f3(c8) = c1 | f2(c8) != c2.  [para(1575(c,1),36(a,1)),flip(c)].
+
+given #371 (T,wt=11): 1582 c7 = c3 | f3(c8) = c1 | f3(c3) = c2.  [para(153(a,1),1575(c,1,1)),merge(b)].
+
+given #372 (T,wt=10): 1655 c7 = c3 | f3(c3) = c2 | NextTo(c8,c1).  [para(1582(b,1),38(a,2))].
+
+given #373 (A,wt=16): 210 f2(c4) = c1 | f2(c4) = c2 | f1(c4) = c1 | f1(c4) = c2.  [resolve(203,c,190,c)].
+
+given #374 (T,wt=10): 1656 c7 = c3 | f3(c3) = c2 | -Diagonal(c8,c1).  [para(1582(b,1),55(a,2))].
+
+given #375 (T,wt=10): 1657 c7 = c3 | f3(c3) = c2 | NextTo(c1,c8).  [para(1582(b,1),54(a,1))].
+
+given #376 (T,wt=10): 1658 c7 = c3 | f3(c3) = c2 | -Diagonal(c1,c8).  [para(1582(b,1),76(a,1))].
+
+given #377 (T,wt=10): 1661 c7 = c3 | f3(c3) = c2 | NextTo(c3,c1).  [para(153(a,1),1655(c,1)),merge(b)].
+
+given #378 (A,wt=20): 212 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | f2(c4) = c2 | -Diagonal(x,c3).  [para(75(b,1),203(c,1))].
+
+given #379 (T,wt=10): 1672 c7 = c3 | f3(c3) = c2 | -Diagonal(c3,c1).  [para(153(a,1),1656(c,1)),merge(b)].
+
+given #380 (T,wt=10): 1674 c7 = c3 | f3(c3) = c2 | NextTo(c1,c3).  [para(153(a,1),1657(c,2)),merge(b)].
+
+given #381 (T,wt=10): 1677 c7 = c3 | f3(c3) = c2 | -Diagonal(c1,c3).  [para(153(a,1),1658(c,2)),merge(b)].
+
+given #382 (T,wt=11): 1649 c7 = c3 | f3(c8) = c1 | f2(c3) != c2.  [para(153(a,1),1577(c,1,1)),merge(b)].
+
+given #383 (A,wt=20): 213 f2(c4) = c1 | f2(c4) = c2 | f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2.  [resolve(204,c,105,d)].
+
+given #384 (T,wt=11): 1653 c7 = c3 | f3(c3) = c2 | f2(c3) = c2.  [resolve(1582,b,1186,c),merge(c)].
+
+given #385 (T,wt=10): 1716 c7 = c3 | f2(c3) = c2 | NextTo(c3,c2).  [para(1653(b,1),38(a,2))].
+
+given #386 (T,wt=10): 1717 c7 = c3 | f2(c3) = c2 | -Diagonal(c3,c2).  [para(1653(b,1),55(a,2))].
+
+given #387 (T,wt=10): 1718 c7 = c3 | f2(c3) = c2 | NextTo(c2,c3).  [para(1653(b,1),54(a,1))].
+
+given #388 (A,wt=20): 214 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | f2(c4) = c2 | -Diagonal(c3,x).  [para(75(b,1),204(c,2))].
+
+given #389 (T,wt=10): 1719 c7 = c3 | f2(c3) = c2 | -Diagonal(c2,c3).  [para(1653(b,1),76(a,1))].
+
+given #390 (T,wt=11): 1654 c7 = c3 | f3(c3) = c2 | f2(c8) != c1.  [para(1582(b,1),36(a,1)),flip(c)].
+
+given #391 (T,wt=11): 1699 c7 = c3 | f3(c8) = c1 | f2(c3) = c1.  [resolve(1649,c,1049,b),merge(d)].
+
+given #392 (T,wt=10): 1749 c7 = c3 | f2(c3) = c1 | NextTo(c8,c1).  [para(1699(b,1),38(a,2))].
+
+given #393 (A,wt=18): 215 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | -Diagonal(x,y) | c4 = y.  [resolve(110,d,42,a),flip(e)].
+
+given #394 (T,wt=10): 1750 c7 = c3 | f2(c3) = c1 | -Diagonal(c8,c1).  [para(1699(b,1),55(a,2))].
+
+given #395 (T,wt=10): 1751 c7 = c3 | f2(c3) = c1 | NextTo(c1,c8).  [para(1699(b,1),54(a,1))].
+
+given #396 (T,wt=10): 1752 c7 = c3 | f2(c3) = c1 | -Diagonal(c1,c8).  [para(1699(b,1),76(a,1))].
+
+given #397 (T,wt=11): 1744 c7 = c3 | f3(c3) = c2 | f2(c3) != c1.  [para(153(a,1),1654(c,1,1)),merge(b)].
+
+given #398 (A,wt=24): 216 c3 = x | c1 = x | c2 = x | f1(y) = c3 | f1(y) = c1 | f1(y) = c2 | Diagonal(x,y).  [para(75(b,1),110(d,1))].
+
+given #399 (T,wt=11): 1748 c7 = c3 | f2(c3) = c1 | f2(c8) != c1.  [para(1699(b,1),36(a,1)),flip(c)].
+
+given #400 (T,wt=15): 265 f3(f1(c4)) = c3 | f3(f1(c4)) = c1 | f3(f1(c4)) = c2.  [resolve(113,d,51,a)].
+
+given #401 (T,wt=14): 1771 f3(f1(c4)) = c1 | f3(f1(c4)) = c2 | NextTo(f1(c4),c3).  [para(265(a,1),38(a,2))].
+
+given #402 (T,wt=14): 1772 f3(f1(c4)) = c1 | f3(f1(c4)) = c2 | -Diagonal(f1(c4),c3).  [para(265(a,1),55(a,2))].
+
+given #403 (A,wt=20): 222 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | f2(x) = c2 | c7 = c3.  [para(75(b,1),211(b,1,1))].
+
+given #404 (T,wt=14): 1773 f3(f1(c4)) = c1 | f3(f1(c4)) = c2 | NextTo(c3,f1(c4)).  [para(265(a,1),54(a,1))].
+
+given #405 (T,wt=14): 1774 f3(f1(c4)) = c1 | f3(f1(c4)) = c2 | -Diagonal(c3,f1(c4)).  [para(265(a,1),76(a,1))].
+
+given #406 (T,wt=15): 330 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | Honey(f1(c4)).  [para(118(d,2),19(a,1))].
+
+given #407 (T,wt=15): 331 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | Honey(f1(c4)).  [para(118(d,2),20(a,1))].
+
+given #408 (A,wt=19): 223 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | c7 = c3 | NextTo(x,c2).  [para(75(b,1),218(c,1))].
+
+given #409 (T,wt=15): 334 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | Butter(f1(c4)).  [para(118(d,2),24(a,1))].
+
+given #410 (T,wt=15): 336 f1(x) = c1 | f1(x) = c2 | f1(c4) = x | Diagonal(x,c3).  [para(118(a,1),35(a,2))].
+
+given #411 (T,wt=12): 1877 f1(c3) = c1 | f1(c3) = c2 | f1(c4) = c3.  [resolve(336,d,32,a)].
+
+given #412 (T,wt=11): 1883 f1(c3) = c1 | f1(c3) = c2 | Diagonal(c4,c3).  [para(1877(c,1),35(a,2))].
+
+given #413 (A,wt=19): 224 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | c7 = c3 | NextTo(c2,x).  [para(75(b,1),219(c,2))].
+
+given #414 (T,wt=11): 1884 f1(c3) = c1 | f1(c3) = c2 | Diagonal(c3,c4).  [para(1877(c,1),51(a,1))].
+
+given #415 (T,wt=12): 1886 f1(c3) = c1 | f1(c3) = c2 | f1(c3) = c4.  [para(1877(c,1),87(a,1,1))].
+
+given #416 (T,wt=14): 1885 f1(c3) = c1 | f1(c3) = c2 | -Diagonal(c3,x) | c4 = x.  [para(1877(c,1),60(a,1)),flip(d)].
+
+given #417 (T,wt=14): 1887 f1(c3) = c1 | f1(c3) = c2 | -Diagonal(x,c3) | c4 = x.  [para(1877(c,1),70(a,2))].
+
+given #418 (A,wt=19): 225 f2(c4) = c1 | c7 = c3 | f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2.  [resolve(220,c,110,d)].
+
+given #419 (T,wt=14): 1908 f1(c3) = c1 | f1(c3) = c2 | -Diagonal(x,c4) | c3 = x.  [resolve(1883,c,42,b)].
+
+given #420 (T,wt=14): 1912 f1(c3) = c1 | f1(c3) = c2 | -Diagonal(c4,x) | c3 = x.  [resolve(1884,c,42,a),flip(d)].
+
+given #421 (T,wt=15): 344 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | Honey(f1(c4)).  [para(118(d,2),40(a,1))].
+
+given #422 (T,wt=15): 345 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | Honey(f1(c4)).  [para(118(d,2),41(a,1))].
+
+given #423 (A,wt=19): 226 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | c7 = c3 | -Diagonal(x,c2).  [para(75(b,1),220(c,1))].
+
+given #424 (T,wt=15): 350 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | -Honey(f1(c4)).  [para(118(d,2),47(a,1))].
+
+given #425 (T,wt=15): 359 f1(x) = c1 | f1(x) = c2 | f1(c4) = x | Diagonal(c3,x).  [para(118(a,1),51(a,1))].
+
+given #426 (T,wt=15): 469 c3 = x | c1 = x | c2 = x | c7 = x | Diagonal(c3,c8).  [para(119(d,1),45(a,1))].
+
+given #427 (T,wt=15): 470 c3 = x | c1 = x | c2 = x | c7 = x | Diagonal(c8,c3).  [para(119(d,1),64(a,2))].
+
+given #428 (A,wt=24): 227 c3 = x | c1 = x | c2 = x | f2(y) = c3 | f2(y) = c1 | f2(y) = c2 | NextTo(x,y).  [para(75(b,1),111(d,1))].
+
+given #429 (T,wt=15): 545 c3 = x | c1 = x | c2 = x | c8 = x | Diagonal(c7,c3).  [para(121(d,1),45(a,2))].
+
+given #430 (T,wt=15): 546 c3 = x | c1 = x | c2 = x | c8 = x | Diagonal(c3,c7).  [para(121(d,1),64(a,1))].
+
+given #431 (T,wt=15): 601 c7 = c3 | c3 = x | c1 = x | c2 = x | -Diagonal(c8,c1).  [para(92(b,1),443(d,1))].
+
+given #432 (T,wt=15): 602 c8 = c3 | c3 = x | c1 = x | c2 = x | -Diagonal(c7,c1).  [para(98(b,1),443(d,1))].
+
+given #433 (A,wt=19): 228 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | c7 = c3 | -Diagonal(c2,x).  [para(75(b,1),221(c,2))].
+
+given #434 (T,wt=15): 603 c7 = c3 | c3 = x | c1 = x | c2 = x | -Diagonal(c3,c1).  [para(162(b,1),443(d,1))].
+
+given #435 (T,wt=15): 607 c7 = c3 | c3 = x | c1 = x | c2 = x | -Diagonal(c8,c2).  [para(92(b,1),444(d,1))].
+
+given #436 (T,wt=15): 608 c8 = c3 | c3 = x | c1 = x | c2 = x | -Diagonal(c7,c2).  [para(98(b,1),444(d,1))].
+
+given #437 (T,wt=15): 609 c7 = c3 | c3 = x | c1 = x | c2 = x | -Diagonal(c3,c2).  [para(162(b,1),444(d,1))].
+
+given #438 (A,wt=20): 229 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | c7 = c3 | f3(x) != c2.  [para(75(b,1),217(c,1,1))].
+
+given #439 (T,wt=15): 783 c8 = c3 | c7 = c2 | c7 = c1 | -Diagonal(c4,x) | c3 = x.  [para(758(a,1),60(a,1)),flip(e)].
+
+given #440 (T,wt=15): 785 c8 = c3 | c7 = c2 | c7 = c1 | -Diagonal(x,c4) | c3 = x.  [para(758(a,1),70(a,2))].
+
+given #441 (T,wt=15): 795 c8 = c3 | c7 = c2 | c7 = c1 | -Diagonal(x,c3) | c4 = x.  [resolve(781,d,42,b)].
+
+given #442 (T,wt=15): 800 c8 = c3 | c7 = c2 | c7 = c1 | -Diagonal(c3,x) | c4 = x.  [resolve(782,d,42,a),flip(e)].
+
+given #443 (A,wt=21): 235 c3 = x | c1 = x | c2 = x | f1(c4) = c1 | f1(x) = c2 | f1(c3) = c4.  [para(75(b,1),193(b,1,1))].
+
+given #444 (T,wt=15): 972 f1(f3(c4)) = c1 | f1(f3(c4)) = c2 | f3(c4) = f1(c3).  [para(174(a,1),87(a,1,1)),flip(c)].
+
+given #445 (T,wt=14): 2081 f1(f3(c4)) = c1 | f3(c4) = f1(c3) | Diagonal(f3(c4),c2).  [para(972(b,1),35(a,2))].
+
+given #446 (T,wt=14): 2082 f1(f3(c4)) = c1 | f3(c4) = f1(c3) | Diagonal(c2,f3(c4)).  [para(972(b,1),51(a,1))].
+
+given #447 (T,wt=14): 2094 f1(f3(c4)) = c1 | f3(c4) = f1(c3) | -Diagonal(c2,f1(c3)).  [factor(2083,b,d)].
+
+given #448 (A,wt=20): 238 c3 = x | c1 = x | c2 = x | f1(c4) = c1 | f1(c3) = c4 | Diagonal(x,c2).  [para(75(b,1),230(c,1))].
+
+given #449 (T,wt=14): 2095 f1(f3(c4)) = c1 | f3(c4) = f1(c3) | -Diagonal(f1(c3),c2).  [factor(2085,b,d)].
+
+given #450 (T,wt=15): 1009 f1(f2(c4)) = c1 | f1(f2(c4)) = c2 | f2(c4) = f1(c3).  [para(175(a,1),87(a,1,1)),flip(c)].
+
+given #451 (T,wt=14): 2133 f1(f2(c4)) = c1 | f2(c4) = f1(c3) | Diagonal(f2(c4),c2).  [para(1009(b,1),35(a,2))].
+
+given #452 (T,wt=14): 2134 f1(f2(c4)) = c1 | f2(c4) = f1(c3) | Diagonal(c2,f2(c4)).  [para(1009(b,1),51(a,1))].
+
+given #453 (A,wt=20): 239 f2(c3) = c3 | f2(c3) = c1 | f2(c3) = c2 | f1(c4) = c1 | f1(c4) = c2.  [resolve(112,d,191,c)].
+
+given #454 (T,wt=14): 2149 f1(f2(c4)) = c1 | f2(c4) = f1(c3) | -Diagonal(c2,f1(c3)).  [factor(2135,b,d)].
+
+given #455 (T,wt=14): 2150 f1(f2(c4)) = c1 | f2(c4) = f1(c3) | -Diagonal(f1(c3),c2).  [factor(2137,b,d)].
+
+given #456 (T,wt=15): 1091 f2(c7) = c1 | f2(c7) = c2 | c8 = c3 | f3(c7) != c3.  [para(242(a,1),36(a,2))].
+
+given #457 (T,wt=15): 1211 c4 = c3 | c4 = c1 | c4 = c2 | c7 = c3 | Butter(f1(c3)).  [para(181(e,2),25(a,1)),flip(a),flip(b),flip(c)].
+
+given #458 (A,wt=24): 241 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | f1(x) = c3 | f1(x) = c1 | f1(x) = c2.  [resolve(112,d,105,d)].
+
+given #459 (T,wt=15): 1220 c4 = c3 | c4 = c1 | c4 = c2 | c7 = c3 | -Honey(f1(c3)).  [para(181(e,2),48(a,1)),flip(a),flip(b),flip(c)].
+
+given #460 (T,wt=15): 1233 c4 = c3 | c4 = c1 | c4 = c2 | c7 = c3 | Ate(f1(c3)).  [para(181(e,2),88(b,1)),flip(a),flip(b),flip(c),merge(e)].
+
+given #461 (T,wt=15): 1333 f2(f1(c4)) = c1 | f2(f1(c4)) = c2 | f3(f1(c4)) != c3.  [para(244(a,1),36(a,2))].
+
+given #462 (T,wt=15): 1535 f3(c7) = c1 | f3(c7) = c2 | c8 = c3 | f2(c7) != c3.  [para(263(a,1),36(a,1)),flip(d)].
+
+given #463 (A,wt=24): 245 c3 = x | c1 = x | c2 = x | f2(y) = c3 | f2(y) = c1 | f2(y) = c2 | -Diagonal(y,x).  [para(75(b,1),112(d,2))].
+
+given #464 (T,wt=15): 1665 f2(c4) = c1 | f1(c4) = c1 | f1(c4) = c2 | NextTo(c4,c2).  [para(210(b,1),37(a,2))].
+
+given #465 (T,wt=15): 1666 f2(c4) = c1 | f1(c4) = c1 | f1(c4) = c2 | NextTo(c2,c4).  [para(210(b,1),52(a,1))].
+
+given #466 (T,wt=15): 1770 f3(f1(c4)) = c1 | f3(f1(c4)) = c2 | f2(f1(c4)) != c3.  [para(265(a,1),36(a,1)),flip(c)].
+
+given #467 (T,wt=15): 1874 f1(f3(c3)) = c1 | f1(f3(c3)) = c2 | f3(c3) = f1(c4).  [resolve(336,d,76,a),flip(c)].
+
+given #468 (A,wt=20): 246 f1(c4) = c1 | f1(c3) = c4 | f2(c2) = c3 | f2(c2) = c1 | f2(c2) = c2.  [resolve(231,c,112,d)].
+
+given #469 (T,wt=14): 2273 f1(f3(c3)) = c1 | f3(c3) = f1(c4) | Diagonal(f3(c3),c2).  [para(1874(b,1),35(a,2))].
+
+given #470 (T,wt=14): 2274 f1(f3(c3)) = c1 | f3(c3) = f1(c4) | Diagonal(c2,f3(c3)).  [para(1874(b,1),51(a,1))].
+
+given #471 (T,wt=14): 2293 f1(f3(c3)) = c1 | f3(c3) = f1(c4) | -Diagonal(c2,f1(c4)).  [factor(2275,b,d)].
+
+given #472 (T,wt=14): 2294 f1(f3(c3)) = c1 | f3(c3) = f1(c4) | -Diagonal(f1(c4),c2).  [factor(2277,b,d)].
+
+given #473 (A,wt=20): 248 c3 = x | c1 = x | c2 = x | f1(c4) = c1 | f1(c3) = c4 | Diagonal(c2,x).  [para(75(b,1),231(c,2))].
+
+given #474 (T,wt=15): 1875 f1(f2(c3)) = c1 | f1(f2(c3)) = c2 | f2(c3) = f1(c4).  [resolve(336,d,72,a),flip(c)].
+
+given #475 (T,wt=14): 2352 f1(f2(c3)) = c1 | f2(c3) = f1(c4) | Diagonal(f2(c3),c2).  [para(1875(b,1),35(a,2))].
+
+given #476 (T,wt=14): 2353 f1(f2(c3)) = c1 | f2(c3) = f1(c4) | Diagonal(c2,f2(c3)).  [para(1875(b,1),51(a,1))].
+
+given #477 (T,wt=14): 2369 f1(f2(c3)) = c1 | f2(c3) = f1(c4) | -Diagonal(c2,f1(c4)).  [factor(2354,b,d)].
+
+given #478 (A,wt=21): 249 c3 = x | c1 = x | c2 = x | f2(c4) = c1 | f2(c4) = c2 | f3(x) != c3.  [para(75(b,1),200(c,1,1))].
+
+given #479 (T,wt=14): 2370 f1(f2(c3)) = c1 | f2(c3) = f1(c4) | -Diagonal(f1(c4),c2).  [factor(2356,b,d)].
+
+given #480 (T,wt=15): 2084 f1(f3(c4)) = c1 | f3(c4) = f1(c3) | f3(c4) = f1(c2).  [para(972(b,1),87(a,1,1)),flip(c)].
+
+given #481 (T,wt=14): 2421 f3(c4) = f1(c3) | f3(c4) = f1(c2) | Diagonal(f3(c4),c1).  [para(2084(a,1),35(a,2))].
+
+given #482 (T,wt=14): 2422 f3(c4) = f1(c3) | f3(c4) = f1(c2) | Diagonal(c1,f3(c4)).  [para(2084(a,1),51(a,1))].
+
+given #483 (A,wt=16): 250 f3(c4) = c1 | f3(c4) = c2 | f2(c4) = c1 | f2(c4) = c2.  [resolve(206,a,200,c)].
+
+given #484 (T,wt=14): 2434 f3(c4) = f1(c3) | f3(c4) = f1(c2) | -Diagonal(c1,f1(c3)).  [factor(2423,a,d)].
+
+given #485 (T,wt=14): 2435 f3(c4) = f1(c3) | f3(c4) = f1(c2) | -Diagonal(c1,f1(c2)).  [factor(2423,b,d)].
+
+given #486 (T,wt=14): 2436 f3(c4) = f1(c3) | f3(c4) = f1(c2) | -Diagonal(f1(c3),c1).  [factor(2425,a,d)].
+
+given #487 (T,wt=14): 2437 f3(c4) = f1(c3) | f3(c4) = f1(c2) | -Diagonal(f1(c2),c1).  [factor(2425,b,d)].
+
+given #488 (A,wt=21): 256 c3 = x | c1 = x | c2 = x | f3(x) = c3 | f3(c4) = c1 | f3(c4) = c2.  [para(75(b,1),206(a,1,1))].
+
+given #489 (T,wt=15): 2136 f1(f2(c4)) = c1 | f2(c4) = f1(c3) | f2(c4) = f1(c2).  [para(1009(b,1),87(a,1,1)),flip(c)].
+
+given #490 (T,wt=14): 2531 f2(c4) = f1(c3) | f2(c4) = f1(c2) | Diagonal(f2(c4),c1).  [para(2136(a,1),35(a,2))].
+
+given #491 (T,wt=14): 2532 f2(c4) = f1(c3) | f2(c4) = f1(c2) | Diagonal(c1,f2(c4)).  [para(2136(a,1),51(a,1))].
+
+given #492 (T,wt=14): 2547 f2(c4) = f1(c3) | f2(c4) = f1(c2) | -Diagonal(c1,f1(c3)).  [factor(2533,a,d)].
+
+given #493 (A,wt=20): 258 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | f3(c4) = c2 | NextTo(x,c3).  [para(75(b,1),252(c,1))].
+
+given #494 (T,wt=14): 2548 f2(c4) = f1(c3) | f2(c4) = f1(c2) | -Diagonal(c1,f1(c2)).  [factor(2533,b,d)].
+
+given #495 (T,wt=14): 2549 f2(c4) = f1(c3) | f2(c4) = f1(c2) | -Diagonal(f1(c3),c1).  [factor(2535,a,d)].
+
+given #496 (T,wt=14): 2550 f2(c4) = f1(c3) | f2(c4) = f1(c2) | -Diagonal(f1(c2),c1).  [factor(2535,b,d)].
+
+given #497 (T,wt=15): 2276 f1(f3(c3)) = c1 | f3(c3) = f1(c4) | f3(c3) = f1(c2).  [para(1874(b,1),87(a,1,1)),flip(c)].
+
+given #498 (A,wt=20): 259 f3(c2) = c3 | f3(c2) = c1 | f3(c2) = c2 | f1(c4) = c1 | f1(c3) = c4.  [resolve(113,d,231,c)].
+
+given #499 (T,wt=14): 2616 f3(c3) = f1(c4) | f3(c3) = f1(c2) | Diagonal(f3(c3),c1).  [para(2276(a,1),35(a,2))].
+
+given #500 (T,wt=14): 2617 f3(c3) = f1(c4) | f3(c3) = f1(c2) | Diagonal(c1,f3(c3)).  [para(2276(a,1),51(a,1))].
+
+given #501 (T,wt=14): 2636 f3(c3) = f1(c4) | f3(c3) = f1(c2) | -Diagonal(c1,f1(c4)).  [factor(2618,a,d)].
+
+given #502 (T,wt=14): 2637 f3(c3) = f1(c4) | f3(c3) = f1(c2) | -Diagonal(c1,f1(c2)).  [factor(2618,b,d)].
+
+given #503 (A,wt=20): 260 f3(c3) = c3 | f3(c3) = c1 | f3(c3) = c2 | f1(c4) = c1 | f1(c4) = c2.  [resolve(113,d,191,c)].
+
+given #504 (T,wt=14): 2638 f3(c3) = f1(c4) | f3(c3) = f1(c2) | -Diagonal(f1(c4),c1).  [factor(2620,a,d)].
+
+given #505 (T,wt=14): 2639 f3(c3) = f1(c4) | f3(c3) = f1(c2) | -Diagonal(f1(c2),c1).  [factor(2620,b,d)].
+
+given #506 (T,wt=15): 2355 f1(f2(c3)) = c1 | f2(c3) = f1(c4) | f2(c3) = f1(c2).  [para(1875(b,1),87(a,1,1)),flip(c)].
+
+given #507 (T,wt=14): 2737 f2(c3) = f1(c4) | f2(c3) = f1(c2) | Diagonal(f2(c3),c1).  [para(2355(a,1),35(a,2))].
+
+given #508 (A,wt=24): 262 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | f1(x) = c3 | f1(x) = c1 | f1(x) = c2.  [resolve(113,d,105,d)].
+
+given #509 (T,wt=14): 2738 f2(c3) = f1(c4) | f2(c3) = f1(c2) | Diagonal(c1,f2(c3)).  [para(2355(a,1),51(a,1))].
+
+given #510 (T,wt=14): 2754 f2(c3) = f1(c4) | f2(c3) = f1(c2) | -Diagonal(c1,f1(c4)).  [factor(2739,a,d)].
+
+given #511 (T,wt=14): 2755 f2(c3) = f1(c4) | f2(c3) = f1(c2) | -Diagonal(c1,f1(c2)).  [factor(2739,b,d)].
+
+given #512 (T,wt=14): 2756 f2(c3) = f1(c4) | f2(c3) = f1(c2) | -Diagonal(f1(c4),c1).  [factor(2741,a,d)].
+
+given #513 (A,wt=24): 266 c3 = x | c1 = x | c2 = x | f3(y) = c3 | f3(y) = c1 | f3(y) = c2 | -Diagonal(y,x).  [para(75(b,1),113(d,2))].
+
+given #514 (T,wt=14): 2757 f2(c3) = f1(c4) | f2(c3) = f1(c2) | -Diagonal(f1(c2),c1).  [factor(2741,b,d)].
+
+given #515 (T,wt=15): 2424 f3(c4) = f1(c3) | f3(c4) = f1(c2) | f3(c4) = f1(c1).  [para(2084(a,1),87(a,1,1)),flip(c)].
+
+given #516 (T,wt=14): 2845 f3(c4) = f1(c2) | f3(c4) = f1(c1) | NextTo(c4,f1(c3)).  [para(2424(a,1),38(a,2))].
+
+given #517 (T,wt=14): 2846 f3(c4) = f1(c2) | f3(c4) = f1(c1) | -Diagonal(c4,f1(c3)).  [para(2424(a,1),55(a,2))].
+
+given #518 (A,wt=16): 267 f3(c4) = c1 | f3(c4) = c2 | f1(c4) = c1 | f1(c4) = c2.  [resolve(253,c,190,c)].
+
+given #519 (T,wt=14): 2847 f3(c4) = f1(c2) | f3(c4) = f1(c1) | NextTo(f1(c3),c4).  [para(2424(a,1),54(a,1))].
+
+given #520 (T,wt=14): 2848 f3(c4) = f1(c2) | f3(c4) = f1(c1) | -Diagonal(f1(c3),c4).  [para(2424(a,1),76(a,1))].
+
+given #521 (T,wt=15): 2457 f3(c4) = c1 | f2(c4) = c1 | f2(c4) = c2 | NextTo(c4,c2).  [para(250(b,1),38(a,2))].
+
+given #522 (T,wt=15): 2458 f3(c4) = c1 | f2(c4) = c1 | f2(c4) = c2 | -Diagonal(c4,c2).  [para(250(b,1),55(a,2))].
+
+given #523 (A,wt=20): 270 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | f3(c4) = c2 | -Diagonal(x,c3).  [para(75(b,1),253(c,1))].
+
+given #524 (T,wt=15): 2459 f3(c4) = c1 | f2(c4) = c1 | f2(c4) = c2 | NextTo(c2,c4).  [para(250(b,1),54(a,1))].
+
+given #525 (T,wt=15): 2460 f3(c4) = c1 | f2(c4) = c1 | f2(c4) = c2 | -Diagonal(c2,c4).  [para(250(b,1),76(a,1))].
+
+given #526 (T,wt=15): 2462 f3(c4) = c1 | f2(c4) = c1 | f2(c4) = c2 | c3 != c2.  [para(250(b,1),200(c,1)),flip(f),merge(d),merge(e)].
+
+given #527 (T,wt=15): 2534 f2(c4) = f1(c3) | f2(c4) = f1(c2) | f2(c4) = f1(c1).  [para(2136(a,1),87(a,1,1)),flip(c)].
+
+given #528 (A,wt=20): 271 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | f3(c4) = c2 | NextTo(c3,x).  [para(75(b,1),254(c,2))].
+
+given #529 (T,wt=14): 2955 f2(c4) = f1(c2) | f2(c4) = f1(c1) | NextTo(c4,f1(c3)).  [para(2534(a,1),37(a,2))].
+
+given #530 (T,wt=14): 2956 f2(c4) = f1(c2) | f2(c4) = f1(c1) | NextTo(f1(c3),c4).  [para(2534(a,1),52(a,1))].
+
+given #531 (T,wt=14): 2957 f2(c4) = f1(c2) | f2(c4) = f1(c1) | -Diagonal(c4,f1(c3)).  [para(2534(a,1),53(a,2))].
+
+given #532 (T,wt=14): 2958 f2(c4) = f1(c2) | f2(c4) = f1(c1) | -Diagonal(f1(c3),c4).  [para(2534(a,1),72(a,1))].
+
+given #533 (A,wt=20): 272 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | f3(c4) = c2 | -Diagonal(c3,x).  [para(75(b,1),255(c,2))].
+
+given #534 (T,wt=15): 2619 f3(c3) = f1(c4) | f3(c3) = f1(c2) | f3(c3) = f1(c1).  [para(2276(a,1),87(a,1,1)),flip(c)].
+
+given #535 (T,wt=14): 3041 f3(c3) = f1(c2) | f3(c3) = f1(c1) | NextTo(c3,f1(c4)).  [para(2619(a,1),38(a,2))].
+
+given #536 (T,wt=14): 3042 f3(c3) = f1(c2) | f3(c3) = f1(c1) | -Diagonal(c3,f1(c4)).  [para(2619(a,1),55(a,2))].
+
+given #537 (T,wt=14): 3043 f3(c3) = f1(c2) | f3(c3) = f1(c1) | NextTo(f1(c4),c3).  [para(2619(a,1),54(a,1))].
+
+given #538 (A,wt=20): 279 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | f3(x) = c2 | c7 = c3.  [para(75(b,1),268(b,1,1))].
+
+given #539 (T,wt=14): 3044 f3(c3) = f1(c2) | f3(c3) = f1(c1) | -Diagonal(f1(c4),c3).  [para(2619(a,1),76(a,1))].
+
+given #540 (T,wt=15): 2740 f2(c3) = f1(c4) | f2(c3) = f1(c2) | f2(c3) = f1(c1).  [para(2355(a,1),87(a,1,1)),flip(c)].
+
+given #541 (T,wt=14): 3140 f2(c3) = f1(c2) | f2(c3) = f1(c1) | NextTo(c3,f1(c4)).  [para(2740(a,1),37(a,2))].
+
+given #542 (T,wt=14): 3141 f2(c3) = f1(c2) | f2(c3) = f1(c1) | NextTo(f1(c4),c3).  [para(2740(a,1),52(a,1))].
+
+given #543 (A,wt=24): 280 c3 = x | c1 = x | c2 = x | f2(y) = c3 | f2(y) = c1 | f2(y) = c2 | -Diagonal(x,y).  [para(75(b,1),114(d,1))].
+
+given #544 (T,wt=14): 3142 f2(c3) = f1(c2) | f2(c3) = f1(c1) | -Diagonal(c3,f1(c4)).  [para(2740(a,1),53(a,2))].
+
+given #545 (T,wt=14): 3143 f2(c3) = f1(c2) | f2(c3) = f1(c1) | -Diagonal(f1(c4),c3).  [para(2740(a,1),72(a,1))].
+
+given #546 (T,wt=15): 2844 f3(c4) = f1(c2) | f3(c4) = f1(c1) | f2(c4) != f1(c3).  [para(2424(a,1),36(a,1)),flip(c)].
+
+given #547 (T,wt=15): 2904 f3(c4) = c1 | f1(c4) = c1 | f1(c4) = c2 | NextTo(c4,c2).  [para(267(b,1),38(a,2))].
+
+given #548 (A,wt=19): 281 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | c7 = c3 | NextTo(x,c2).  [para(75(b,1),275(c,1))].
+
+given #549 (T,wt=15): 2905 f3(c4) = c1 | f1(c4) = c1 | f1(c4) = c2 | NextTo(c2,c4).  [para(267(b,1),54(a,1))].
+
+given #550 (T,wt=15): 2954 f2(c4) = f1(c2) | f2(c4) = f1(c1) | f3(c4) != f1(c3).  [para(2534(a,1),36(a,2))].
+
+given #551 (T,wt=15): 3040 f3(c3) = f1(c2) | f3(c3) = f1(c1) | f2(c3) != f1(c4).  [para(2619(a,1),36(a,1)),flip(c)].
+
+given #552 (T,wt=15): 3139 f2(c3) = f1(c2) | f2(c3) = f1(c1) | f3(c3) != f1(c4).  [para(2740(a,1),36(a,2))].
+
+given #553 (A,wt=19): 282 f3(c4) = c1 | c7 = c3 | f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2.  [resolve(276,c,110,d)].
+
+given #554 (T,wt=16): 324 f1(c2) = c4 | f1(c1) = c4 | f3(c4) = c1 | f3(c4) = c2.  [resolve(318,c,255,c)].
+
+given #555 (T,wt=15): 3337 f1(c2) = c4 | f1(c1) = c4 | f3(c4) = c1 | NextTo(c4,c2).  [para(324(d,1),38(a,2))].
+
+given #556 (T,wt=15): 3338 f1(c2) = c4 | f1(c1) = c4 | f3(c4) = c1 | NextTo(c2,c4).  [para(324(d,1),54(a,1))].
+
+given #557 (T,wt=16): 325 f1(c2) = c4 | f1(c1) = c4 | f2(c4) = c1 | f2(c4) = c2.  [resolve(318,c,204,c)].
+
+given #558 (A,wt=19): 283 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | c7 = c3 | -Diagonal(x,c2).  [para(75(b,1),276(c,1))].
+
+given #559 (T,wt=15): 3356 f1(c2) = c4 | f1(c1) = c4 | f2(c4) = c1 | NextTo(c4,c2).  [para(325(d,1),37(a,2))].
+
+given #560 (T,wt=15): 3357 f1(c2) = c4 | f1(c1) = c4 | f2(c4) = c1 | NextTo(c2,c4).  [para(325(d,1),52(a,1))].
+
+given #561 (T,wt=16): 332 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | f1(c4) != c1.  [para(118(d,2),21(a,1))].
+
+given #562 (T,wt=16): 333 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | f1(c4) != c2.  [para(118(d,2),21(a,2)),flip(d)].
+
+given #563 (A,wt=19): 284 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | c7 = c3 | NextTo(c2,x).  [para(75(b,1),277(c,2))].
+
+given #564 (T,wt=16): 335 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | f1(c4) != c4.  [para(118(d,2),26(a,2)),flip(d)].
+
+given #565 (T,wt=16): 342 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | NextTo(f1(c4),c6).  [para(118(d,2),39(a,1))].
+
+given #566 (T,wt=16): 343 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | NextTo(c5,f1(c4)).  [para(118(d,2),39(a,2))].
+
+given #567 (T,wt=16): 353 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | -Diagonal(f1(c4),c6).  [para(118(d,2),57(a,1))].
+
+given #568 (A,wt=19): 285 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | c7 = c3 | -Diagonal(c2,x).  [para(75(b,1),278(c,2))].
+
+given #569 (T,wt=16): 354 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | -Diagonal(c5,f1(c4)).  [para(118(d,2),57(a,2))].
+
+given #570 (T,wt=16): 355 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | NextTo(f1(c4),c5).  [para(118(d,2),56(a,1))].
+
+given #571 (T,wt=16): 356 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | NextTo(c6,f1(c4)).  [para(118(d,2),56(a,2))].
+
+given #572 (T,wt=16): 362 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | -Diagonal(f1(c4),c5).  [para(118(d,2),67(a,1))].
+
+given #573 (A,wt=24): 286 c3 = x | c1 = x | c2 = x | f3(y) = c3 | f3(y) = c1 | f3(y) = c2 | NextTo(x,y).  [para(75(b,1),115(d,1))].
+
+given #574 (T,wt=16): 363 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | -Diagonal(c6,f1(c4)).  [para(118(d,2),67(a,2))].
+
+given #575 (T,wt=16): 372 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(x,f1(c4)) | c8 = x.  [para(118(d,2),62(a,2)),rewrite([85(2),85(5),85(8)])].
+
+given #576 (T,wt=16): 374 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(f1(c4),x) | c7 = x.  [para(118(d,2),63(a,1)),rewrite([86(2),86(5),86(8)])].
+
+given #577 (T,wt=16): 375 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(x,f1(c4)) | c7 = x.  [para(118(d,2),68(a,2)),rewrite([86(2),86(5),86(8)])].
+
+given #578 (A,wt=20): 291 c3 = x | c1 = x | c2 = x | f3(x) = c1 | c7 = c3 | f2(c4) = c1.  [para(75(b,1),273(a,1,1))].
+
+given #579 (T,wt=16): 377 c3 = x | c1 = x | c2 = x | -Diagonal(f1(c4),y) | y = x.  [para(118(d,2),60(a,1)),rewrite([87(2),87(4),87(6)]),flip(a),flip(b),flip(c)].
+
+given #580 (T,wt=16): 378 f1(x) = c1 | f1(x) = c2 | f1(c4) = x | f1(c3) = x.  [para(118(a,1),87(a,1,1))].
+
+given #581 (T,wt=13): 3574 c8 = c1 | c8 = c2 | f1(c3) = c7 | Ate(f1(c4)).  [para(378(c,2),43(a,1)),rewrite([85(2),85(5)])].
+
+given #582 (T,wt=13): 3575 c7 = c1 | c7 = c2 | f1(c3) = c8 | Ate(f1(c4)).  [para(378(c,2),44(a,1)),rewrite([86(2),86(5)])].
+
+given #583 (A,wt=19): 292 c3 = x | c1 = x | c2 = x | c7 = c3 | f2(c4) = c1 | NextTo(x,c1).  [para(75(b,1),287(c,1))].
+
+given #584 (T,wt=13): 3578 c7 = c1 | c7 = c2 | f1(c3) = c8 | -Honey(f1(c4)).  [para(378(c,2),65(a,1)),rewrite([86(2),86(5)])].
+
+given #585 (T,wt=13): 3579 c8 = c1 | c8 = c2 | f1(c3) = c7 | -Honey(f1(c4)).  [para(378(c,2),66(a,1)),rewrite([85(2),85(5)])].
+
+given #586 (T,wt=13): 3603 c8 = c1 | c8 = c2 | f1(c3) = c7 | c8 = c4.  [para(378(c,2),85(a,1,1)),rewrite([85(2),85(5),87(13)]),flip(d)].
+
+given #587 (T,wt=12): 4054 c8 = c1 | c8 = c2 | c8 = c4 | Diagonal(c3,c7).  [para(3603(c,1),35(a,2))].
+
+given #588 (A,wt=19): 293 c7 = c3 | f2(c4) = c1 | f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2.  [resolve(288,c,110,d)].
+
+given #589 (T,wt=12): 4055 c8 = c1 | c8 = c2 | c8 = c4 | Diagonal(c7,c3).  [para(3603(c,1),51(a,1))].
+
+given #590 (T,wt=13): 3606 c7 = c1 | c7 = c2 | f1(c3) = c8 | c7 = c4.  [para(378(c,2),86(a,1,1)),rewrite([86(2),86(5),87(13)]),flip(d)].
+
+given #591 (T,wt=12): 4095 c7 = c1 | c7 = c2 | c7 = c4 | Diagonal(c3,c8).  [para(3606(c,1),35(a,2))].
+
+given #592 (T,wt=12): 4096 c7 = c1 | c7 = c2 | c7 = c4 | Diagonal(c8,c3).  [para(3606(c,1),51(a,1))].
+
+given #593 (A,wt=19): 294 c3 = x | c1 = x | c2 = x | c7 = c3 | f2(c4) = c1 | -Diagonal(x,c1).  [para(75(b,1),288(c,1))].
+
+given #594 (T,wt=14): 3576 c8 = c1 | c8 = c2 | f1(c3) = c7 | Diagonal(f1(c4),c8).  [para(378(c,2),45(a,1)),rewrite([85(2),85(5)])].
+
+given #595 (T,wt=14): 3577 c7 = c1 | c7 = c2 | f1(c3) = c8 | Diagonal(c7,f1(c4)).  [para(378(c,2),45(a,2)),rewrite([86(2),86(5)])].
+
+given #596 (T,wt=14): 3584 c7 = c1 | c7 = c2 | f1(c3) = c8 | Diagonal(f1(c4),c7).  [para(378(c,2),64(a,1)),rewrite([86(2),86(5)])].
+
+given #597 (T,wt=14): 3585 c8 = c1 | c8 = c2 | f1(c3) = c7 | Diagonal(c8,f1(c4)).  [para(378(c,2),64(a,2)),rewrite([85(2),85(5)])].
+
+given #598 (A,wt=19): 295 c3 = x | c1 = x | c2 = x | c7 = c3 | f2(c4) = c1 | NextTo(c1,x).  [para(75(b,1),289(c,2))].
+
+given #599 (T,wt=14): 3602 c8 = c1 | f1(c4) = c7 | f1(c3) = c7 | c8 = c2.  [para(378(b,1),85(a,1)),rewrite([85(2)]),flip(d)].
+
+given #600 (T,wt=13): 4176 c8 = c1 | f1(c3) = c7 | c8 = c2 | Diagonal(c4,c7).  [para(3602(b,1),35(a,2))].
+
+given #601 (T,wt=13): 4177 c8 = c1 | f1(c3) = c7 | c8 = c2 | Diagonal(c7,c4).  [para(3602(b,1),51(a,1))].
+
+given #602 (T,wt=14): 3604 c7 = c1 | c7 = c2 | f1(c3) = c8 | f1(c4) = c8.  [para(378(c,2),85(a,1)),rewrite([85(2),86(2),85(5),86(5),85(10)])].
+
+given #603 (A,wt=24): 296 c3 = x | c1 = x | c2 = x | f3(y) = c3 | f3(y) = c1 | f3(y) = c2 | -Diagonal(x,y).  [para(75(b,1),116(d,1))].
+
+given #604 (T,wt=13): 4216 c7 = c1 | c7 = c2 | f1(c3) = c8 | Diagonal(c4,c8).  [para(3604(d,1),35(a,2))].
+
+given #605 (T,wt=13): 4217 c7 = c1 | c7 = c2 | f1(c3) = c8 | Diagonal(c8,c4).  [para(3604(d,1),51(a,1))].
+
+given #606 (T,wt=13): 4230 c7 = c1 | c7 = c2 | f1(c3) = c8 | c8 = c3.  [para(3604(d,1),784(d,1)),merge(e),merge(f),merge(g)].
+
+given #607 (T,wt=12): 4263 c7 = c1 | c7 = c2 | c8 = c3 | Diagonal(c3,c8).  [para(4230(c,1),35(a,2))].
+
+given #608 (A,wt=19): 297 c3 = x | c1 = x | c2 = x | c7 = c3 | f2(c4) = c1 | -Diagonal(c1,x).  [para(75(b,1),290(c,2))].
+
+given #609 (T,wt=12): 4264 c7 = c1 | c7 = c2 | c8 = c3 | Diagonal(c8,c3).  [para(4230(c,1),51(a,1))].
+
+given #610 (T,wt=14): 3614 c1 = x | c2 = x | f1(c3) = f1(x) | c4 = x.  [para(378(c,2),87(a,1,1)),rewrite([87(2),87(4),87(11)]),flip(a),flip(b)].
+
+given #611 (T,wt=13): 4290 c1 = x | c2 = x | c4 = x | Diagonal(c3,f1(x)).  [para(3614(c,1),35(a,2))].
+
+given #612 (T,wt=13): 4291 c1 = x | c2 = x | c4 = x | Diagonal(x,f1(c3)).  [para(3614(c,2),35(a,2))].
+
+given #613 (A,wt=20): 298 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | c7 = c3 | f2(x) != c2.  [para(75(b,1),274(c,1,1))].
+
+given #614 (T,wt=13): 4292 c1 = x | c2 = x | c4 = x | Diagonal(f1(x),c3).  [para(3614(c,1),51(a,1))].
+
+given #615 (T,wt=13): 4293 c1 = x | c2 = x | c4 = x | Diagonal(f1(c3),x).  [para(3614(c,2),51(a,1))].
+
+given #616 (T,wt=13): 4347 c1 = x | c2 = x | c4 = x | -Diagonal(f1(c3),c1).  [factor(4295,a,e)].
+
+given #617 (T,wt=13): 4348 c1 = x | c2 = x | c4 = x | -Diagonal(f1(c3),c2).  [factor(4295,b,e)].
+
+given #618 (A,wt=21): 304 c3 = x | c1 = x | c2 = x | f1(x) = c1 | f1(c3) = c4 | f1(c2) = c4.  [para(75(b,1),233(a,1,1))].
+
+given #619 (T,wt=13): 4349 c1 = x | c2 = x | c4 = x | -Diagonal(f1(c3),c4).  [factor(4295,c,e)].
+
+given #620 (T,wt=14): 3986 c8 = c1 | c8 = c2 | f1(c3) = c7 | -Diagonal(c1,f1(c4)).  [factor(3600,a,e)].
+
+given #621 (T,wt=14): 3987 c8 = c1 | c8 = c2 | f1(c3) = c7 | -Diagonal(c2,f1(c4)).  [factor(3600,b,e)].
+
+given #622 (T,wt=14): 3988 c7 = c1 | c7 = c2 | f1(c3) = c8 | -Diagonal(f1(c4),c1).  [factor(3605,a,e)].
+
+given #623 (A,wt=20): 306 f1(c3) = c4 | f1(c2) = c4 | f3(c1) = c3 | f3(c1) = c1 | f3(c1) = c2.  [resolve(299,c,116,d)].
+
+given #624 (T,wt=14): 3989 c7 = c1 | c7 = c2 | f1(c3) = c8 | -Diagonal(f1(c4),c2).  [factor(3605,b,e)].
+
+given #625 (T,wt=14): 3990 c7 = c1 | c7 = c2 | f1(c3) = c8 | -Diagonal(c1,f1(c4)).  [factor(3607,a,e)].
+
+given #626 (T,wt=14): 3991 c7 = c1 | c7 = c2 | f1(c3) = c8 | -Diagonal(c2,f1(c4)).  [factor(3607,b,e)].
+
+given #627 (T,wt=14): 3997 c8 = c1 | c8 = c2 | f1(c3) = c7 | -Diagonal(f1(c4),c1).  [factor(3615,a,e)].
+
+given #628 (A,wt=20): 307 f1(c3) = c4 | f1(c2) = c4 | f2(c1) = c3 | f2(c1) = c1 | f2(c1) = c2.  [resolve(299,c,114,d)].
+
+given #629 (T,wt=14): 3998 c8 = c1 | c8 = c2 | f1(c3) = c7 | -Diagonal(f1(c4),c2).  [factor(3615,b,e)].
+
+given #630 (T,wt=15): 3559 f1(c1) = c1 | f1(c1) = c2 | f1(c3) = c1 | Honey(f1(c4)).  [para(378(c,2),19(a,1))].
+
+given #631 (T,wt=15): 3560 f1(c2) = c1 | f1(c2) = c2 | f1(c3) = c2 | Honey(f1(c4)).  [para(378(c,2),20(a,1))].
+
+given #632 (T,wt=15): 3563 f1(x) = c1 | f1(c4) = x | f1(c3) = x | Diagonal(x,c2).  [para(378(b,1),35(a,2))].
+
+given #633 (A,wt=20): 309 c3 = x | c1 = x | c2 = x | f1(c3) = c4 | f1(c2) = c4 | Diagonal(x,c1).  [para(75(b,1),299(c,1))].
+
+given #634 (T,wt=12): 4575 f1(c2) = c1 | f1(c4) = c2 | f1(c3) = c2.  [resolve(3563,d,32,a)].
+
+given #635 (T,wt=11): 4580 f1(c2) = c1 | f1(c3) = c2 | Diagonal(c4,c2).  [para(4575(b,1),35(a,2))].
+
+given #636 (T,wt=11): 4581 f1(c2) = c1 | f1(c3) = c2 | Diagonal(c2,c4).  [para(4575(b,1),51(a,1))].
+
+given #637 (T,wt=12): 4583 f1(c2) = c1 | f1(c3) = c2 | f1(c2) = c4.  [para(4575(b,1),87(a,1,1))].
+
+given #638 (A,wt=23): 310 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c1 = x | f1(c3) = c4 | f1(c2) = c4.  [resolve(117,d,299,c)].
+
+given #639 (T,wt=11): 4662 f1(c2) = c1 | f1(c2) = c4 | Diagonal(c3,c2).  [para(4583(b,1),35(a,2))].
+
+given #640 (T,wt=11): 4663 f1(c2) = c1 | f1(c2) = c4 | Diagonal(c2,c3).  [para(4583(b,1),51(a,1))].
+
+given #641 (T,wt=12): 4665 f1(c2) = c1 | f1(c2) = c4 | f1(c2) = c3.  [para(4583(b,1),87(a,1,1))].
+
+given #642 (T,wt=11): 4746 f1(c2) = c1 | f1(c2) = c3 | Diagonal(c2,c4).  [para(4665(b,1),35(a,2))].
+
+given #643 (A,wt=23): 311 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c2 = x | f1(c4) = c1 | f1(c3) = c4.  [resolve(117,d,230,c)].
+
+given #644 (T,wt=11): 4747 f1(c2) = c1 | f1(c2) = c3 | Diagonal(c4,c2).  [para(4665(b,1),51(a,1))].
+
+given #645 (T,wt=12): 4749 f1(c2) = c1 | f1(c2) = c3 | f1(c4) = c2.  [para(4665(b,1),87(a,1,1))].
+
+given #646 (T,wt=14): 4582 f1(c2) = c1 | f1(c3) = c2 | -Diagonal(c2,x) | c4 = x.  [para(4575(b,1),60(a,1)),flip(d)].
+
+given #647 (T,wt=14): 4584 f1(c2) = c1 | f1(c3) = c2 | -Diagonal(x,c2) | c4 = x.  [para(4575(b,1),70(a,2))].
+
+given #648 (A,wt=23): 312 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c3 = x | f1(c4) = c1 | f1(c4) = c2.  [resolve(117,d,190,c)].
+
+given #649 (T,wt=14): 4586 f1(c2) = c1 | f1(c3) = c2 | c7 = c3 | c8 = c2.  [para(4575(b,1),92(b,1)),flip(d)].
+
+given #650 (T,wt=13): 5031 f1(c2) = c1 | c7 = c3 | c8 = c2 | Diagonal(c3,c2).  [para(4586(b,1),35(a,2))].
+
+given #651 (T,wt=13): 5032 f1(c2) = c1 | c7 = c3 | c8 = c2 | Diagonal(c2,c3).  [para(4586(b,1),51(a,1))].
+
+given #652 (T,wt=13): 5035 f1(c2) = c1 | c7 = c3 | c8 = c2 | c7 = c2.  [para(4586(b,1),158(b,1)),flip(e),merge(d)].
+
+given #653 (A,wt=27): 313 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | y = x | f1(y) = c3 | f1(y) = c1 | f1(y) = c2.  [resolve(117,d,110,d)].
+
+given #654 (T,wt=12): 5058 c7 = c3 | c8 = c2 | c7 = c2 | Diagonal(c2,c1).  [para(5035(a,1),35(a,2))].
+
+given #655 (T,wt=12): 5059 c7 = c3 | c8 = c2 | c7 = c2 | Diagonal(c1,c2).  [para(5035(a,1),51(a,1))].
+
+given #656 (T,wt=12): 5570 c7 = c3 | c8 = c2 | c7 = c2 | c5 = c1.  [resolve(5058,d,149,b)].
+
+given #657 (T,wt=11): 5573 c7 = c3 | c7 = c2 | c5 = c1 | Ate(c2).  [para(5570(b,1),44(a,1))].
+
+given #658 (A,wt=27): 314 c3 = x | c1 = x | c2 = x | f1(y) = c3 | f1(y) = c1 | f1(y) = c2 | -Diagonal(x,z) | z = y.  [para(75(b,1),117(d,1))].
+
+given #659 (T,wt=11): 5575 c7 = c3 | c7 = c2 | c5 = c1 | -Honey(c2).  [para(5570(b,1),65(a,1))].
+
+given #660 (T,wt=9): 5609 c7 = c3 | c7 = c2 | c5 = c1.  [resolve(5575,d,20,a)].
+
+given #661 (T,wt=8): 5610 c7 = c2 | c5 = c1 | Ate(c3).  [para(5609(a,1),43(a,1))].
+
+given #662 (T,wt=9): 5611 c7 = c2 | c5 = c1 | Diagonal(c3,c8).  [para(5609(a,1),45(a,1))].
+
+given #663 (A,wt=20): 316 c3 = x | c1 = x | c2 = x | f1(c3) = c4 | f1(c2) = c4 | Diagonal(c1,x).  [para(75(b,1),300(c,2))].
+
+given #664 (T,wt=9): 5612 c7 = c2 | c5 = c1 | Diagonal(c8,c3).  [para(5609(a,1),64(a,2))].
+
+given #665 (T,wt=10): 5614 c7 = c2 | c5 = c1 | f1(c3) = c8.  [para(5609(a,1),85(a,1,1))].
+
+given #666 (T,wt=12): 5613 c7 = c2 | c5 = c1 | -Diagonal(x,c3) | c8 = x.  [para(5609(a,1),62(a,2))].
+
+given #667 (T,wt=12): 5615 c7 = c2 | c5 = c1 | -Diagonal(c3,x) | c8 = x.  [para(5609(a,1),69(a,1))].
+
+given #668 (A,wt=21): 317 c3 = x | c1 = x | c2 = x | f3(c4) = c1 | f3(c4) = c2 | f2(x) != c3.  [para(75(b,1),251(c,1,1))].
+
+given #669 (T,wt=12): 5616 c7 = c2 | c5 = c1 | c8 = c3 | Diagonal(c3,c4).  [para(5609(a,1),95(b,1))].
+
+given #670 (T,wt=12): 5617 c7 = c2 | c5 = c1 | c8 = c3 | Diagonal(c4,c3).  [para(5609(a,1),96(b,2))].
+
+given #671 (T,wt=12): 5653 c7 = c2 | c5 = c1 | -Diagonal(c8,x) | c3 = x.  [resolve(5611,c,42,a),flip(d)].
+
+given #672 (T,wt=12): 5659 c7 = c2 | c5 = c1 | -Diagonal(x,c8) | c3 = x.  [resolve(5612,c,42,b)].
+
+given #673 (A,wt=21): 323 c3 = x | c1 = x | c2 = x | f1(c3) = x | f1(c2) = c4 | f1(c1) = c4.  [para(75(b,1),302(a,2))].
+
+given #674 (T,wt=13): 5036 f1(c2) = c1 | c7 = c3 | c8 = c2 | c4 = c2.  [para(4586(b,1),167(b,1)),flip(e),merge(d)].
+
+given #675 (T,wt=12): 5843 c7 = c3 | c8 = c2 | c4 = c2 | Diagonal(c2,c1).  [para(5036(a,1),35(a,2))].
+
+given #676 (T,wt=12): 5844 c7 = c3 | c8 = c2 | c4 = c2 | Diagonal(c1,c2).  [para(5036(a,1),51(a,1))].
+
+given #677 (T,wt=12): 5848 c7 = c3 | c8 = c2 | c4 = c2 | c5 = c1.  [resolve(5843,d,149,b)].
+
+given #678 (A,wt=20): 326 f1(c2) = c4 | f1(c1) = c4 | f3(c3) = c3 | f3(c3) = c1 | f3(c3) = c2.  [resolve(318,c,113,d)].
+
+given #679 (T,wt=11): 5851 c7 = c3 | c4 = c2 | c5 = c1 | Ate(c2).  [para(5848(b,1),44(a,1))].
+
+given #680 (T,wt=11): 5853 c7 = c3 | c4 = c2 | c5 = c1 | -Honey(c2).  [para(5848(b,1),65(a,1))].
+
+given #681 (T,wt=9): 5898 c7 = c3 | c4 = c2 | c5 = c1.  [resolve(5853,d,20,a)].
+
+given #682 (T,wt=8): 5899 c4 = c2 | c5 = c1 | Ate(c3).  [para(5898(a,1),43(a,1))].
+
+given #683 (A,wt=20): 327 f1(c2) = c4 | f1(c1) = c4 | f2(c3) = c3 | f2(c3) = c1 | f2(c3) = c2.  [resolve(318,c,112,d)].
+
+given #684 (T,wt=9): 5900 c4 = c2 | c5 = c1 | Diagonal(c3,c8).  [para(5898(a,1),45(a,1))].
+
+given #685 (T,wt=9): 5901 c4 = c2 | c5 = c1 | Diagonal(c8,c3).  [para(5898(a,1),64(a,2))].
+
+given #686 (T,wt=10): 5903 c4 = c2 | c5 = c1 | f1(c3) = c8.  [para(5898(a,1),85(a,1,1))].
+
+given #687 (T,wt=12): 5902 c4 = c2 | c5 = c1 | -Diagonal(x,c3) | c8 = x.  [para(5898(a,1),62(a,2))].
+
+given #688 (A,wt=20): 329 c3 = x | c1 = x | c2 = x | f1(c2) = c4 | f1(c1) = c4 | Diagonal(c3,x).  [para(75(b,1),318(c,2))].
+
+given #689 (T,wt=12): 5904 c4 = c2 | c5 = c1 | -Diagonal(c3,x) | c8 = x.  [para(5898(a,1),69(a,1))].
+
+given #690 (T,wt=12): 5905 c4 = c2 | c5 = c1 | c8 = c3 | Diagonal(c3,c4).  [para(5898(a,1),95(b,1))].
+
+given #691 (T,wt=12): 5906 c4 = c2 | c5 = c1 | c8 = c3 | Diagonal(c4,c3).  [para(5898(a,1),96(b,2))].
+
+given #692 (T,wt=12): 5931 c4 = c2 | c5 = c1 | c8 = c3 | -Diagonal(c2,c3).  [factor(5908,a,e)].
+
+given #693 (A,wt=20): 338 f1(f3(x)) = c3 | f1(f3(x)) = c1 | f1(f3(x)) = c2 | f2(x) != f1(c4).  [para(118(d,2),36(a,1)),flip(d)].
+
+given #694 (T,wt=12): 5932 c4 = c2 | c5 = c1 | c8 = c3 | -Diagonal(c3,c2).  [factor(5909,a,e)].
+
+given #695 (T,wt=12): 5959 c4 = c2 | c5 = c1 | -Diagonal(c8,x) | c3 = x.  [resolve(5900,c,42,a),flip(d)].
+
+given #696 (T,wt=12): 5965 c4 = c2 | c5 = c1 | -Diagonal(x,c8) | c3 = x.  [resolve(5901,c,42,b)].
+
+given #697 (T,wt=13): 5061 c7 = c3 | c8 = c2 | c7 = c2 | f1(c1) = c2.  [para(5035(a,1),87(a,1,1))].
+
+given #698 (A,wt=20): 339 f1(f2(x)) = c3 | f1(f2(x)) = c1 | f1(f2(x)) = c2 | f3(x) != f1(c4).  [para(118(d,2),36(a,2))].
+
+given #699 (T,wt=13): 5618 c7 = c2 | c5 = c1 | c8 = c3 | f1(c4) = c3.  [para(5609(a,1),98(b,2))].
+
+given #700 (T,wt=13): 5664 c8 = c3 | c7 = c2 | c5 = c1 | f1(c3) = c4.  [para(74(b,1),5614(c,2))].
+
+given #701 (T,wt=13): 5846 c7 = c3 | c8 = c2 | c4 = c2 | f1(c1) = c2.  [para(5036(a,1),87(a,1,1))].
+
+given #702 (T,wt=13): 5907 c4 = c2 | c5 = c1 | c8 = c3 | f1(c4) = c3.  [para(5898(a,1),98(b,2))].
+
+given #703 (A,wt=19): 340 f1(f2(x)) = c3 | f1(f2(x)) = c1 | f1(f2(x)) = c2 | NextTo(x,f1(c4)).  [para(118(d,2),37(a,2))].
+
+given #704 (T,wt=13): 5970 c8 = c3 | c4 = c2 | c5 = c1 | f1(c3) = c4.  [para(74(b,1),5903(c,2))].
+
+given #705 (T,wt=14): 4587 f1(c2) = c1 | f1(c3) = c2 | c8 = c3 | c7 = c2.  [para(4575(b,1),98(b,1)),flip(d)].
+
+given #706 (T,wt=13): 6280 f1(c2) = c1 | c8 = c3 | c7 = c2 | Diagonal(c3,c2).  [para(4587(b,1),35(a,2))].
+
+given #707 (T,wt=13): 6281 f1(c2) = c1 | c8 = c3 | c7 = c2 | Diagonal(c2,c3).  [para(4587(b,1),51(a,1))].
+
+given #708 (A,wt=19): 341 f1(f3(x)) = c3 | f1(f3(x)) = c1 | f1(f3(x)) = c2 | NextTo(x,f1(c4)).  [para(118(d,2),38(a,2))].
+
+given #709 (T,wt=14): 4588 f1(c2) = c1 | f1(c3) = c2 | c7 = c3 | c3 = c2.  [para(4575(b,1),162(b,1)),flip(d)].
+
+given #710 (T,wt=13): 6339 f1(c2) = c1 | c7 = c3 | c3 = c2 | Diagonal(c3,c2).  [para(4588(b,1),35(a,2))].
+
+given #711 (T,wt=13): 6340 f1(c2) = c1 | c7 = c3 | c3 = c2 | Diagonal(c2,c3).  [para(4588(b,1),51(a,1))].
+
+given #712 (T,wt=13): 6343 f1(c2) = c1 | c7 = c3 | c3 = c2 | c7 = c2.  [para(4588(b,1),158(b,1)),flip(e),merge(d)].
+
+given #713 (A,wt=19): 361 f1(f2(x)) = c3 | f1(f2(x)) = c1 | f1(f2(x)) = c2 | NextTo(f1(c4),x).  [para(118(d,2),52(a,1))].
+
+given #714 (T,wt=12): 6366 c7 = c3 | c3 = c2 | c7 = c2 | Diagonal(c2,c1).  [para(6343(a,1),35(a,2))].
+
+given #715 (T,wt=12): 6367 c7 = c3 | c3 = c2 | c7 = c2 | Diagonal(c1,c2).  [para(6343(a,1),51(a,1))].
+
+given #716 (T,wt=13): 6344 f1(c2) = c1 | c7 = c3 | c3 = c2 | c4 = c2.  [para(4588(b,1),167(b,1)),flip(e),merge(d)].
+
+given #717 (T,wt=12): 6401 c7 = c3 | c3 = c2 | c4 = c2 | Diagonal(c2,c1).  [para(6344(a,1),35(a,2))].
+
+given #718 (A,wt=19): 364 f1(f2(x)) = c3 | f1(f2(x)) = c1 | f1(f2(x)) = c2 | -Diagonal(x,f1(c4)).  [para(118(d,2),53(a,2))].
+
+given #719 (T,wt=12): 6402 c7 = c3 | c3 = c2 | c4 = c2 | Diagonal(c1,c2).  [para(6344(a,1),51(a,1))].
+
+given #720 (T,wt=13): 6369 c7 = c3 | c3 = c2 | c7 = c2 | f1(c1) = c2.  [para(6343(a,1),87(a,1,1))].
+
+given #721 (T,wt=13): 6404 c7 = c3 | c3 = c2 | c4 = c2 | f1(c1) = c2.  [para(6344(a,1),87(a,1,1))].
+
+given #722 (T,wt=14): 4654 f1(c2) = c1 | f1(c3) = c2 | -Diagonal(x,c4) | c2 = x.  [resolve(4580,c,42,b)].
+
+given #723 (A,wt=19): 365 f1(f3(x)) = c3 | f1(f3(x)) = c1 | f1(f3(x)) = c2 | -Diagonal(x,f1(c4)).  [para(118(d,2),55(a,2))].
+
+given #724 (T,wt=14): 4658 f1(c2) = c1 | f1(c3) = c2 | -Diagonal(c4,x) | c2 = x.  [resolve(4581,c,42,a),flip(d)].
+
+given #725 (T,wt=14): 4664 f1(c2) = c1 | f1(c2) = c4 | -Diagonal(c2,x) | c3 = x.  [para(4583(b,1),60(a,1)),flip(d)].
+
+given #726 (T,wt=14): 4666 f1(c2) = c1 | f1(c2) = c4 | -Diagonal(x,c2) | c3 = x.  [para(4583(b,1),70(a,2))].
+
+given #727 (T,wt=14): 4667 f1(c2) = c1 | f1(c2) = c4 | c7 = c3 | c7 = c2.  [para(4583(b,1),158(b,1)),flip(d)].
+
+given #728 (A,wt=19): 366 f1(f2(x)) = c3 | f1(f2(x)) = c1 | f1(f2(x)) = c2 | -Diagonal(f1(c4),x).  [para(118(d,2),72(a,1))].
+
+given #729 (T,wt=13): 6489 f1(c2) = c1 | c7 = c3 | c7 = c2 | Diagonal(c2,c4).  [para(4667(b,1),35(a,2))].
+
+given #730 (T,wt=13): 6490 f1(c2) = c1 | c7 = c3 | c7 = c2 | Diagonal(c4,c2).  [para(4667(b,1),51(a,1))].
+
+given #731 (T,wt=14): 4668 f1(c2) = c1 | f1(c2) = c4 | c7 = c3 | c4 = c2.  [para(4583(b,1),167(b,1)),flip(d)].
+
+given #732 (T,wt=13): 6547 f1(c2) = c1 | c7 = c3 | c4 = c2 | Diagonal(c2,c4).  [para(4668(b,1),35(a,2))].
+
+given #733 (A,wt=19): 367 f1(f3(x)) = c3 | f1(f3(x)) = c1 | f1(f3(x)) = c2 | NextTo(f1(c4),x).  [para(118(d,2),54(a,1))].
+
+given #734 (T,wt=13): 6548 f1(c2) = c1 | c7 = c3 | c4 = c2 | Diagonal(c4,c2).  [para(4668(b,1),51(a,1))].
+
+given #735 (T,wt=14): 4740 f1(c2) = c1 | f1(c2) = c4 | -Diagonal(x,c3) | c2 = x.  [resolve(4662,c,42,b)].
+
+given #736 (T,wt=14): 4743 f1(c2) = c1 | f1(c2) = c4 | -Diagonal(c3,x) | c2 = x.  [resolve(4663,c,42,a),flip(d)].
+
+given #737 (T,wt=14): 4748 f1(c2) = c1 | f1(c2) = c3 | -Diagonal(c4,x) | c2 = x.  [para(4665(b,1),60(a,1)),flip(d)].
+
+given #738 (A,wt=19): 368 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c5 = c1 | f1(c4) = c2.  [para(118(d,2),58(b,1))].
+
+given #739 (T,wt=14): 4750 f1(c2) = c1 | f1(c2) = c3 | -Diagonal(x,c4) | c2 = x.  [para(4665(b,1),70(a,2))].
+
+given #740 (T,wt=14): 4772 f1(c2) = c1 | f1(c2) = c3 | c7 = c3 | c3 = c2.  [resolve(4746,c,168,b)].
+
+given #741 (T,wt=14): 4778 f1(c2) = c1 | f1(c2) = c3 | c8 = c3 | c7 = c2.  [resolve(4746,c,99,b)].
+
+given #742 (T,wt=14): 4779 f1(c2) = c1 | f1(c2) = c3 | c7 = c3 | c8 = c2.  [resolve(4746,c,91,b)].
+
+given #743 (A,wt=19): 369 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | f1(c4) = c5.  [para(118(d,2),58(b,2)),flip(e)].
+
+given #744 (T,wt=14): 4780 f1(c2) = c1 | f1(c2) = c3 | -Diagonal(x,c2) | c4 = x.  [resolve(4746,c,42,b)].
+
+given #745 (T,wt=14): 4879 f1(c2) = c1 | f1(c2) = c3 | -Diagonal(c2,x) | c4 = x.  [resolve(4747,c,42,a),flip(d)].
+
+given #746 (T,wt=14): 5051 f1(c2) = c1 | c7 = c3 | c8 = c2 | f2(c3) = c2.  [resolve(5031,d,1717,c),merge(d)].
+
+given #747 (T,wt=13): 6720 f1(c2) = c1 | c7 = c3 | c8 = c2 | NextTo(c3,c2).  [para(5051(d,1),37(a,2))].
+
+given #748 (A,wt=19): 370 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | c6 = c1 | f1(c4) = c2.  [para(118(d,2),59(b,1))].
+
+given #749 (T,wt=13): 6721 f1(c2) = c1 | c7 = c3 | c8 = c2 | NextTo(c2,c3).  [para(5051(d,1),52(a,1))].
+
+given #750 (T,wt=13): 6722 f1(c2) = c1 | c7 = c3 | c8 = c2 | -Diagonal(c3,c2).  [para(5051(d,1),53(a,2))].
+
+given #751 (T,wt=10): 6742 f1(c2) = c1 | c7 = c3 | c8 = c2.  [resolve(6722,d,5031,d),merge(d),merge(e),merge(f)].
+
+given #752 (T,wt=9): 6743 c7 = c3 | c8 = c2 | Diagonal(c2,c1).  [para(6742(a,1),35(a,2))].
+
+given #753 (A,wt=19): 371 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c6 = c1 | f1(c4) = c6.  [para(118(d,2),59(b,2)),flip(e)].
+
+given #754 (T,wt=9): 6744 c7 = c3 | c8 = c2 | Diagonal(c1,c2).  [para(6742(a,1),51(a,1))].
+
+given #755 (T,wt=9): 6748 c7 = c3 | c8 = c2 | c5 = c1.  [resolve(6743,c,149,b)].
+
+given #756 (T,wt=8): 6810 c7 = c3 | c5 = c1 | Ate(c2).  [para(6748(b,1),44(a,1))].
+
+given #757 (T,wt=8): 6812 c7 = c3 | c5 = c1 | -Honey(c2).  [para(6748(b,1),65(a,1))].
+
+given #758 (A,wt=19): 373 f1(f3(x)) = c3 | f1(f3(x)) = c1 | f1(f3(x)) = c2 | -Diagonal(f1(c4),x).  [para(118(d,2),76(a,1))].
+
+given #759 (T,wt=6): 6844 c7 = c3 | c5 = c1.  [resolve(6812,c,20,a)].
+
+given #760 (T,wt=5): 6875 c5 = c1 | Ate(c3).  [para(6844(a,1),43(a,1))].
+
+given #761 (T,wt=6): 6876 c5 = c1 | Diagonal(c3,c8).  [para(6844(a,1),45(a,1))].
+
+given #762 (T,wt=6): 6877 c5 = c1 | Diagonal(c8,c3).  [para(6844(a,1),64(a,2))].
+
+given #763 (A,wt=18): 376 f1(x) = c1 | f1(x) = c2 | f1(c4) = x | -Diagonal(c3,y) | y = x.  [para(118(a,1),60(a,1))].
+
+given #764 (T,wt=7): 6879 c5 = c1 | f1(c3) = c8.  [para(6844(a,1),85(a,1,1))].
+
+given #765 (T,wt=9): 6878 c5 = c1 | -Diagonal(x,c3) | c8 = x.  [para(6844(a,1),62(a,2))].
+
+given #766 (T,wt=9): 6880 c5 = c1 | -Diagonal(c3,x) | c8 = x.  [para(6844(a,1),69(a,1))].
+
+given #767 (T,wt=9): 6881 c5 = c1 | c8 = c3 | Diagonal(c3,c4).  [para(6844(a,1),95(b,1))].
+
+given #768 (A,wt=16): 380 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(f1(c4),x) | c8 = x.  [para(118(d,2),69(a,1)),rewrite([85(2),85(5),85(8)])].
+
+given #769 (T,wt=9): 6882 c5 = c1 | c8 = c3 | Diagonal(c4,c3).  [para(6844(a,1),96(b,2))].
+
+given #770 (T,wt=9): 6919 c5 = c1 | -Diagonal(c8,x) | c3 = x.  [resolve(6876,b,42,a),flip(c)].
+
+given #771 (T,wt=9): 6925 c5 = c1 | -Diagonal(x,c8) | c3 = x.  [resolve(6877,b,42,b)].
+
+given #772 (T,wt=10): 6746 c7 = c3 | c8 = c2 | f1(c1) = c2.  [para(6742(a,1),87(a,1,1))].
+
+given #773 (A,wt=19): 381 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | NextTo(f1(c4),c6).  [para(118(d,2),77(b,1))].
+
+given #774 (T,wt=10): 6883 c5 = c1 | c8 = c3 | f1(c4) = c3.  [para(6844(a,1),98(b,2))].
+
+given #775 (T,wt=10): 6962 c8 = c3 | c5 = c1 | f1(c3) = c4.  [para(74(b,1),6879(b,2))].
+
+given #776 (T,wt=12): 6745 c7 = c3 | c8 = c2 | -Diagonal(c1,x) | c2 = x.  [para(6742(a,1),60(a,1)),flip(d)].
+
+given #777 (T,wt=12): 6747 c7 = c3 | c8 = c2 | -Diagonal(x,c1) | c2 = x.  [para(6742(a,1),70(a,2))].
+
+given #778 (A,wt=19): 382 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | c5 = c1 | NextTo(c2,f1(c4)).  [para(118(d,2),77(b,2))].
+
+given #779 (T,wt=12): 6749 c7 = c3 | c8 = c2 | -Diagonal(x,c2) | c1 = x.  [resolve(6743,c,42,b)].
+
+given #780 (T,wt=12): 6809 c7 = c3 | c8 = c2 | -Diagonal(c2,x) | c1 = x.  [resolve(6744,c,42,a),flip(d)].
+
+given #781 (T,wt=12): 6884 c5 = c1 | c8 = c3 | -Diagonal(x,c3) | c4 = x.  [para(6844(a,1),130(b,2))].
+
+given #782 (T,wt=12): 6885 c5 = c1 | c8 = c3 | -Diagonal(c3,x) | c4 = x.  [para(6844(a,1),132(b,1))].
+
+given #783 (A,wt=19): 383 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | -Diagonal(f1(c4),c6).  [para(118(d,2),78(b,1))].
+
+given #784 (T,wt=12): 7020 c5 = c1 | c8 = c3 | -Diagonal(c4,x) | c3 = x.  [resolve(6881,c,42,a),flip(d)].
+
+given #785 (T,wt=12): 7039 c5 = c1 | c8 = c3 | -Diagonal(x,c4) | c3 = x.  [resolve(6882,c,42,b)].
+
+given #786 (T,wt=14): 6359 f1(c2) = c1 | c7 = c3 | c3 = c2 | f2(c3) = c2.  [resolve(6339,d,1717,c),merge(d)].
+
+given #787 (T,wt=13): 7162 f1(c2) = c1 | c7 = c3 | c3 = c2 | NextTo(c3,c2).  [para(6359(d,1),37(a,2))].
+
+given #788 (A,wt=19): 384 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | c5 = c1 | -Diagonal(c2,f1(c4)).  [para(118(d,2),78(b,2))].
+
+given #789 (T,wt=13): 7163 f1(c2) = c1 | c7 = c3 | c3 = c2 | NextTo(c2,c3).  [para(6359(d,1),52(a,1))].
+
+given #790 (T,wt=13): 7164 f1(c2) = c1 | c7 = c3 | c3 = c2 | -Diagonal(c3,c2).  [para(6359(d,1),53(a,2))].
+
+given #791 (T,wt=10): 7180 f1(c2) = c1 | c7 = c3 | c3 = c2.  [resolve(7164,d,6339,d),merge(d),merge(e),merge(f)].
+
+given #792 (T,wt=9): 7181 c7 = c3 | c3 = c2 | Diagonal(c2,c1).  [para(7180(a,1),35(a,2))].
+
+given #793 (A,wt=18): 385 f1(x) = c1 | f1(x) = c2 | f1(c4) = x | -Diagonal(y,c3) | x = y.  [para(118(a,1),70(a,2))].
+
+given #794 (T,wt=9): 7182 c7 = c3 | c3 = c2 | Diagonal(c1,c2).  [para(7180(a,1),51(a,1))].
+
+given #795 (T,wt=10): 7184 c7 = c3 | c3 = c2 | f1(c1) = c2.  [para(7180(a,1),87(a,1,1))].
+
+given #796 (T,wt=12): 7183 c7 = c3 | c3 = c2 | -Diagonal(c1,x) | c2 = x.  [para(7180(a,1),60(a,1)),flip(d)].
+
+given #797 (T,wt=12): 7185 c7 = c3 | c3 = c2 | -Diagonal(x,c1) | c2 = x.  [para(7180(a,1),70(a,2))].
+
+given #798 (A,wt=16): 386 c3 = x | c1 = x | c2 = x | -Diagonal(y,f1(c4)) | x = y.  [para(118(d,2),70(a,2)),rewrite([87(2),87(4),87(6)]),flip(a),flip(b),flip(c)].
+
+given #799 (T,wt=12): 7186 c7 = c3 | c3 = c2 | -Diagonal(x,c2) | c1 = x.  [resolve(7181,c,42,b)].
+
+given #800 (T,wt=12): 7200 c7 = c3 | c3 = c2 | -Diagonal(c2,x) | c1 = x.  [resolve(7182,c,42,a),flip(d)].
+
+given #801 (T,wt=14): 6492 f1(c2) = c1 | c7 = c3 | c7 = c2 | f1(c4) = c2.  [para(4667(b,1),87(a,1,1))].
+
+given #802 (T,wt=14): 6531 f1(c2) = c1 | c7 = c3 | c7 = c2 | f3(c4) = c1.  [resolve(6489,d,278,c),merge(e)].
+
+given #803 (A,wt=19): 387 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | c5 = c1 | NextTo(f1(c4),c2).  [para(118(d,2),79(b,1))].
+
+given #804 (T,wt=13): 7287 f1(c2) = c1 | c7 = c3 | c7 = c2 | NextTo(c4,c1).  [para(6531(d,1),38(a,2))].
+
+given #805 (T,wt=13): 7288 f1(c2) = c1 | c7 = c3 | c7 = c2 | -Diagonal(c4,c1).  [para(6531(d,1),55(a,2))].
+
+given #806 (T,wt=13): 7289 f1(c2) = c1 | c7 = c3 | c7 = c2 | NextTo(c1,c4).  [para(6531(d,1),54(a,1))].
+
+given #807 (T,wt=13): 7290 f1(c2) = c1 | c7 = c3 | c7 = c2 | -Diagonal(c1,c4).  [para(6531(d,1),76(a,1))].
+
+given #808 (A,wt=19): 388 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | NextTo(c6,f1(c4)).  [para(118(d,2),79(b,2))].
+
+given #809 (T,wt=14): 6535 f1(c2) = c1 | c7 = c3 | c7 = c2 | f2(c4) = c1.  [resolve(6489,d,221,c),merge(e)].
+
+given #810 (T,wt=14): 6550 f1(c2) = c1 | c7 = c3 | c4 = c2 | f1(c4) = c2.  [para(4668(b,1),87(a,1,1))].
+
+given #811 (T,wt=14): 6561 f1(c2) = c1 | c7 = c3 | c4 = c2 | f3(c4) = c1.  [resolve(6547,d,278,c),merge(e)].
+
+given #812 (T,wt=13): 7390 f1(c2) = c1 | c7 = c3 | c4 = c2 | NextTo(c4,c1).  [para(6561(d,1),38(a,2))].
+
+given #813 (A,wt=19): 389 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | c5 = c1 | -Diagonal(f1(c4),c2).  [para(118(d,2),80(b,1))].
+
+given #814 (T,wt=13): 7391 f1(c2) = c1 | c7 = c3 | c4 = c2 | -Diagonal(c4,c1).  [para(6561(d,1),55(a,2))].
+
+given #815 (T,wt=13): 7392 f1(c2) = c1 | c7 = c3 | c4 = c2 | NextTo(c1,c4).  [para(6561(d,1),54(a,1))].
+
+given #816 (T,wt=13): 7393 f1(c2) = c1 | c7 = c3 | c4 = c2 | -Diagonal(c1,c4).  [para(6561(d,1),76(a,1))].
+
+given #817 (T,wt=14): 6565 f1(c2) = c1 | c7 = c3 | c4 = c2 | f2(c4) = c1.  [resolve(6547,d,221,c),merge(e)].
+
+given #818 (A,wt=19): 390 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | -Diagonal(c6,f1(c4)).  [para(118(d,2),80(b,2))].
+
+given #819 (T,wt=14): 6911 c5 = c1 | f1(c2) = c1 | f1(c2) = c4 | c8 = c2.  [resolve(6876,b,4743,c),flip(d)].
+
+given #820 (T,wt=13): 7450 c5 = c1 | f1(c2) = c1 | c8 = c2 | Diagonal(c2,c4).  [para(6911(c,1),35(a,2))].
+
+given #821 (T,wt=13): 7451 c5 = c1 | f1(c2) = c1 | c8 = c2 | Diagonal(c4,c2).  [para(6911(c,1),51(a,1))].
+
+given #822 (T,wt=14): 6912 c5 = c1 | f1(c3) = c1 | f1(c3) = c2 | c8 = c4.  [resolve(6876,b,1885,c),flip(d)].
+
+given #823 (A,wt=19): 391 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c6 = c1 | NextTo(f1(c4),c2).  [para(118(d,2),81(b,1))].
+
+given #824 (T,wt=13): 7479 c5 = c1 | f1(c3) = c1 | c8 = c4 | Diagonal(c3,c2).  [para(6912(c,1),35(a,2))].
+
+given #825 (T,wt=13): 7480 c5 = c1 | f1(c3) = c1 | c8 = c4 | Diagonal(c2,c3).  [para(6912(c,1),51(a,1))].
+
+given #826 (T,wt=13): 7504 c5 = c1 | f1(c3) = c1 | c8 = c4 | c8 = c2.  [para(6912(c,1),6879(b,1)),flip(e),merge(d)].
+
+given #827 (T,wt=12): 7539 c5 = c1 | c8 = c4 | c8 = c2 | Diagonal(c3,c1).  [para(7504(b,1),35(a,2))].
+
+given #828 (A,wt=19): 392 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c6 = c1 | NextTo(c5,f1(c4)).  [para(118(d,2),81(b,2))].
+
+given #829 (T,wt=12): 7540 c5 = c1 | c8 = c4 | c8 = c2 | Diagonal(c1,c3).  [para(7504(b,1),51(a,1))].
+
+given #830 (T,wt=12): 7563 c5 = c1 | c8 = c4 | c8 = c2 | c8 = c1.  [para(7504(b,1),6879(b,1)),flip(e),merge(d)].
+
+given #831 (T,wt=11): 7580 c5 = c1 | c8 = c2 | c8 = c1 | Ate(c4).  [para(7563(b,1),44(a,1))].
+
+given #832 (T,wt=12): 7581 c5 = c1 | c8 = c2 | c8 = c1 | Diagonal(c7,c4).  [para(7563(b,1),45(a,2))].
+
+given #833 (A,wt=19): 393 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c6 = c1 | -Diagonal(f1(c4),c2).  [para(118(d,2),82(b,1))].
+
+given #834 (T,wt=12): 7582 c5 = c1 | c8 = c2 | c8 = c1 | Diagonal(c4,c7).  [para(7563(b,1),64(a,1))].
+
+given #835 (T,wt=12): 7592 c5 = c1 | c8 = c2 | c8 = c1 | Diagonal(c3,c4).  [para(7563(b,1),6876(b,2)),merge(d)].
+
+given #836 (T,wt=12): 7593 c5 = c1 | c8 = c2 | c8 = c1 | Diagonal(c4,c3).  [para(7563(b,1),6877(b,1)),merge(d)].
+
+given #837 (T,wt=13): 7542 c5 = c1 | c8 = c4 | c8 = c2 | f1(c1) = c3.  [para(7504(b,1),87(a,1,1))].
+
+given #838 (A,wt=19): 394 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c6 = c1 | -Diagonal(c5,f1(c4)).  [para(118(d,2),82(b,2))].
+
+given #839 (T,wt=13): 7584 c5 = c1 | c8 = c2 | c8 = c1 | f1(c4) = c7.  [para(7563(b,1),86(a,1,1))].
+
+given #840 (T,wt=13): 7594 c5 = c1 | c8 = c2 | c8 = c1 | f1(c3) = c4.  [para(7563(b,1),6879(b,2)),merge(d)].
+
+given #841 (T,wt=13): 7636 c5 = c1 | c8 = c2 | c8 = c1 | f1(c4) = c3.  [resolve(7592,d,61,a)].
+
+given #842 (T,wt=14): 6913 c5 = c1 | f1(c2) = c4 | f1(c1) = c4 | c8 = c4.  [resolve(6876,b,451,c),flip(d)].
+
+given #843 (A,wt=19): 395 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c6 = c1 | NextTo(f1(c4),c5).  [para(118(d,2),83(b,1))].
+
+given #844 (T,wt=13): 7792 c5 = c1 | f1(c1) = c4 | c8 = c4 | Diagonal(c2,c4).  [para(6913(b,1),35(a,2))].
+
+given #845 (T,wt=13): 7793 c5 = c1 | f1(c1) = c4 | c8 = c4 | Diagonal(c4,c2).  [para(6913(b,1),51(a,1))].
+
+given #846 (T,wt=14): 6918 c5 = c1 | f1(c4) = c1 | f1(c4) = c2 | c8 = c4.  [resolve(6876,b,192,c),flip(d)].
+
+given #847 (T,wt=13): 7815 c5 = c1 | f1(c4) = c1 | c8 = c4 | Diagonal(c4,c2).  [para(6918(c,1),35(a,2))].
+
+given #848 (A,wt=19): 396 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c6 = c1 | NextTo(c2,f1(c4)).  [para(118(d,2),83(b,2))].
+
+given #849 (T,wt=13): 7816 c5 = c1 | f1(c4) = c1 | c8 = c4 | Diagonal(c2,c4).  [para(6918(c,1),51(a,1))].
+
+given #850 (T,wt=14): 7015 c5 = c1 | c8 = c3 | f3(c4) = c1 | f3(c4) = c2.  [resolve(6881,c,255,c)].
+
+given #851 (T,wt=13): 7886 c5 = c1 | c8 = c3 | f3(c4) = c1 | NextTo(c4,c2).  [para(7015(d,1),38(a,2))].
+
+given #852 (T,wt=13): 7887 c5 = c1 | c8 = c3 | f3(c4) = c1 | -Diagonal(c4,c2).  [para(7015(d,1),55(a,2))].
+
+given #853 (A,wt=19): 397 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c6 = c1 | -Diagonal(f1(c4),c5).  [para(118(d,2),84(b,1))].
+
+given #854 (T,wt=13): 7888 c5 = c1 | c8 = c3 | f3(c4) = c1 | NextTo(c2,c4).  [para(7015(d,1),54(a,1))].
+
+given #855 (T,wt=13): 7889 c5 = c1 | c8 = c3 | f3(c4) = c1 | -Diagonal(c2,c4).  [para(7015(d,1),76(a,1))].
+
+given #856 (T,wt=14): 7016 c5 = c1 | c8 = c3 | f2(c4) = c1 | f2(c4) = c2.  [resolve(6881,c,204,c)].
+
+given #857 (T,wt=13): 7928 c5 = c1 | c8 = c3 | f2(c4) = c1 | NextTo(c4,c2).  [para(7016(d,1),37(a,2))].
+
+given #858 (A,wt=19): 398 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c6 = c1 | -Diagonal(c2,f1(c4)).  [para(118(d,2),84(b,2))].
+
+given #859 (T,wt=13): 7929 c5 = c1 | c8 = c3 | f2(c4) = c1 | NextTo(c2,c4).  [para(7016(d,1),52(a,1))].
+
+given #860 (T,wt=13): 7930 c5 = c1 | c8 = c3 | f2(c4) = c1 | -Diagonal(c4,c2).  [para(7016(d,1),53(a,2))].
+
+given #861 (T,wt=13): 7931 c5 = c1 | c8 = c3 | f2(c4) = c1 | -Diagonal(c2,c4).  [para(7016(d,1),72(a,1))].
+
+given #862 (T,wt=14): 7286 f1(c2) = c1 | c7 = c3 | c7 = c2 | f2(c4) != c1.  [para(6531(d,1),36(a,1)),flip(d)].
+
+given #863 (A,wt=25): 399 c3 = x | c1 = x | c2 = x | f1(y) = c3 | f1(y) = c1 | f1(y) = c2 | f1(x) = y.  [para(75(b,1),118(d,1,1))].
+
+given #864 (T,wt=10): 7978 f1(c2) = c1 | c7 = c3 | c7 = c2.  [resolve(7286,d,6535,d),merge(d),merge(e),merge(f)].
+
+given #865 (T,wt=9): 8439 c7 = c3 | c7 = c2 | Diagonal(c2,c1).  [para(7978(a,1),35(a,2))].
+
+given #866 (T,wt=9): 8440 c7 = c3 | c7 = c2 | Diagonal(c1,c2).  [para(7978(a,1),51(a,1))].
+
+given #867 (T,wt=10): 8442 c7 = c3 | c7 = c2 | f1(c1) = c2.  [para(7978(a,1),87(a,1,1))].
+
+given #868 (A,wt=16): 400 c7 = c3 | c7 = c1 | c7 = c2 | -Diagonal(f1(c4),x) | c4 = x.  [para(118(d,2),101(b,1)),rewrite([86(2),86(5),86(8)]),merge(d)].
+
+given #869 (T,wt=12): 8441 c7 = c3 | c7 = c2 | -Diagonal(c1,x) | c2 = x.  [para(7978(a,1),60(a,1)),flip(d)].
+
+given #870 (T,wt=12): 8443 c7 = c3 | c7 = c2 | -Diagonal(x,c1) | c2 = x.  [para(7978(a,1),70(a,2))].
+
+given #871 (T,wt=12): 8444 c7 = c3 | c7 = c2 | -Diagonal(x,c2) | c1 = x.  [resolve(8439,c,42,b)].
+
+given #872 (T,wt=12): 8445 c7 = c3 | c7 = c2 | -Diagonal(c2,x) | c1 = x.  [resolve(8440,c,42,a),flip(d)].
+
+given #873 (A,wt=19): 401 f1(c6) = c3 | f1(c6) = c1 | f1(c6) = c2 | f1(c4) = c1 | c5 = c1.  [para(118(d,2),142(a,1))].
+
+given #874 (T,wt=14): 7389 f1(c2) = c1 | c7 = c3 | c4 = c2 | f2(c4) != c1.  [para(6561(d,1),36(a,1)),flip(d)].
+
+given #875 (T,wt=10): 8465 f1(c2) = c1 | c7 = c3 | c4 = c2.  [resolve(7389,d,6565,d),merge(d),merge(e),merge(f)].
+
+given #876 (T,wt=9): 8466 c7 = c3 | c4 = c2 | Diagonal(c2,c1).  [para(8465(a,1),35(a,2))].
+
+given #877 (T,wt=9): 8467 c7 = c3 | c4 = c2 | Diagonal(c1,c2).  [para(8465(a,1),51(a,1))].
+
+given #878 (A,wt=19): 402 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | f1(c4) = c6 | c5 = c1.  [para(118(d,2),142(a,2)),flip(d)].
+
+given #879 (T,wt=10): 8469 c7 = c3 | c4 = c2 | f1(c1) = c2.  [para(8465(a,1),87(a,1,1))].
+
+given #880 (T,wt=12): 8468 c7 = c3 | c4 = c2 | -Diagonal(c1,x) | c2 = x.  [para(8465(a,1),60(a,1)),flip(d)].
+
+given #881 (T,wt=12): 8470 c7 = c3 | c4 = c2 | -Diagonal(x,c1) | c2 = x.  [para(8465(a,1),70(a,2))].
+
+given #882 (T,wt=12): 8471 c7 = c3 | c4 = c2 | -Diagonal(x,c2) | c1 = x.  [resolve(8466,c,42,b)].
+
+given #883 (A,wt=19): 403 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c5 = c1 | NextTo(f1(c4),c1).  [para(118(d,2),144(b,1))].
+
+given #884 (T,wt=12): 8472 c7 = c3 | c4 = c2 | -Diagonal(c2,x) | c1 = x.  [resolve(8467,c,42,a),flip(d)].
+
+given #885 (T,wt=14): 7453 c5 = c1 | f1(c2) = c1 | c8 = c2 | f1(c4) = c2.  [para(6911(c,1),87(a,1,1))].
+
+given #886 (T,wt=14): 7482 c5 = c1 | f1(c3) = c1 | c8 = c4 | f1(c2) = c3.  [para(6912(c,1),87(a,1,1))].
+
+given #887 (T,wt=13): 8600 c5 = c1 | c8 = c4 | f1(c2) = c3 | Diagonal(c3,c1).  [para(7482(b,1),35(a,2))].
+
+given #888 (A,wt=19): 404 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | c5 = c1 | NextTo(c5,f1(c4)).  [para(118(d,2),144(b,2))].
+
+given #889 (T,wt=13): 8601 c5 = c1 | c8 = c4 | f1(c2) = c3 | Diagonal(c1,c3).  [para(7482(b,1),51(a,1))].
+
+given #890 (T,wt=13): 8624 c5 = c1 | c8 = c4 | f1(c2) = c3 | c8 = c1.  [para(7482(b,1),6879(b,1)),flip(e),merge(d)].
+
+given #891 (T,wt=12): 8639 c5 = c1 | c8 = c4 | c8 = c1 | Diagonal(c2,c3).  [para(8624(c,1),35(a,2))].
+
+given #892 (T,wt=12): 8640 c5 = c1 | c8 = c4 | c8 = c1 | Diagonal(c3,c2).  [para(8624(c,1),51(a,1))].
+
+given #893 (A,wt=19): 405 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c5 = c1 | -Diagonal(f1(c4),c1).  [para(118(d,2),145(b,1))].
+
+given #894 (T,wt=13): 8642 c5 = c1 | c8 = c4 | c8 = c1 | f1(c3) = c2.  [para(8624(c,1),87(a,1,1))].
+
+given #895 (T,wt=14): 7795 c5 = c1 | f1(c1) = c4 | c8 = c4 | f1(c4) = c2.  [para(6913(b,1),87(a,1,1))].
+
+given #896 (T,wt=14): 7818 c5 = c1 | f1(c4) = c1 | c8 = c4 | f1(c2) = c4.  [para(6918(c,1),87(a,1,1))].
+
+given #897 (T,wt=13): 8725 c5 = c1 | c8 = c4 | f1(c2) = c4 | Diagonal(c4,c1).  [para(7818(b,1),35(a,2))].
+
+given #898 (A,wt=19): 406 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | c5 = c1 | -Diagonal(c5,f1(c4)).  [para(118(d,2),145(b,2))].
+
+given #899 (T,wt=13): 8726 c5 = c1 | c8 = c4 | f1(c2) = c4 | Diagonal(c1,c4).  [para(7818(b,1),51(a,1))].
+
+given #900 (T,wt=14): 7885 c5 = c1 | c8 = c3 | f3(c4) = c1 | f2(c4) != c2.  [para(7015(d,1),36(a,1)),flip(d)].
+
+given #901 (T,wt=14): 7927 c5 = c1 | c8 = c3 | f2(c4) = c1 | f3(c4) != c2.  [para(7016(d,1),36(a,2))].
+
+given #902 (T,wt=14): 8603 c5 = c1 | c8 = c4 | f1(c2) = c3 | f1(c1) = c3.  [para(7482(b,1),87(a,1,1))].
+
+given #903 (A,wt=19): 407 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | c5 = c1 | NextTo(f1(c4),c5).  [para(118(d,2),146(b,1))].
+
+given #904 (T,wt=13): 8795 c5 = c1 | c8 = c4 | f1(c1) = c3 | Diagonal(c2,c3).  [para(8603(c,1),35(a,2))].
+
+given #905 (T,wt=13): 8796 c5 = c1 | c8 = c4 | f1(c1) = c3 | Diagonal(c3,c2).  [para(8603(c,1),51(a,1))].
+
+given #906 (T,wt=14): 8788 c5 = c1 | c8 = c3 | f3(c4) = c1 | f2(c4) = c1.  [resolve(7885,d,7016,d),merge(d),merge(e)].
+
+given #907 (T,wt=13): 8817 c5 = c1 | c8 = c3 | f2(c4) = c1 | NextTo(c4,c1).  [para(8788(c,1),38(a,2))].
+
+given #908 (A,wt=19): 408 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c5 = c1 | NextTo(c1,f1(c4)).  [para(118(d,2),146(b,2))].
+
+given #909 (T,wt=13): 8818 c5 = c1 | c8 = c3 | f2(c4) = c1 | -Diagonal(c4,c1).  [para(8788(c,1),55(a,2))].
+
+given #910 (T,wt=13): 8819 c5 = c1 | c8 = c3 | f2(c4) = c1 | NextTo(c1,c4).  [para(8788(c,1),54(a,1))].
+
+given #911 (T,wt=13): 8820 c5 = c1 | c8 = c3 | f2(c4) = c1 | -Diagonal(c1,c4).  [para(8788(c,1),76(a,1))].
+
+given #912 (T,wt=14): 8798 c5 = c1 | c8 = c4 | f1(c1) = c3 | f1(c3) = c2.  [para(8603(c,1),87(a,1,1))].
+
+given #913 (A,wt=19): 409 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | c5 = c1 | -Diagonal(f1(c4),c5).  [para(118(d,2),147(b,1))].
+
+given #914 (T,wt=15): 3564 f1(x) = c1 | f1(x) = c2 | f1(c3) = x | Diagonal(c4,x).  [para(378(c,1),35(a,2))].
+
+given #915 (T,wt=15): 3565 c1 = x | c2 = x | f1(c3) = f1(x) | Diagonal(x,f1(c4)).  [para(378(c,2),35(a,2)),rewrite([87(2),87(4)]),flip(a),flip(b)].
+
+given #916 (T,wt=15): 3572 f1(c5) = c1 | f1(c5) = c2 | f1(c3) = c5 | Honey(f1(c4)).  [para(378(c,2),40(a,1))].
+
+given #917 (T,wt=15): 3573 f1(c6) = c1 | f1(c6) = c2 | f1(c3) = c6 | Honey(f1(c4)).  [para(378(c,2),41(a,1))].
+
+given #918 (A,wt=19): 410 f1(c5) = c3 | f1(c5) = c1 | f1(c5) = c2 | c5 = c1 | -Diagonal(c1,f1(c4)).  [para(118(d,2),147(b,2))].
+
+given #919 (T,wt=15): 3586 f1(x) = c1 | f1(c4) = x | f1(c3) = x | Diagonal(c2,x).  [para(378(b,1),51(a,1))].
+
+given #920 (T,wt=15): 3587 f1(x) = c1 | f1(x) = c2 | f1(c3) = x | Diagonal(x,c4).  [para(378(c,1),51(a,1))].
+
+given #921 (T,wt=15): 3588 c1 = x | c2 = x | f1(c3) = f1(x) | Diagonal(f1(c4),x).  [para(378(c,2),51(a,1)),rewrite([87(2),87(4)]),flip(a),flip(b)].
+
+given #922 (T,wt=15): 3995 c1 = x | c2 = x | f1(c3) = f1(x) | -Diagonal(f1(c4),c1).  [factor(3610,a,e)].
+
+given #923 (A,wt=19): 411 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | NextTo(f1(c4),c1).  [para(118(d,2),148(b,1))].
+
+given #924 (T,wt=15): 3996 c1 = x | c2 = x | f1(c3) = f1(x) | -Diagonal(f1(c4),c2).  [factor(3610,b,e)].
+
+given #925 (T,wt=15): 4056 c8 = c1 | c8 = c2 | c8 = c4 | -Diagonal(c7,x) | c3 = x.  [para(3603(c,1),60(a,1)),flip(e)].
+
+given #926 (T,wt=15): 4057 c8 = c1 | c8 = c2 | c8 = c4 | -Diagonal(x,c7) | c3 = x.  [para(3603(c,1),70(a,2))].
+
+given #927 (T,wt=15): 4074 c8 = c1 | c8 = c2 | c8 = c4 | -Diagonal(x,c3) | c7 = x.  [resolve(4054,d,42,b)].
+
+given #928 (A,wt=19): 412 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | c5 = c1 | NextTo(c2,f1(c4)).  [para(118(d,2),148(b,2))].
+
+given #929 (T,wt=15): 4091 c8 = c1 | c8 = c2 | c8 = c4 | -Diagonal(c3,x) | c7 = x.  [resolve(4055,d,42,a),flip(e)].
+
+given #930 (T,wt=15): 4097 c7 = c1 | c7 = c2 | c7 = c4 | -Diagonal(c8,x) | c3 = x.  [para(3606(c,1),60(a,1)),flip(e)].
+
+given #931 (T,wt=15): 4098 c7 = c1 | c7 = c2 | c7 = c4 | -Diagonal(x,c8) | c3 = x.  [para(3606(c,1),70(a,2))].
+
+given #932 (T,wt=15): 4116 c7 = c1 | c7 = c2 | c7 = c4 | -Diagonal(x,c3) | c8 = x.  [resolve(4095,d,42,b)].
+
+given #933 (A,wt=19): 413 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | -Diagonal(f1(c4),c1).  [para(118(d,2),149(b,1))].
+
+given #934 (T,wt=15): 4121 c7 = c1 | c7 = c2 | c7 = c4 | -Diagonal(c3,x) | c8 = x.  [resolve(4096,d,42,a),flip(e)].
+
+given #935 (T,wt=15): 4265 c7 = c1 | c7 = c2 | c8 = c3 | -Diagonal(c8,x) | c3 = x.  [para(4230(c,1),60(a,1)),flip(e)].
+
+given #936 (T,wt=15): 4266 c7 = c1 | c7 = c2 | c8 = c3 | -Diagonal(x,c8) | c3 = x.  [para(4230(c,1),70(a,2))].
+
+given #937 (T,wt=15): 4281 c7 = c1 | c7 = c2 | c8 = c3 | -Diagonal(x,c3) | c8 = x.  [resolve(4263,d,42,b)].
+
+given #938 (A,wt=19): 414 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | c5 = c1 | -Diagonal(c2,f1(c4)).  [para(118(d,2),149(b,2))].
+
+given #939 (T,wt=15): 4286 c7 = c1 | c7 = c2 | c8 = c3 | -Diagonal(c3,x) | c8 = x.  [resolve(4264,d,42,a),flip(e)].
+
+given #940 (T,wt=15): 4356 f1(x) = c1 | f1(x) = c2 | f1(x) = c4 | Diagonal(c3,x).  [para(87(a,1),4290(d,2)),flip(a),flip(b),flip(c)].
+
+given #941 (T,wt=15): 4376 f3(f1(c3)) = c1 | f3(f1(c3)) = c2 | f3(f1(c3)) = c4.  [resolve(4291,d,76,a),flip(a),flip(b),flip(c)].
+
+given #942 (T,wt=14): 9172 f3(f1(c3)) = c1 | f3(f1(c3)) = c2 | NextTo(f1(c3),c4).  [para(4376(c,1),38(a,2))].
+
+given #943 (A,wt=19): 415 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | c5 = c1 | NextTo(f1(c4),c2).  [para(118(d,2),150(b,1))].
+
+given #944 (T,wt=14): 9173 f3(f1(c3)) = c1 | f3(f1(c3)) = c2 | -Diagonal(f1(c3),c4).  [para(4376(c,1),55(a,2))].
+
+given #945 (T,wt=14): 9174 f3(f1(c3)) = c1 | f3(f1(c3)) = c2 | NextTo(c4,f1(c3)).  [para(4376(c,1),54(a,1))].
+
+given #946 (T,wt=14): 9175 f3(f1(c3)) = c1 | f3(f1(c3)) = c2 | -Diagonal(c4,f1(c3)).  [para(4376(c,1),76(a,1))].
+
+given #947 (T,wt=15): 4377 f2(f1(c3)) = c1 | f2(f1(c3)) = c2 | f2(f1(c3)) = c4.  [resolve(4291,d,72,a),flip(a),flip(b),flip(c)].
+
+given #948 (A,wt=19): 416 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | NextTo(c1,f1(c4)).  [para(118(d,2),150(b,2))].
+
+given #949 (T,wt=14): 9315 f2(f1(c3)) = c1 | f2(f1(c3)) = c2 | NextTo(f1(c3),c4).  [para(4377(c,1),37(a,2))].
+
+given #950 (T,wt=14): 9316 f2(f1(c3)) = c1 | f2(f1(c3)) = c2 | NextTo(c4,f1(c3)).  [para(4377(c,1),52(a,1))].
+
+given #951 (T,wt=14): 9317 f2(f1(c3)) = c1 | f2(f1(c3)) = c2 | -Diagonal(f1(c3),c4).  [para(4377(c,1),53(a,2))].
+
+given #952 (T,wt=14): 9318 f2(f1(c3)) = c1 | f2(f1(c3)) = c2 | -Diagonal(c4,f1(c3)).  [para(4377(c,1),72(a,1))].
+
+given #953 (A,wt=19): 417 f1(c1) = c3 | f1(c1) = c1 | f1(c1) = c2 | c5 = c1 | -Diagonal(f1(c4),c2).  [para(118(d,2),151(b,1))].
+
+given #954 (T,wt=15): 4380 c7 = c3 | c1 = x | c2 = x | c4 = x | Diagonal(x,c7).  [para(158(b,1),4291(d,2))].
+
+given #955 (T,wt=15): 4381 c7 = c3 | c1 = x | c2 = x | c4 = x | Diagonal(x,c4).  [para(167(b,1),4291(d,2))].
+
+given #956 (T,wt=15): 4400 f1(x) = c1 | f1(x) = c2 | f1(x) = c4 | Diagonal(x,c3).  [para(87(a,1),4292(d,1)),flip(a),flip(b),flip(c)].
+
+given #957 (T,wt=15): 4415 c7 = c3 | c1 = x | c2 = x | c4 = x | Diagonal(c7,x).  [para(158(b,1),4293(d,1))].
+
+given #958 (A,wt=19): 418 f1(c2) = c3 | f1(c2) = c1 | f1(c2) = c2 | c5 = c1 | -Diagonal(c1,f1(c4)).  [para(118(d,2),151(b,2))].
+
+given #959 (T,wt=15): 4416 c7 = c3 | c1 = x | c2 = x | c4 = x | Diagonal(c4,x).  [para(167(b,1),4293(d,1))].
+
+given #960 (T,wt=15): 4433 c7 = c3 | c1 = x | c2 = x | c4 = x | -Diagonal(c7,c1).  [para(158(b,1),4347(d,1))].
+
+given #961 (T,wt=15): 4434 c7 = c3 | c1 = x | c2 = x | c4 = x | -Diagonal(c4,c1).  [para(167(b,1),4347(d,1))].
+
+given #962 (T,wt=15): 4443 c7 = c3 | c1 = x | c2 = x | c4 = x | -Diagonal(c7,c2).  [para(158(b,1),4348(d,1))].
+
+given #963 (A,wt=18): 419 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | c7 = c3 | Ate(f1(c4)).  [para(118(d,2),154(b,1))].
+
+given #964 (T,wt=15): 4444 c7 = c3 | c1 = x | c2 = x | c4 = x | -Diagonal(c4,c2).  [para(167(b,1),4348(d,1))].
+
+given #965 (T,wt=15): 4483 c7 = c3 | c1 = x | c2 = x | c4 = x | -Diagonal(c7,c4).  [para(158(b,1),4349(d,1))].
+
+given #966 (T,wt=15): 4569 f1(c1) = c1 | f1(c4) = c1 | f1(c3) = c1 | c5 = c1.  [resolve(3563,d,151,b)].
+
+given #967 (T,wt=14): 9505 f1(c1) = c1 | f1(c3) = c1 | c5 = c1 | Diagonal(c4,c1).  [para(4569(b,1),35(a,2))].
+
+given #968 (A,wt=19): 420 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | c7 = c3 | Diagonal(c7,f1(c4)).  [para(118(d,2),155(b,2))].
+
+given #969 (T,wt=14): 9506 f1(c1) = c1 | f1(c3) = c1 | c5 = c1 | Diagonal(c1,c4).  [para(4569(b,1),51(a,1))].
+
+given #970 (T,wt=15): 4570 f1(c5) = c1 | f1(c4) = c5 | f1(c3) = c5 | c6 = c1.  [resolve(3563,d,82,b)].
+
+given #971 (T,wt=14): 9586 f1(c4) = c5 | f1(c3) = c5 | c6 = c1 | Diagonal(c5,c1).  [para(4570(a,1),35(a,2))].
+
+given #972 (T,wt=14): 9587 f1(c4) = c5 | f1(c3) = c5 | c6 = c1 | Diagonal(c1,c5).  [para(4570(a,1),51(a,1))].
+
+given #973 (A,wt=19): 421 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | c7 = c3 | Diagonal(f1(c4),c7).  [para(118(d,2),156(b,1))].
+
+given #974 (T,wt=15): 4571 f1(c6) = c1 | f1(c4) = c6 | f1(c3) = c6 | c5 = c1.  [resolve(3563,d,80,b)].
+
+given #975 (T,wt=14): 9614 f1(c4) = c6 | f1(c3) = c6 | c5 = c1 | Diagonal(c6,c1).  [para(4571(a,1),35(a,2))].
+
+given #976 (T,wt=14): 9615 f1(c4) = c6 | f1(c3) = c6 | c5 = c1 | Diagonal(c1,c6).  [para(4571(a,1),51(a,1))].
+
+given #977 (T,wt=14): 9622 c5 = c1 | f1(c4) = c6 | f1(c3) = c6 | Diagonal(c1,c1).  [para(142(a,1),9614(d,1)),merge(d)].
+
+given #978 (A,wt=16): 422 c8 = c3 | c8 = c1 | c8 = c2 | -Diagonal(f1(c4),x) | c4 = x.  [para(118(d,2),132(b,1)),rewrite([85(2),85(5),85(8)]),merge(d)].
+
+given #979 (T,wt=11): 9627 c5 = c1 | f1(c4) = c6 | f1(c3) = c6.  [resolve(9622,d,32,a)].
+
+given #980 (T,wt=10): 9628 c5 = c1 | f1(c3) = c6 | Diagonal(c4,c6).  [para(9627(b,1),35(a,2))].
+
+given #981 (T,wt=10): 9629 c5 = c1 | f1(c3) = c6 | Diagonal(c6,c4).  [para(9627(b,1),51(a,1))].
+
+given #982 (T,wt=10): 9723 c5 = c1 | f1(c3) = c6 | Diagonal(c4,c1).  [para(142(a,1),9628(c,2)),merge(b)].
+
+given #983 (A,wt=31): 423 f1(f2(x)) = c3 | f1(f2(x)) = c1 | f1(f2(x)) = c2 | f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | f1(c4) != c4.  [para(118(d,2),106(d,1))].
+
+given #984 (T,wt=10): 9727 c5 = c1 | f1(c3) = c6 | Diagonal(c1,c4).  [para(142(a,1),9629(c,1)),merge(b)].
+
+given #985 (T,wt=11): 9631 c5 = c1 | f1(c3) = c6 | f1(c6) = c4.  [para(9627(b,1),87(a,1,1))].
+
+given #986 (T,wt=11): 9635 c5 = c1 | f1(c4) = c1 | f1(c3) = c6.  [para(142(a,1),9627(b,2)),merge(b)].
+
+given #987 (T,wt=11): 9744 c5 = c1 | f1(c3) = c6 | f1(c1) = c4.  [resolve(9723,c,61,a)].
+
+given #988 (A,wt=22): 424 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | c7 = c3 | -Diagonal(f1(c4),x) | c7 = x.  [para(118(d,2),157(b,1))].
+
+given #989 (T,wt=10): 9843 c5 = c1 | f1(c1) = c4 | Diagonal(c3,c6).  [para(9744(b,1),35(a,2))].
+
+given #990 (T,wt=10): 9844 c5 = c1 | f1(c1) = c4 | Diagonal(c6,c3).  [para(9744(b,1),51(a,1))].
+
+given #991 (T,wt=10): 9880 c5 = c1 | f1(c1) = c4 | c8 = c6.  [para(9744(b,1),6879(b,1)),flip(d),merge(c)].
+
+given #992 (T,wt=9): 9910 c5 = c1 | c8 = c6 | Diagonal(c1,c4).  [para(9880(b,1),35(a,2))].
+
+given #993 (A,wt=22): 425 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | c7 = c3 | -Diagonal(x,f1(c4)) | c7 = x.  [para(118(d,2),159(b,2))].
+
+given #994 (T,wt=9): 9911 c5 = c1 | c8 = c6 | Diagonal(c4,c1).  [para(9880(b,1),51(a,1))].
+
+given #995 (T,wt=10): 9901 c5 = c1 | f1(c1) = c4 | Diagonal(c3,c1).  [para(142(a,1),9843(c,2)),merge(b)].
+
+given #996 (T,wt=10): 9906 c5 = c1 | f1(c1) = c4 | Diagonal(c1,c3).  [para(142(a,1),9844(c,1)),merge(b)].
+
+given #997 (T,wt=10): 9913 c5 = c1 | c8 = c6 | f1(c4) = c1.  [para(9880(b,1),87(a,1,1))].
+
+given #998 (A,wt=31): 427 f1(f3(x)) = c3 | f1(f3(x)) = c1 | f1(f3(x)) = c2 | f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | f1(c4) != c4.  [para(118(d,2),107(d,1))].
+
+given #999 (T,wt=10): 9942 c5 = c1 | f1(c1) = c4 | c8 = c1.  [resolve(9901,c,6880,b),merge(c)].
+
+given #1000 (T,wt=9): 10051 c5 = c1 | c8 = c1 | Diagonal(c1,c4).  [para(9942(b,1),35(a,2))].
+
+given #1001 (T,wt=9): 10052 c5 = c1 | c8 = c1 | Diagonal(c4,c1).  [para(9942(b,1),51(a,1))].
+
+given #1002 (T,wt=10): 10054 c5 = c1 | c8 = c1 | f1(c4) = c1.  [para(9942(b,1),87(a,1,1))].
+
+given #1003 (A,wt=25): 428 c3 = x | c1 = x | c2 = x | f1(c4) = c3 | f1(x) = c1 | f1(x) = c2 | f1(c4) = x.  [para(118(d,2),118(a,1)),rewrite([87(2),87(4),87(6)]),flip(a),flip(b),flip(c)].
+
+given #1004 (T,wt=11): 9846 c5 = c1 | f1(c1) = c4 | f1(c6) = c3.  [para(9744(b,1),87(a,1,1))].
+
+given #1005 (T,wt=11): 9848 c5 = c1 | f1(c3) = c1 | f1(c1) = c4.  [para(142(a,1),9744(b,2)),merge(b)].
+
+given #1006 (T,wt=11): 9947 c5 = c1 | f1(c1) = c4 | f1(c1) = c3.  [resolve(9901,c,61,a)].
+
+given #1007 (T,wt=10): 10408 c5 = c1 | f1(c1) = c3 | Diagonal(c1,c4).  [para(9947(b,1),35(a,2))].
+
+given #1008 (A,wt=29): 429 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | f1(c4) = f1(x) | f1(x) = c1 | f1(x) = c2 | f1(c4) = x.  [para(118(d,2),118(a,2)),flip(d)].
+
+given #1009 (T,wt=10): 10409 c5 = c1 | f1(c1) = c3 | Diagonal(c4,c1).  [para(9947(b,1),51(a,1))].
+
+given #1010 (T,wt=11): 10411 c5 = c1 | f1(c1) = c3 | f1(c4) = c1.  [para(9947(b,1),87(a,1,1))].
+
+given #1011 (T,wt=12): 9912 c5 = c1 | c8 = c6 | -Diagonal(c4,x) | c1 = x.  [para(9880(b,1),60(a,1)),flip(d)].
+
+given #1012 (T,wt=12): 9914 c5 = c1 | c8 = c6 | -Diagonal(x,c4) | c1 = x.  [para(9880(b,1),70(a,2))].
+
+given #1013 (A,wt=16): 439 f1(c1) = c1 | f1(c1) = c2 | f1(c4) = c1 | -Diagonal(c3,f1(c1)).  [factor(376,a,e)].
+
+given #1014 (T,wt=12): 9922 c5 = c1 | c8 = c6 | c8 = c3 | c3 = c1.  [resolve(9910,c,7039,c),merge(c)].
+
+given #1015 (T,wt=11): 10618 c5 = c1 | c8 = c3 | c3 = c1 | Ate(c6).  [para(9922(b,1),44(a,1))].
+
+given #1016 (T,wt=11): 10620 c5 = c1 | c8 = c3 | c3 = c1 | -Honey(c6).  [para(9922(b,1),65(a,1))].
+
+given #1017 (T,wt=9): 10647 c5 = c1 | c8 = c3 | c3 = c1.  [resolve(10620,d,41,a)].
+
+given #1018 (A,wt=16): 440 f1(c2) = c1 | f1(c2) = c2 | f1(c4) = c2 | -Diagonal(c3,f1(c2)).  [factor(376,b,e)].
+
+given #1019 (T,wt=9): 10648 c5 = c1 | c3 = c1 | Diagonal(c7,c3).  [para(10647(b,1),45(a,2))].
+
+given #1020 (T,wt=9): 10649 c5 = c1 | c3 = c1 | Diagonal(c3,c7).  [para(10647(b,1),64(a,1))].
+
+given #1021 (T,wt=9): 10660 c5 = c1 | c3 = c1 | Diagonal(c3,c3).  [para(10647(b,1),6876(b,2)),merge(c)].
+
+given #1022 (T,wt=6): 10685 c5 = c1 | c3 = c1.  [resolve(10660,c,32,a)].
+
+given #1023 (A,wt=16): 441 f1(x) = c1 | f1(x) = c2 | f1(c4) = x | -Diagonal(c3,f1(c4)).  [factor(376,c,e)].
+
+given #1024 (T,wt=6): 10686 c3 = c1 | NextTo(c1,c6).  [para(10685(a,1),39(a,1))].
+
+given #1025 (T,wt=6): 10687 c3 = c1 | -Diagonal(c1,c6).  [para(10685(a,1),57(a,1))].
+
+given #1026 (T,wt=6): 10688 c3 = c1 | NextTo(c6,c1).  [para(10685(a,1),56(a,2))].
+
+given #1027 (T,wt=6): 10689 c3 = c1 | -Diagonal(c6,c1).  [para(10685(a,1),67(a,2))].
+
+given #1028 (A,wt=19): 448 f1(c3) = c3 | f1(c3) = c1 | f1(c3) = c2 | c7 = c3 | -Diagonal(f1(c4),c3).  [factor(424,d,f)].
+
+given #1029 (T,wt=9): 10690 c3 = c1 | c6 = c1 | NextTo(c1,c2).  [para(10685(a,1),81(b,1))].
+
+given #1030 (T,wt=9): 10691 c3 = c1 | c6 = c1 | -Diagonal(c1,c2).  [para(10685(a,1),82(b,1))].
+
+given #1031 (T,wt=9): 10692 c3 = c1 | c6 = c1 | NextTo(c2,c1).  [para(10685(a,1),83(b,2))].
+
+given #1032 (T,wt=9): 10693 c3 = c1 | c6 = c1 | -Diagonal(c2,c1).  [para(10685(a,1),84(b,2))].
+
+given #1033 (A,wt=23): 450 f1(c2) = c4 | f1(c1) = c4 | f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c3 = x.  [resolve(319,c,117,d)].
+
+given #1034 (T,wt=12): 9932 c5 = c1 | c8 = c6 | c8 = c3 | c7 = c1.  [resolve(9910,c,99,b)].
+
+given #1035 (T,wt=11): 10801 c5 = c1 | c8 = c3 | c7 = c1 | Ate(c6).  [para(9932(b,1),44(a,1))].
+
+given #1036 (T,wt=11): 10803 c5 = c1 | c8 = c3 | c7 = c1 | -Honey(c6).  [para(9932(b,1),65(a,1))].
+
+given #1037 (T,wt=9): 10830 c5 = c1 | c8 = c3 | c7 = c1.  [resolve(10803,d,41,a)].
+
+given #1038 (A,wt=20): 452 c3 = x | c1 = x | c2 = x | f1(c2) = c4 | f1(c1) = c4 | Diagonal(x,c3).  [para(75(b,1),319(c,1))].
+
+given #1039 (T,wt=9): 10831 c5 = c1 | c7 = c1 | Diagonal(c7,c3).  [para(10830(b,1),45(a,2))].
+
+given #1040 (T,wt=9): 10832 c5 = c1 | c7 = c1 | Diagonal(c3,c7).  [para(10830(b,1),64(a,1))].
+
+given #1041 (T,wt=9): 10843 c5 = c1 | c7 = c1 | Diagonal(c3,c3).  [para(10830(b,1),6876(b,2)),merge(c)].
+
+given #1042 (T,wt=6): 10873 c5 = c1 | c7 = c1.  [resolve(10843,c,32,a)].
+
+given #1043 (A,wt=21): 453 c3 = x | c1 = x | c2 = x | f1(c2) = c4 | f1(c1) = c4 | f1(x) = c3.  [para(75(b,1),321(c,1,1))].
+
+given #1044 (T,wt=5): 10874 c5 = c1 | Ate(c1).  [para(10873(b,1),43(a,1))].
+
+given #1045 (T,wt=5): 10876 c5 = c1 | -Honey(c1).  [para(10873(b,1),66(a,1))].
+
+given #1046 (T,wt=3): 10924 c5 = c1.  [resolve(10876,b,19,a)].
+
+given #1047 (T,wt=3): 11150 NextTo(c6,c1).  [back_rewrite(56),rewrite([10924(2)])].
+
+given #1048 (A,wt=21): 454 c3 = x | c1 = x | c2 = x | c8 = c3 | c8 = c1 | c8 = c2 | Ate(f1(x)).  [para(75(b,1),346(d,1,1))].
+
+given #1049 (F,wt=3): 11148 -Diagonal(c6,c1).  [back_rewrite(67),rewrite([10924(2)])].
+
+given #1050 (F,wt=3): 11149 -Diagonal(c1,c6).  [back_rewrite(57),rewrite([10924(1)])].
+
+given #1051 (T,wt=3): 11151 NextTo(c1,c6).  [back_rewrite(39),rewrite([10924(1)])].
+
+given #1052 (T,wt=6): 11144 c6 = c1 | -Diagonal(c2,c1).  [back_rewrite(84),rewrite([10924(5)])].
+
+given #1053 (T,wt=6): 11145 c6 = c1 | NextTo(c2,c1).  [back_rewrite(83),rewrite([10924(5)])].
+
+given #1054 (T,wt=6): 11146 c6 = c1 | -Diagonal(c1,c2).  [back_rewrite(82),rewrite([10924(4)])].
+
+given #1055 (A,wt=19): 455 f1(c4) = c1 | f1(c4) = c2 | c8 = c3 | c8 = c1 | c8 = c2 | Ate(c3).  [para(178(a,1),346(d,1))].
+
+given #1056 (T,wt=6): 11147 c6 = c1 | NextTo(c1,c2).  [back_rewrite(81),rewrite([10924(4)])].
+
+given #1057 (T,wt=9): 11163 c6 = c1 | c7 = c3 | c4 = c2.  [resolve(11144,b,8466,c)].
+
+given #1058 (T,wt=8): 11169 c6 = c1 | c4 = c2 | Ate(c3).  [para(11163(b,1),43(a,1))].
+
+given #1059 (T,wt=9): 11164 c6 = c1 | c7 = c3 | c7 = c2.  [resolve(11144,b,8439,c)].
+
+given #1060 (A,wt=19): 456 f1(c4) = c1 | f1(c3) = c4 | c8 = c3 | c8 = c1 | c8 = c2 | Ate(c2).  [para(193(b,1),346(d,1))].
+
+given #1061 (T,wt=8): 11211 c6 = c1 | c7 = c2 | Ate(c3).  [para(11164(b,1),43(a,1))].
+
+given #1062 (T,wt=9): 11165 c6 = c1 | c7 = c3 | c3 = c2.  [resolve(11144,b,7181,c)].
+
+given #1063 (T,wt=8): 11251 c6 = c1 | c3 = c2 | Ate(c3).  [para(11165(b,1),43(a,1))].
+
+given #1064 (T,wt=9): 11166 c6 = c1 | c7 = c3 | c8 = c2.  [resolve(11144,b,6743,c)].
+
+given #1065 (A,wt=19): 457 f1(c3) = c4 | f1(c2) = c4 | c8 = c3 | c8 = c1 | c8 = c2 | Ate(c1).  [para(233(a,1),346(d,1))].
+
+given #1066 (T,wt=8): 11291 c6 = c1 | c7 = c3 | Ate(c2).  [para(11166(c,1),44(a,1))].
+
+given #1067 (T,wt=8): 11293 c6 = c1 | c7 = c3 | -Honey(c2).  [para(11166(c,1),65(a,1))].
+
+given #1068 (T,wt=6): 11325 c6 = c1 | c7 = c3.  [resolve(11293,c,20,a)].
+
+given #1069 (T,wt=5): 11326 c6 = c1 | Ate(c3).  [para(11325(b,1),43(a,1))].
+
+given #1070 (A,wt=23): 458 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c8 = c3 | c8 = c1 | c8 = c2 | Ate(x).  [para(118(d,1),346(d,1))].
+
+given #1071 (T,wt=6): 11327 c6 = c1 | Diagonal(c3,c8).  [para(11325(b,1),45(a,1))].
+
+given #1072 (T,wt=6): 11328 c6 = c1 | Diagonal(c8,c3).  [para(11325(b,1),64(a,2))].
+
+given #1073 (T,wt=7): 11330 c6 = c1 | f1(c3) = c8.  [para(11325(b,1),85(a,1,1))].
+
+given #1074 (T,wt=9): 11329 c6 = c1 | -Diagonal(x,c3) | c8 = x.  [para(11325(b,1),62(a,2))].
+
+given #1075 (A,wt=19): 459 f1(c2) = c4 | f1(c1) = c4 | c8 = c3 | c8 = c1 | c8 = c2 | Ate(c3).  [para(321(c,1),346(d,1))].
+
+given #1076 (T,wt=9): 11331 c6 = c1 | -Diagonal(c3,x) | c8 = x.  [para(11325(b,1),69(a,1))].
+
+given #1077 (T,wt=9): 11332 c6 = c1 | c8 = c3 | Diagonal(c3,c4).  [para(11325(b,1),95(b,1))].
+
+given #1078 (T,wt=9): 11333 c6 = c1 | c8 = c3 | Diagonal(c4,c3).  [para(11325(b,1),96(b,2))].
+
+given #1079 (T,wt=9): 11376 c6 = c1 | -Diagonal(c8,x) | c3 = x.  [resolve(11327,b,42,a),flip(c)].
+
+given #1080 (A,wt=21): 460 c3 = x | c1 = x | c2 = x | c7 = c3 | c7 = c1 | c7 = c2 | Ate(f1(x)).  [para(75(b,1),347(d,1,1))].
+
+given #1081 (T,wt=9): 11383 c6 = c1 | -Diagonal(x,c8) | c3 = x.  [resolve(11328,b,42,b)].
+
+given #1082 (T,wt=10): 11334 c6 = c1 | c8 = c3 | f1(c4) = c3.  [para(11325(b,1),98(b,2))].
+
+given #1083 (T,wt=10): 11389 c8 = c3 | c6 = c1 | f1(c3) = c4.  [para(74(b,1),11330(b,2))].
+
+given #1084 (T,wt=12): 11335 c6 = c1 | c8 = c3 | -Diagonal(x,c3) | c4 = x.  [para(11325(b,1),130(b,2))].
+
+given #1085 (A,wt=23): 461 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c7 = c3 | c7 = c1 | c7 = c2 | Ate(x).  [para(118(d,1),347(d,1))].
+
+given #1086 (T,wt=12): 11336 c6 = c1 | c8 = c3 | -Diagonal(c3,x) | c4 = x.  [para(11325(b,1),132(b,1))].
+
+given #1087 (T,wt=12): 11466 c6 = c1 | c8 = c3 | -Diagonal(c4,x) | c3 = x.  [resolve(11332,c,42,a),flip(d)].
+
+given #1088 (T,wt=12): 11469 c6 = c1 | c8 = c3 | -Diagonal(x,c4) | c3 = x.  [resolve(11333,c,42,b)].
+
+given #1089 (T,wt=14): 10941 f1(c4) = c1 | f1(c3) = c1 | c6 = c1 | Diagonal(c1,c1).  [back_rewrite(9587),rewrite([10924(3),10924(7),10924(13)])].
+
+given #1090 (A,wt=18): 463 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c7 = c3 | Diagonal(x,c7).  [para(119(e,2),35(a,2)),flip(a),flip(b),flip(c)].
+
+given #1091 (T,wt=11): 11558 f1(c4) = c1 | f1(c3) = c1 | c6 = c1.  [resolve(10941,d,32,a)].
+
+given #1092 (T,wt=10): 11566 f1(c3) = c1 | c6 = c1 | Diagonal(c4,c1).  [para(11558(a,1),35(a,2))].
+
+given #1093 (T,wt=10): 11567 f1(c3) = c1 | c6 = c1 | Diagonal(c1,c4).  [para(11558(a,1),51(a,1))].
+
+given #1094 (T,wt=11): 11569 f1(c3) = c1 | c6 = c1 | f1(c1) = c4.  [para(11558(a,1),87(a,1,1))].
+
+given #1095 (A,wt=19): 464 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | c7 = c3 | f2(x) != c7.  [para(119(e,2),36(a,1)),flip(a),flip(b),flip(c),flip(e)].
+
+given #1096 (T,wt=10): 11636 c6 = c1 | f1(c1) = c4 | Diagonal(c3,c1).  [para(11569(a,1),35(a,2))].
+
+given #1097 (T,wt=10): 11637 c6 = c1 | f1(c1) = c4 | Diagonal(c1,c3).  [para(11569(a,1),51(a,1))].
+
+given #1098 (T,wt=10): 11669 c6 = c1 | f1(c1) = c4 | c8 = c1.  [para(11569(a,1),11330(b,1)),flip(d),merge(c)].
+
+given #1099 (T,wt=9): 11682 c6 = c1 | c8 = c1 | Diagonal(c1,c4).  [para(11669(b,1),35(a,2))].
+
+given #1100 (A,wt=19): 465 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | c7 = c3 | f3(x) != c7.  [para(119(e,2),36(a,2)),flip(a),flip(b),flip(c)].
+
+given #1101 (T,wt=9): 11683 c6 = c1 | c8 = c1 | Diagonal(c4,c1).  [para(11669(b,1),51(a,1))].
+
+given #1102 (T,wt=10): 11685 c6 = c1 | c8 = c1 | f1(c4) = c1.  [para(11669(b,1),87(a,1,1))].
+
+given #1103 (T,wt=11): 11639 c6 = c1 | f1(c1) = c4 | f1(c1) = c3.  [para(11569(a,1),87(a,1,1))].
+
+given #1104 (T,wt=10): 11757 c6 = c1 | f1(c1) = c3 | Diagonal(c1,c4).  [para(11639(b,1),35(a,2))].
+
+given #1105 (A,wt=18): 466 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | c7 = c3 | NextTo(x,c7).  [para(119(e,2),37(a,2)),flip(a),flip(b),flip(c)].
+
+given #1106 (T,wt=10): 11758 c6 = c1 | f1(c1) = c3 | Diagonal(c4,c1).  [para(11639(b,1),51(a,1))].
+
+given #1107 (T,wt=11): 11760 c6 = c1 | f1(c1) = c3 | f1(c4) = c1.  [para(11639(b,1),87(a,1,1))].
+
+given #1108 (T,wt=12): 11684 c6 = c1 | c8 = c1 | -Diagonal(c4,x) | c1 = x.  [para(11669(b,1),60(a,1)),flip(d)].
+
+given #1109 (T,wt=12): 11686 c6 = c1 | c8 = c1 | -Diagonal(x,c4) | c1 = x.  [para(11669(b,1),70(a,2))].
+
+given #1110 (A,wt=18): 467 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | c7 = c3 | NextTo(x,c7).  [para(119(e,2),38(a,2)),flip(a),flip(b),flip(c)].
+
+given #1111 (T,wt=12): 11692 c6 = c1 | c8 = c1 | c8 = c3 | c3 = c1.  [resolve(11682,c,11469,c),merge(c)].
+
+given #1112 (T,wt=12): 11701 c6 = c1 | c8 = c1 | c8 = c3 | c7 = c1.  [resolve(11682,c,99,b)].
+
+given #1113 (T,wt=12): 11702 c6 = c1 | c8 = c1 | -Diagonal(x,c1) | c4 = x.  [resolve(11682,c,42,b)].
+
+given #1114 (T,wt=12): 11708 c6 = c1 | c8 = c1 | -Diagonal(c1,x) | c4 = x.  [resolve(11683,c,42,a),flip(d)].
+
+given #1115 (A,wt=18): 471 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | c7 = c3 | Diagonal(c7,x).  [para(119(e,2),51(a,1)),flip(a),flip(b),flip(c)].
+
+given #1116 (T,wt=12): 11821 c6 = c1 | c8 = c1 | c3 = c1 | Diagonal(c7,c3).  [para(11692(c,1),45(a,2))].
+
+given #1117 (T,wt=12): 11822 c6 = c1 | c8 = c1 | c3 = c1 | Diagonal(c3,c7).  [para(11692(c,1),64(a,1))].
+
+given #1118 (T,wt=12): 11833 c6 = c1 | c8 = c1 | c3 = c1 | Diagonal(c3,c3).  [para(11692(c,1),11327(b,2)),merge(d)].
+
+given #1119 (T,wt=9): 11874 c6 = c1 | c8 = c1 | c3 = c1.  [resolve(11833,d,32,a)].
+
+given #1120 (A,wt=18): 472 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | c7 = c3 | NextTo(c7,x).  [para(119(e,2),52(a,1)),flip(a),flip(b),flip(c)].
+
+given #1121 (T,wt=8): 11875 c6 = c1 | c3 = c1 | Ate(c1).  [para(11874(b,1),44(a,1))].
+
+given #1122 (T,wt=8): 11877 c6 = c1 | c3 = c1 | -Honey(c1).  [para(11874(b,1),65(a,1))].
+
+given #1123 (T,wt=6): 11909 c6 = c1 | c3 = c1.  [resolve(11877,c,19,a)].
+
+given #1124 (T,wt=6): 11914 c3 = c1 | NextTo(c1,c1).  [para(11909(a,1),11150(a,1))].
+
+============================== PROOF =================================
+
+% Proof 1 at 2.44 (+ 0.07) seconds.
+% Length of proof is 149.
+% Level of proof is 46.
+% Maximum clause weight is 16.000.
+% Given clauses 1124.
+
+1 (all x (Honey(x) | Butter(x))) # label(non_clause).  [assumption].
+2 (all x -(Honey(x) & Butter(x))) # label(non_clause).  [assumption].
+3 (exists x exists y all z (Honey(x) & Honey(y) & x != y & (Honey(z) -> x = z | y = z))) # label(non_clause).  [assumption].
+4 (exists x exists y all z (Butter(x) & Butter(y) & x != y & (Butter(z) -> x = z | y = z))) # label(non_clause).  [assumption].
+6 (all x all y -(NextTo(x,y) & Diagonal(x,y))) # label(non_clause).  [assumption].
+7 (all x -NextTo(x,x)) # label(non_clause).  [assumption].
+8 (all x -Diagonal(x,x)) # label(non_clause).  [assumption].
+9 (all x all y (NextTo(x,y) <-> NextTo(y,x))) # label(non_clause).  [assumption].
+10 (all x all y (Diagonal(x,y) <-> Diagonal(y,x))) # label(non_clause).  [assumption].
+11 (all x exists y Diagonal(x,y)) # label(non_clause).  [assumption].
+12 (all x exists y exists z (y != z & NextTo(x,y) & NextTo(x,z))) # label(non_clause).  [assumption].
+13 (exists x exists y (NextTo(x,y) & Honey(x) & Honey(y))) # label(non_clause).  [assumption].
+14 (all x all y all z (Diagonal(x,y) & Diagonal(y,z) -> x = z)) # label(non_clause).  [assumption].
+15 (exists x exists y (Ate(x) & Ate(y) & Diagonal(x,y))) # label(non_clause).  [assumption].
+16 (exists x (Ate(x) & Honey(x))) # label(non_clause) # label(goal).  [goal].
+17 Honey(x) | Butter(x).  [clausify(1)].
+18 -Honey(x) | -Butter(x).  [clausify(2)].
+19 Honey(c1).  [clausify(3)].
+20 Honey(c2).  [clausify(3)].
+22 -Honey(x) | x = c1 | x = c2.  [clausify(3)].
+23 -Honey(x) | c1 = x | c2 = x.  [copy(22),flip(b),flip(c)].
+24 Butter(c3).  [clausify(4)].
+27 -Butter(x) | x = c3 | x = c4.  [clausify(4)].
+28 -Butter(x) | c3 = x | c4 = x.  [copy(27),flip(b),flip(c)].
+30 -NextTo(x,y) | -Diagonal(x,y).  [clausify(6)].
+31 -NextTo(x,x).  [clausify(7)].
+32 -Diagonal(x,x).  [clausify(8)].
+33 -NextTo(x,y) | NextTo(y,x).  [clausify(9)].
+34 -Diagonal(x,y) | Diagonal(y,x).  [clausify(10)].
+35 Diagonal(x,f1(x)).  [clausify(11)].
+36 f3(x) != f2(x).  [clausify(12)].
+37 NextTo(x,f2(x)).  [clausify(12)].
+38 NextTo(x,f3(x)).  [clausify(12)].
+39 NextTo(c5,c6).  [clausify(13)].
+40 Honey(c5).  [clausify(13)].
+41 Honey(c6).  [clausify(13)].
+42 -Diagonal(x,y) | -Diagonal(y,z) | z = x.  [clausify(14)].
+43 Ate(c7).  [clausify(15)].
+44 Ate(c8).  [clausify(15)].
+45 Diagonal(c7,c8).  [clausify(15)].
+46 -Ate(x) | -Honey(x).  [deny(16)].
+47 -Honey(c3).  [resolve(24,a,18,b)].
+49 c3 = x | c4 = x | Honey(x).  [resolve(28,a,17,b)].
+51 Diagonal(f1(x),x).  [resolve(35,a,34,a)].
+53 -Diagonal(x,f2(x)).  [resolve(37,a,30,a)].
+55 -Diagonal(x,f3(x)).  [resolve(38,a,30,a)].
+56 NextTo(c6,c5).  [resolve(39,a,33,a)].
+57 -Diagonal(c5,c6).  [resolve(39,a,30,a)].
+58 c5 = c1 | c5 = c2.  [resolve(40,a,23,a),flip(a),flip(b)].
+59 c6 = c1 | c6 = c2.  [resolve(41,a,23,a),flip(a),flip(b)].
+60 -Diagonal(f1(x),y) | y = x.  [resolve(42,a,35,a)].
+61 -Diagonal(x,y) | f1(y) = x.  [resolve(42,b,35,a)].
+62 -Diagonal(x,c7) | c8 = x.  [resolve(45,a,42,b)].
+64 Diagonal(c8,c7).  [resolve(45,a,34,a)].
+65 -Honey(c8).  [resolve(46,a,44,a)].
+66 -Honey(c7).  [resolve(46,a,43,a)].
+67 -Diagonal(c6,c5).  [resolve(56,a,30,a)].
+68 -Diagonal(x,c8) | c7 = x.  [resolve(64,a,42,b)].
+73 c7 = c3 | c7 = c4.  [resolve(49,c,66,a),flip(a),flip(b)].
+74 c8 = c3 | c8 = c4.  [resolve(49,c,65,a),flip(a),flip(b)].
+75 c3 = x | c4 = x | c1 = x | c2 = x.  [resolve(49,c,23,a)].
+77 c5 = c1 | NextTo(c2,c6).  [para(58(b,1),39(a,1))].
+78 c5 = c1 | -Diagonal(c2,c6).  [para(58(b,1),57(a,1))].
+80 c5 = c1 | -Diagonal(c6,c2).  [para(58(b,1),67(a,2))].
+82 c6 = c1 | -Diagonal(c5,c2).  [para(59(b,1),57(a,2))].
+84 c6 = c1 | -Diagonal(c2,c5).  [para(59(b,1),67(a,1))].
+85 f1(c7) = c8.  [resolve(62,a,51,a),flip(a)].
+87 f1(f1(x)) = x.  [resolve(60,a,35,a)].
+89 c7 = c3 | Diagonal(c4,c8).  [para(73(b,1),45(a,1))].
+90 c7 = c3 | Diagonal(c8,c4).  [para(73(b,1),64(a,2))].
+92 c7 = c3 | f1(c4) = c8.  [para(73(b,1),85(a,1,1))].
+96 c8 = c3 | Diagonal(c4,c7).  [para(74(b,1),64(a,1))].
+99 c8 = c3 | -Diagonal(x,c4) | c7 = x.  [para(74(b,1),68(a,2))].
+100 c6 = c1 | c5 = c1 | NextTo(c2,c2).  [para(59(b,1),77(b,2))].
+102 c8 = c3 | c7 = c3 | Diagonal(c4,c4).  [para(74(b,1),89(b,2))].
+112 f2(x) = c3 | f2(x) = c1 | f2(x) = c2 | -Diagonal(x,c4).  [para(75(b,2),53(a,2)),flip(a),flip(b),flip(c)].
+113 f3(x) = c3 | f3(x) = c1 | f3(x) = c2 | -Diagonal(x,c4).  [para(75(b,2),55(a,2)),flip(a),flip(b),flip(c)].
+118 f1(x) = c3 | f1(x) = c1 | f1(x) = c2 | f1(c4) = x.  [para(75(b,2),87(a,1,1)),flip(a),flip(b),flip(c)].
+142 c6 = c1 | c5 = c1.  [resolve(100,c,31,a)].
+149 c5 = c1 | -Diagonal(c2,c1).  [para(142(a,1),78(b,2)),merge(b)].
+153 c8 = c3 | c7 = c3.  [resolve(102,c,32,a)].
+243 f2(c8) = c3 | f2(c8) = c1 | f2(c8) = c2 | c7 = c3.  [resolve(112,d,90,b)].
+264 f3(c8) = c3 | f3(c8) = c1 | f3(c8) = c2 | c7 = c3.  [resolve(113,d,90,b)].
+378 f1(x) = c1 | f1(x) = c2 | f1(c4) = x | f1(c3) = x.  [para(118(a,1),87(a,1,1))].
+1119 f2(c8) = c1 | f2(c8) = c2 | c7 = c3 | NextTo(c8,c3).  [para(243(a,1),37(a,2))].
+1126 c7 = c3 | f2(c8) = c1 | f2(c8) = c2 | NextTo(c3,c3).  [para(153(a,1),1119(d,1)),merge(d)].
+1135 c7 = c3 | f2(c8) = c1 | f2(c8) = c2.  [resolve(1126,d,31,a)].
+1145 c7 = c3 | f2(c8) = c1 | f2(c3) = c2.  [para(153(a,1),1135(c,1,1)),merge(b)].
+1186 c7 = c3 | f2(c3) = c2 | f3(c8) != c1.  [para(1145(b,1),36(a,2))].
+1553 f3(c8) = c1 | f3(c8) = c2 | c7 = c3 | NextTo(c8,c3).  [para(264(a,1),38(a,2))].
+1566 c7 = c3 | f3(c8) = c1 | f3(c8) = c2 | NextTo(c3,c3).  [para(153(a,1),1553(d,1)),merge(d)].
+1575 c7 = c3 | f3(c8) = c1 | f3(c8) = c2.  [resolve(1566,d,31,a)].
+1582 c7 = c3 | f3(c8) = c1 | f3(c3) = c2.  [para(153(a,1),1575(c,1,1)),merge(b)].
+1653 c7 = c3 | f3(c3) = c2 | f2(c3) = c2.  [resolve(1582,b,1186,c),merge(c)].
+1717 c7 = c3 | f2(c3) = c2 | -Diagonal(c3,c2).  [para(1653(b,1),55(a,2))].
+3563 f1(x) = c1 | f1(c4) = x | f1(c3) = x | Diagonal(x,c2).  [para(378(b,1),35(a,2))].
+4570 f1(c5) = c1 | f1(c4) = c5 | f1(c3) = c5 | c6 = c1.  [resolve(3563,d,82,b)].
+4571 f1(c6) = c1 | f1(c4) = c6 | f1(c3) = c6 | c5 = c1.  [resolve(3563,d,80,b)].
+4575 f1(c2) = c1 | f1(c4) = c2 | f1(c3) = c2.  [resolve(3563,d,32,a)].
+4586 f1(c2) = c1 | f1(c3) = c2 | c7 = c3 | c8 = c2.  [para(4575(b,1),92(b,1)),flip(d)].
+5031 f1(c2) = c1 | c7 = c3 | c8 = c2 | Diagonal(c3,c2).  [para(4586(b,1),35(a,2))].
+5051 f1(c2) = c1 | c7 = c3 | c8 = c2 | f2(c3) = c2.  [resolve(5031,d,1717,c),merge(d)].
+6722 f1(c2) = c1 | c7 = c3 | c8 = c2 | -Diagonal(c3,c2).  [para(5051(d,1),53(a,2))].
+6742 f1(c2) = c1 | c7 = c3 | c8 = c2.  [resolve(6722,d,5031,d),merge(d),merge(e),merge(f)].
+6743 c7 = c3 | c8 = c2 | Diagonal(c2,c1).  [para(6742(a,1),35(a,2))].
+6748 c7 = c3 | c8 = c2 | c5 = c1.  [resolve(6743,c,149,b)].
+6812 c7 = c3 | c5 = c1 | -Honey(c2).  [para(6748(b,1),65(a,1))].
+6844 c7 = c3 | c5 = c1.  [resolve(6812,c,20,a)].
+6876 c5 = c1 | Diagonal(c3,c8).  [para(6844(a,1),45(a,1))].
+6879 c5 = c1 | f1(c3) = c8.  [para(6844(a,1),85(a,1,1))].
+9587 f1(c4) = c5 | f1(c3) = c5 | c6 = c1 | Diagonal(c1,c5).  [para(4570(a,1),51(a,1))].
+9614 f1(c4) = c6 | f1(c3) = c6 | c5 = c1 | Diagonal(c6,c1).  [para(4571(a,1),35(a,2))].
+9622 c5 = c1 | f1(c4) = c6 | f1(c3) = c6 | Diagonal(c1,c1).  [para(142(a,1),9614(d,1)),merge(d)].
+9627 c5 = c1 | f1(c4) = c6 | f1(c3) = c6.  [resolve(9622,d,32,a)].
+9628 c5 = c1 | f1(c3) = c6 | Diagonal(c4,c6).  [para(9627(b,1),35(a,2))].
+9723 c5 = c1 | f1(c3) = c6 | Diagonal(c4,c1).  [para(142(a,1),9628(c,2)),merge(b)].
+9744 c5 = c1 | f1(c3) = c6 | f1(c1) = c4.  [resolve(9723,c,61,a)].
+9880 c5 = c1 | f1(c1) = c4 | c8 = c6.  [para(9744(b,1),6879(b,1)),flip(d),merge(c)].
+9910 c5 = c1 | c8 = c6 | Diagonal(c1,c4).  [para(9880(b,1),35(a,2))].
+9932 c5 = c1 | c8 = c6 | c8 = c3 | c7 = c1.  [resolve(9910,c,99,b)].
+10803 c5 = c1 | c8 = c3 | c7 = c1 | -Honey(c6).  [para(9932(b,1),65(a,1))].
+10830 c5 = c1 | c8 = c3 | c7 = c1.  [resolve(10803,d,41,a)].
+10843 c5 = c1 | c7 = c1 | Diagonal(c3,c3).  [para(10830(b,1),6876(b,2)),merge(c)].
+10873 c5 = c1 | c7 = c1.  [resolve(10843,c,32,a)].
+10876 c5 = c1 | -Honey(c1).  [para(10873(b,1),66(a,1))].
+10924 c5 = c1.  [resolve(10876,b,19,a)].
+10941 f1(c4) = c1 | f1(c3) = c1 | c6 = c1 | Diagonal(c1,c1).  [back_rewrite(9587),rewrite([10924(3),10924(7),10924(13)])].
+11144 c6 = c1 | -Diagonal(c2,c1).  [back_rewrite(84),rewrite([10924(5)])].
+11150 NextTo(c6,c1).  [back_rewrite(56),rewrite([10924(2)])].
+11166 c6 = c1 | c7 = c3 | c8 = c2.  [resolve(11144,b,6743,c)].
+11293 c6 = c1 | c7 = c3 | -Honey(c2).  [para(11166(c,1),65(a,1))].
+11325 c6 = c1 | c7 = c3.  [resolve(11293,c,20,a)].
+11327 c6 = c1 | Diagonal(c3,c8).  [para(11325(b,1),45(a,1))].
+11330 c6 = c1 | f1(c3) = c8.  [para(11325(b,1),85(a,1,1))].
+11333 c6 = c1 | c8 = c3 | Diagonal(c4,c3).  [para(11325(b,1),96(b,2))].
+11469 c6 = c1 | c8 = c3 | -Diagonal(x,c4) | c3 = x.  [resolve(11333,c,42,b)].
+11558 f1(c4) = c1 | f1(c3) = c1 | c6 = c1.  [resolve(10941,d,32,a)].
+11569 f1(c3) = c1 | c6 = c1 | f1(c1) = c4.  [para(11558(a,1),87(a,1,1))].
+11669 c6 = c1 | f1(c1) = c4 | c8 = c1.  [para(11569(a,1),11330(b,1)),flip(d),merge(c)].
+11682 c6 = c1 | c8 = c1 | Diagonal(c1,c4).  [para(11669(b,1),35(a,2))].
+11692 c6 = c1 | c8 = c1 | c8 = c3 | c3 = c1.  [resolve(11682,c,11469,c),merge(c)].
+11833 c6 = c1 | c8 = c1 | c3 = c1 | Diagonal(c3,c3).  [para(11692(c,1),11327(b,2)),merge(d)].
+11874 c6 = c1 | c8 = c1 | c3 = c1.  [resolve(11833,d,32,a)].
+11877 c6 = c1 | c3 = c1 | -Honey(c1).  [para(11874(b,1),65(a,1))].
+11909 c6 = c1 | c3 = c1.  [resolve(11877,c,19,a)].
+11914 c3 = c1 | NextTo(c1,c1).  [para(11909(a,1),11150(a,1))].
+11915 c3 = c1.  [resolve(11914,b,31,a)].
+17375 -Honey(c1).  [back_rewrite(47),rewrite([11915(1)])].
+17376 $F.  [resolve(17375,a,19,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=1124. Generated=98032. Kept=17357. proofs=1.
+Usable=84. Sos=141. Demods=5. Limbo=5460, Disabled=11701. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=80675. Back_subsumed=4122.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=5 (0 lex), Back_demodulated=7549. Back_unit_deleted=0.
+Demod_attempts=2496239. Demod_rewrites=35070.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=777935. Nonunit_bsub_feature_tests=124584.
+Megabytes=27.16.
+User_CPU=2.44, System_CPU=0.07, Wall_clock=2.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+Process 42382 exit (max_proofs) Fri Oct 28 19:23:29 2022

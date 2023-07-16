@@ -1,0 +1,198 @@
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 3270 was started by markmuinde on MacBook-Pro.local,
+Thu Oct 13 16:02:53 2022
+The command was "prover9 -f tarquin.in".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file tarquin.in
+
+set(ignore_option_dependencies).
+if(Prover9).
+% Conditional input included.
+clear(auto).
+clear(auto_setup).
+clear(auto_limits).
+clear(auto_denials).
+clear(auto_inference).
+clear(auto_process).
+assign(eq_defs,pass).
+assign(max_seconds,10).
+assign(max_weight,2147483647).
+assign(sos_limit,-1).
+clear(predicate_elim).
+set(binary_resolution).
+set(paramodulation).
+set(factor).
+end_if.
+if(Mace4).
+% Conditional input omitted.
+end_if.
+
+formulas(assumptions).
+(TarquinLearnsPhilosophy -> TarquinAcquiresWisdom) & (TarquinLearnsScience -> TarquinAdvancesKnowledge).
+TarquinAcquiresWisdom -> -TarquinDiesMisery.
+TarquinAdvancesKnowledge -> TarquinSatisfiesAspirations.
+-TarquinSatisfiesAspirations -> TarquinDiesMisery.
+-TarquinSatisfiesAspirations.
+end_of_list.
+
+formulas(goals).
+-(TarquinLearnsPhilosophy | TarquinLearnsScience).
+end_of_list.
+
+============================== end of input ==========================
+
+% Enabling option dependencies (ignore applies only on input).
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 (TarquinLearnsPhilosophy -> TarquinAcquiresWisdom) & (TarquinLearnsScience -> TarquinAdvancesKnowledge) # label(non_clause).  [assumption].
+2 TarquinAcquiresWisdom -> -TarquinDiesMisery # label(non_clause).  [assumption].
+3 TarquinAdvancesKnowledge -> TarquinSatisfiesAspirations # label(non_clause).  [assumption].
+4 -TarquinSatisfiesAspirations -> TarquinDiesMisery # label(non_clause).  [assumption].
+5 -(TarquinLearnsPhilosophy | TarquinLearnsScience) # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+-TarquinLearnsPhilosophy | TarquinAcquiresWisdom.  [clausify(1)].
+-TarquinLearnsScience | TarquinAdvancesKnowledge.  [clausify(1)].
+-TarquinAcquiresWisdom | -TarquinDiesMisery.  [clausify(2)].
+-TarquinAdvancesKnowledge | TarquinSatisfiesAspirations.  [clausify(3)].
+TarquinSatisfiesAspirations | TarquinDiesMisery.  [clausify(4)].
+-TarquinSatisfiesAspirations.  [assumption].
+TarquinLearnsPhilosophy | TarquinLearnsScience.  [deny(5)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ TarquinAdvancesKnowledge, TarquinLearnsPhilosophy, TarquinLearnsScience, TarquinSatisfiesAspirations, TarquinAcquiresWisdom, TarquinDiesMisery ]).
+Function symbol precedence:  function_order([ ]).
+After inverse_order:  (no changes).
+
+kept:      6 -TarquinLearnsPhilosophy | TarquinAcquiresWisdom.  [clausify(1)].
+kept:      7 -TarquinLearnsScience | TarquinAdvancesKnowledge.  [clausify(1)].
+kept:      8 -TarquinAcquiresWisdom | -TarquinDiesMisery.  [clausify(2)].
+kept:      9 -TarquinAdvancesKnowledge | TarquinSatisfiesAspirations.  [clausify(3)].
+kept:      10 TarquinSatisfiesAspirations | TarquinDiesMisery.  [clausify(4)].
+kept:      11 -TarquinSatisfiesAspirations.  [assumption].
+kept:      12 TarquinLearnsPhilosophy | TarquinLearnsScience.  [deny(5)].
+
+============================== end of process initial clauses ========
+
+============================== CLAUSES FOR SEARCH ====================
+
+% Clauses after input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+6 -TarquinLearnsPhilosophy | TarquinAcquiresWisdom.  [clausify(1)].
+7 -TarquinLearnsScience | TarquinAdvancesKnowledge.  [clausify(1)].
+8 -TarquinAcquiresWisdom | -TarquinDiesMisery.  [clausify(2)].
+9 -TarquinAdvancesKnowledge | TarquinSatisfiesAspirations.  [clausify(3)].
+10 TarquinSatisfiesAspirations | TarquinDiesMisery.  [clausify(4)].
+11 -TarquinSatisfiesAspirations.  [assumption].
+12 TarquinLearnsPhilosophy | TarquinLearnsScience.  [deny(5)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== end of clauses for search =============
+
+============================== SEARCH ================================
+
+% Starting search at 0.01 seconds.
+
+given #1 (I,wt=2): 6 -TarquinLearnsPhilosophy | TarquinAcquiresWisdom.  [clausify(1)].
+
+given #2 (I,wt=2): 7 -TarquinLearnsScience | TarquinAdvancesKnowledge.  [clausify(1)].
+
+given #3 (I,wt=2): 8 -TarquinAcquiresWisdom | -TarquinDiesMisery.  [clausify(2)].
+
+given #4 (I,wt=2): 9 -TarquinAdvancesKnowledge | TarquinSatisfiesAspirations.  [clausify(3)].
+
+given #5 (I,wt=2): 10 TarquinSatisfiesAspirations | TarquinDiesMisery.  [clausify(4)].
+
+given #6 (I,wt=1): 11 -TarquinSatisfiesAspirations.  [assumption].
+
+given #7 (I,wt=2): 12 TarquinLearnsPhilosophy | TarquinLearnsScience.  [deny(5)].
+
+given #8 (A,wt=2): 13 TarquinSatisfiesAspirations | -TarquinAcquiresWisdom.  [resolve(10,b,8,b)].
+
+given #9 (T,wt=2): 14 TarquinLearnsPhilosophy | TarquinAdvancesKnowledge.  [resolve(12,b,7,a)].
+
+given #10 (T,wt=2): 15 TarquinAdvancesKnowledge | TarquinAcquiresWisdom.  [resolve(14,a,6,a)].
+
+given #11 (T,wt=2): 16 TarquinAdvancesKnowledge | TarquinSatisfiesAspirations.  [resolve(15,b,13,b)].
+
+given #12 (T,wt=1): 17 TarquinAdvancesKnowledge.  [resolve(16,b,11,a)].
+
+============================== PROOF =================================
+
+% Proof 1 at 0.01 (+ 0.00) seconds.
+% Length of proof is 19.
+% Level of proof is 7.
+% Maximum clause weight is 2.000.
+% Given clauses 12.
+
+1 (TarquinLearnsPhilosophy -> TarquinAcquiresWisdom) & (TarquinLearnsScience -> TarquinAdvancesKnowledge) # label(non_clause).  [assumption].
+2 TarquinAcquiresWisdom -> -TarquinDiesMisery # label(non_clause).  [assumption].
+3 TarquinAdvancesKnowledge -> TarquinSatisfiesAspirations # label(non_clause).  [assumption].
+4 -TarquinSatisfiesAspirations -> TarquinDiesMisery # label(non_clause).  [assumption].
+5 -(TarquinLearnsPhilosophy | TarquinLearnsScience) # label(non_clause) # label(goal).  [goal].
+6 -TarquinLearnsPhilosophy | TarquinAcquiresWisdom.  [clausify(1)].
+7 -TarquinLearnsScience | TarquinAdvancesKnowledge.  [clausify(1)].
+8 -TarquinAcquiresWisdom | -TarquinDiesMisery.  [clausify(2)].
+9 -TarquinAdvancesKnowledge | TarquinSatisfiesAspirations.  [clausify(3)].
+10 TarquinSatisfiesAspirations | TarquinDiesMisery.  [clausify(4)].
+11 -TarquinSatisfiesAspirations.  [assumption].
+12 TarquinLearnsPhilosophy | TarquinLearnsScience.  [deny(5)].
+13 TarquinSatisfiesAspirations | -TarquinAcquiresWisdom.  [resolve(10,b,8,b)].
+14 TarquinLearnsPhilosophy | TarquinAdvancesKnowledge.  [resolve(12,b,7,a)].
+15 TarquinAdvancesKnowledge | TarquinAcquiresWisdom.  [resolve(14,a,6,a)].
+16 TarquinAdvancesKnowledge | TarquinSatisfiesAspirations.  [resolve(15,b,13,b)].
+17 TarquinAdvancesKnowledge.  [resolve(16,b,11,a)].
+18 TarquinSatisfiesAspirations.  [resolve(17,a,9,a)].
+19 $F.  [resolve(18,a,11,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=12. Generated=13. Kept=13. proofs=1.
+Usable=8. Sos=0. Demods=0. Limbo=0, Disabled=11. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=0. Back_subsumed=4.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=0 (0 lex), Back_demodulated=0. Back_unit_deleted=0.
+Demod_attempts=0. Demod_rewrites=0.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=0. Nonunit_bsub_feature_tests=14.
+Megabytes=0.04.
+User_CPU=0.01, System_CPU=0.00, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+Process 3270 exit (max_proofs) Thu Oct 13 16:02:53 2022
